@@ -1,0 +1,379 @@
+/* Load Fonts */
+@font-face {
+    font-family: 'Poppins Bold';
+    src: url('../fonts/Poppins-Bold.eot');
+    src: url('../fonts/Poppins-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Poppins-Bold.woff2') format('woff2'),
+        url('../fonts/Poppins-Bold.woff') format('woff'),
+        url('../fonts/Poppins-Bold.ttf') format('truetype'),
+        url('../fonts/Poppins-Bold.svg#Poppins-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins Medium';
+    src: url('../fonts/Poppins-Medium.eot');
+    src: url('../fonts/Poppins-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Poppins-Medium.woff2') format('woff2'),
+        url('../fonts/Poppins-Medium.woff') format('woff'),
+        url('../fonts/Poppins-Medium.ttf') format('truetype'),
+        url('../fonts/Poppins-Medium.svg#Poppins-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins Regular';
+    src: url('../fonts/Poppins-Regular.eot');
+    src: url('../fonts/Poppins-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Poppins-Regular.woff2') format('woff2'),
+        url('../fonts/Poppins-Regular.woff') format('woff'),
+        url('../fonts/Poppins-Regular.ttf') format('truetype'),
+        url('../fonts/Poppins-Regular.svg#Poppins-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins Light';
+    src: url('../fonts/Poppins-Light.eot');
+    src: url('../fonts/Poppins-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Poppins-Light.woff2') format('woff2'),
+        url('../fonts/Poppins-Light.woff') format('woff'),
+        url('../fonts/Poppins-Light.ttf') format('truetype'),
+        url('../fonts/Poppins-Light.svg#Poppins-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body {
+    color: #252e3f;
+    font-family: 'Poppins Regular', sans-serif;
+    font-size: 18px;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    -ms-font-smoothing: antialiased;
+    -o-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+
+    -webkit-text-rendering: optimizeLegibility;
+    -moz-text-rendering: optimizeLegibility;
+    -ms-text-rendering: optimizeLegibility;
+    -o-text-rendering: optimizeLegibility;
+    text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+b,
+strong {
+    font-family: 'Poppins Medium', sans-serif;
+    font-weight: normal;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.hide {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.relative {
+    position: relative;
+}
+
+.holder {
+    height: 100%;
+    margin: 0 auto;
+    max-width: 720px;
+}
+
+.container {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.close-btn {
+    background: transparent no-repeat center center url("../images/icon-close.svg");
+    border: none;
+    cursor: pointer;
+    height: 17px;
+    padding: 0;
+    text-indent: -9999em;
+    width: 17px;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+header .close-btn {
+    left: 0;
+    position: absolute;
+    transform: translate(0, -50%);
+    top: 50%;
+}
+
+header h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+main {
+    height: 100%;
+    line-height: 140%;
+    padding: 10px 0 25px;
+}
+
+footer {
+    background-color: #f5f5f5;
+    font-size: 14px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.label {
+    color: #767f90;
+    font-size: 16px;
+}
+
+.value {
+    font-size: 16px;
+}
+
+/* Detail screen */
+.detail-screen main .container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-screen h2 {
+    font-size: 23px;
+    margin: 0;
+}
+
+.detail-screen small {
+    font-size: 75%;
+}
+
+.detail-screen .price {
+    line-height: 100%;
+    margin-bottom: 2.13em;
+    margin-top: .83em;
+}
+
+.detail-screen .amount {
+    color: #f0b54d;
+    font-family: 'Poppins Bold', sans-serif;
+    font-size: 22px;
+    line-height: 100%;
+}
+
+.detail-screen .card-value {
+    background: transparent no-repeat left center url("../images/icon-card.svg");
+    background-size: 25px auto;
+    padding-left: 45px;
+}
+
+.detail-screen .pay-btn-wrapper {
+    margin-top: auto;
+}
+
+.detail-screen .pay-btn {
+    background: rgb(87,161,46);
+    background: linear-gradient(90deg, rgba(87,161,46,1) 0%, rgba(122,190,78,1) 100%);
+    border: none;
+    border-radius: 5em;
+    color: #fff;
+    font-family: 'Poppins Bold', sans-serif;
+    font-size: 23px;
+    padding: 10px 5px;
+    width: 90px
+}
+
+.detail-screen .pay-btn::after {
+    background: no-repeat center center url("../images/icon-chevron-right.svg");
+    background-size: 12px auto;
+    content: "";
+    display: inline-block;
+    margin-left: 5px;
+    height: 14px;
+    width: 10px;
+}
+
+/* Auth screen */
+.auth-screen .code {
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    margin: 30px 0 25px;
+    padding: 20px 40px;
+}
+
+.auth-screen .is-valid {
+    height: 20px;
+    margin: 0 auto 20px;
+    width: 20px;
+}
+
+.auth-screen .valid {
+    background: transparent no-repeat center center url("../images/icon-checked.svg");
+}
+
+.auth-screen .digits {
+    display: flex;
+    margin-left: -7px;
+    margin-right: -7px;
+}
+
+.auth-screen .digit {
+    padding-left: 7px;
+    padding-right: 7px;
+    width: 16.66666%
+}
+
+.auth-screen .digit input[type=password],
+.auth-screen .digit input[type=number] {
+    appearance: none;
+    border: none;
+    border-bottom: 1px solid #5fc460;
+    outline: none;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.auth-screen .hint {
+    font-size: 15px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.auth-screen .forgot-btn {
+    background-color: transparent;
+    border: none;
+    color: #7abe4e;
+    display: block;
+    font-family: 'Poppins Medium', sans-serif;
+    font-size: 15px;
+    margin: 0 auto;
+    max-width: 125px;
+    padding: 0;
+    width: 100%;
+}
+
+/* Resume screen */
+.resume-screen .success {
+    background: no-repeat center center url("../images/icon-checked.svg");
+    height: 68px;
+    margin: 0 auto 40px;
+    width: 68px;
+}
+
+.resume-screen h2 {
+    font-family: 'Poppins Bold', sans-serif;
+    font-size: 26px;
+    margin: 0 0 13px;
+}
+
+.resume-screen .date {
+    color: rgb(118, 127, 144);
+    margin-bottom: 15px;
+}
+
+.resume-screen .price small {
+    font-size: 100%;
+}
+
+.resume-screen .amount {
+    font-family: 'Poppins Medium', sans-serif;
+    font-size: 40px;
+    line-height: 100%;
+    margin-bottom: 15px;
+}
+
+.resume-screen .resume {
+    background-color: rgb(247, 247, 247);
+    border-top: 2px dashed rgb(191, 191, 191);
+    margin-top: 50px;
+    padding: 15px 0;
+}
+
+.resume-screen .resume-row {
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    padding: 20px 20px;
+}
+
+.resume-screen .row {
+    margin-bottom: 20px;
+}
+
+.resume-screen .row:last-child {
+    margin-bottom: 0;
+}
+
+.resume-screen .share-btn,
+.resume-screen .movie-btn {
+    background-color: transparent;
+    border: none;
+    display: block;
+    font-family: 'Poppins Medium', sans-serif;
+    font-size: 15px;
+    margin: 0 auto;
+    max-width: 125px;
+    padding: 5px 5px;
+    width: 100%;
+}
+
+.resume-screen .share-btn {
+    border: 1px solid #252E40;
+    border-radius: 15em;
+    margin-bottom: 15px;
+}
+
+.resume-screen .share-btn::before {
+    background: no-repeat center center url("../images/icon-share.svg");
+    background-size: 17px auto;
+    content: "";
+    display: inline-block;
+    height: 17px;
+    margin-bottom: -2px;
+    margin-right: 5px;
+    width: 17px;
+}
+
+.resume-screen .movie-btn {
+    color: #7abe4e;
+}
