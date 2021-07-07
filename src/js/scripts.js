@@ -4,7 +4,7 @@
  * @param {Node|NodeList} els
  * @param {function} handler
  */
- function addListener(events, els, handler) {
+function addListener(events, els, handler) {
     const add = (events, el, handler) => {
         events.split(' ').forEach(event => el.addEventListener(event, handler));
     };
@@ -20,15 +20,15 @@
  * Bind JSON to HTML.
  * @param {object} values
  */
- function bind(values) {
+function bind(values) {
     const tags = qa('[data-id]');
 
     [].forEach.call(tags, tag => {
         const id = tag.dataset['id'];
         const value = values[id];
-        
+
         if (id === 'precio') {
-            tag.innerHTML = formatAmount(value);    
+            tag.innerHTML = formatAmount(value);
         } else if (id === 'saldo') {
             if (value === 'false') {
                 setTimeout(() => { showAdvice(tag, true); }, 500);
@@ -44,7 +44,7 @@
  * @param {number} amount 
  * @returns {string}
  */
- function formatAmount(amount) {
+function formatAmount(amount) {
     return '$ ' + Number(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
@@ -52,9 +52,9 @@
  * Handle digit keyup event.
  * @param {KeyboardEvent} event
  */
-function handleDigitKeyup({target, keyCode}) {
+function handleDigitKeyup({ target, keyCode }) {
     const parent = target.parentNode;
-    
+
     if (keyCode === 8) {
         const prev = parent.previousElementSibling;
 
@@ -80,6 +80,7 @@ function handleDigitKeyup({target, keyCode}) {
 
 /**
  * Apply number filter.
+ * @param {Event} e
  */
 function numberFilter(e) {
     const filter = /^\d{0,1}$/;
@@ -94,6 +95,48 @@ function numberFilter(e) {
     } else {
         this.value = '';
     }
+}
+
+/**
+ * Do querySelector.
+ * @param {string} selector
+ * @param {HTMLElement} context
+ * @returns Node
+ */
+ function q(selector, context) {
+    return (context || document).querySelector(selector);
+}
+
+/**
+ * Do querySelectorAll.
+ * @param {string} selector
+ * @param {HTMLElement[]} context
+ * @returns NodeList
+ */
+function qa(selector, context) {
+    return (context || document).querySelectorAll(selector);
+}
+
+/**
+ * Make request.
+ * @param {string} url 
+ * @param {string} method
+ * @param {object} body
+ * @param {object} headers 
+ * @param {function} callback 
+ */
+function request(url, method, body, headers, callback) {
+    $.ajax({
+        url: 'https://omm6oug5pg.execute-api.us-east-1.amazonaws.com/desarrollo/oauth2/v1/token',
+        method: 'POST',
+        body: { 'grant_type': 'client_credentials' },
+        beforeSend: function(jqXHR) {
+            jqXHR.setRequestHeader('Authorization', "Basic " + btoa('18h8vanvrh4pui1lrntc1niljf' + ":" + '1ge31bhjrdk9d0ja14mft8qepi4clkt805jqb2svqvmb4so1v4g7'));
+        },
+        success: function() {
+            console.log(arguments);
+        }
+    });
 }
 
 /**
@@ -131,26 +174,6 @@ function showAdvice(el, flag) {
 }
 
 /**
- * Do querySelector.
- * @param {string} selector
- * @param {HTMLElement} context
- * @returns Node
- */
- function q(selector, context) {
-    return (context || document).querySelector(selector);
-}
-
-/**
- * Do querySelectorAll.
- * @param {string} selector
- * @param {HTMLElement[]} context
- * @returns NodeList
- */
- function qa(selector, context) {
-    return (context || document).querySelectorAll(selector);
-}
-
-/**
  * Validate code from client.
  * @returns {boolean}
  */
@@ -180,15 +203,17 @@ if (location.pathname.indexOf('detail') >= 0) {
         addListener('click', closeBtn, () => { showAdvice(advice, false); });
     });
 
-    $('.swipe-btn').swipe({cb: function() {
-        console.log('swipe from detail');
-    }});
+    $('.swipe-btn').swipe({
+        cb: function () {
+            console.log('swipe from detail');
+        }
+    });
 
     bind(searchToJson());
 
 } else if (location.pathname.indexOf('auth') >= 0) {
     const digits = qa('.auth-screen .digit input');
-    
+
     addListener('keypress keydown keyup input change paste', digits, numberFilter);
     addListener('keyup', digits, handleDigitKeyup);
 

@@ -1,6 +1,7 @@
 TODO
+=====
 
-- [ ] Agregar swipe button
+- [x] Agregar swipe button
 - [ ] Remover funciones vanilla para usar jQuery
 - [ ] Trabajar con cambio de pantallas
 - [ ] Enviar peticiones
