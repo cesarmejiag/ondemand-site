@@ -91,6 +91,11 @@ strong {
     font-weight: normal;
 }
 
+button {
+    appearance: none;
+    cursor: pointer;
+}
+
 .text-center {
     text-align: center;
 }
@@ -124,8 +129,8 @@ strong {
 
 .close-btn {
     background: transparent no-repeat center center url("../images/icon-close.svg");
+    background-size: 16px auto;
     border: none;
-    cursor: pointer;
     height: 17px;
     padding: 0;
     text-indent: -9999em;
@@ -171,6 +176,55 @@ footer {
     font-size: 16px;
 }
 
+.advice {
+    background-color: #E6F2FB;
+    border-radius: 12px;
+    display: flex;
+    font-size: 14px;
+    padding: 15px 20px;
+}
+
+.advice.advice-warning {
+    background-color: #FFF8CC;
+    font-size: 16px;
+}
+
+.advice.fixed {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    transition: transform 375ms;
+    transform: translate(0, 0);
+    width: 100%;
+}
+
+.advice.fixed.no-visible {
+    transform: translate(0, 100%);
+}
+
+.advice .close-btn {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+.advice .icon {
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.advice .btn {
+    background-color: transparent;
+    border: none;
+    color: #5DC137;
+    font-family: 'Poppins Medium',sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 0;
+}
+
 /* Detail screen */
 .detail-screen main .container {
     min-height: 100%;
@@ -205,36 +259,44 @@ footer {
 }
 
 .detail-screen .advice {
-    background-color: #E6F2FB;
-    border-radius: 12px;
-    display: flex;
-    font-size: 14px;
     margin-top: 40px;
-    padding: 15px 20px;
 }
 
-.detail-screen .advice .icon {
-    flex-shrink: 0;
-    margin-right: 10px;
-}
-
-.detail-screen .pay-btn-wrapper {
+.detail-screen .swipe-wrapper {
     margin-top: auto;
 }
 
-.detail-screen .pay-btn {
-    background: rgb(87,161,46);
-    background: linear-gradient(90deg, rgba(87,161,46,1) 0%, rgba(122,190,78,1) 100%);
+.detail-screen .swipe-btn {
+    align-items: center;
+    background: #FFFFFF;
+    border-radius: 24px;
+    box-shadow: inset 0 2px 10px 0 rgba(220, 220, 220, 0.80);
+    display: flex;
+    height: 48px;
+    justify-content: center;
+    position: relative;
+}
+
+.detail-screen .swipe-btn .slider {
+    align-items: center;
+    background: rgb(46 164 0);
+    background: linear-gradient(90deg, rgba(46, 164, 0, 1) 0%, rgba(93, 193, 55, 1) 100%);
     border: none;
     border-radius: 5em;
     color: #fff;
+    display: flex;
     font-family: 'Poppins Bold', sans-serif;
-    font-size: 23px;
-    padding: 10px 5px;
-    width: 90px
+    font-size: 18px;
+    height: 48px;
+    justify-content: center;
+    left: 0;
+    padding: 7px 5px;
+    position: absolute;
+    text-align: center;
+    width: 80px
 }
 
-.detail-screen .pay-btn::after {
+.detail-screen .swipe-btn .slider::after {
     background: no-repeat center center url("../images/icon-chevron-right.svg");
     background-size: 8px auto;
     content: "";
@@ -242,6 +304,10 @@ footer {
     margin-left: 5px;
     height: 14px;
     width: 10px;
+}
+
+.detail-screen .swipe-btn .text {
+    font-size: 14px;
 }
 
 /* Auth screen */
@@ -343,6 +409,7 @@ footer {
 
 .resume-screen header .close-btn {
     background: transparent no-repeat center center url("../images/icon-close-white.svg");
+    background-size: 16px auto;
     left: 30px;
     top: 32px;
 }

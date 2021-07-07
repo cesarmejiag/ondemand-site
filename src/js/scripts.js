@@ -26,9 +26,13 @@
     [].forEach.call(tags, tag => {
         const id = tag.dataset['id'];
         const value = values[id];
-
+        
         if (id === 'precio') {
             tag.innerHTML = formatAmount(value);    
+        } else if (id === 'saldo') {
+            if (value === 'false') {
+                setTimeout(() => { showAdvice(tag, true); }, 500);
+            }
         } else {
             tag.innerHTML = value;
         }
@@ -48,26 +52,47 @@
  * Handle digit keyup event.
  * @param {KeyboardEvent} event
  */
-function handleDigitKeyup(event) {
-    const el = event.target;
-    const parent = el.parentNode;
-
-    if (event.keyCode === 8) {
-        const prev = q('input', parent.previousElementSibling);
+function handleDigitKeyup({target, keyCode}) {
+    const parent = target.parentNode;
+    
+    if (keyCode === 8) {
+        const prev = parent.previousElementSibling;
 
         if (prev) {
-            prev.value = '';
-            prev.focus();
+            const input = q('input', prev);
+            input.value = '';
+            input.focus();
         }
 
-    } else if (event.keyCode > 48 && event.keyCode < 58) {
-        if (el.value !== '') {
-            const next = q('input', parent.nextElementSibling);
-            
+    } else if (keyCode > 47 && keyCode < 58) {
+        if (target.value !== '') {
+            const next = parent.nextElementSibling;
+
             if (next) {
-                next.focus();
+                const input = q('input', next);
+                input.focus();
             }
         }
+    }
+
+    validateCode();
+}
+
+/**
+ * Apply number filter.
+ */
+function numberFilter(e) {
+    const filter = /^\d{0,1}$/;
+
+    if (filter.test(this.value)) {
+        this.oldValue = this.value;
+        this.oldSelectionStart = this.selectionStart;
+        this.oldSelectionEnd = this.selectionEnd;
+    } else if (this.hasOwnProperty('oldValue')) {
+        this.value = this.oldValue;
+        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+    } else {
+        this.value = '';
     }
 }
 
@@ -93,6 +118,19 @@ function searchToJson() {
 }
 
 /**
+ * Show or hide advice.
+ * @param {HTMLElement} el 
+ * @param {boolean} flag 
+ */
+function showAdvice(el, flag) {
+    if (flag) {
+        el.classList.remove('no-visible');
+    } else {
+        el.classList.add('no-visible');
+    }
+}
+
+/**
  * Do querySelector.
  * @param {string} selector
  * @param {HTMLElement} context
@@ -112,16 +150,48 @@ function searchToJson() {
     return (context || document).querySelectorAll(selector);
 }
 
+/**
+ * Validate code from client.
+ * @returns {boolean}
+ */
+function validateCode() {
+    const codeEl = q('.auth-screen .code');
+    const digits = qa('.auth-screen .digit input');
+    let code = "";
+
+    [].forEach.call(digits, digit => {
+        code += digit.value;
+    });
+
+    if (code.length === 6) {
+        if (code === '000001') {
+            codeEl.classList.add('valid');
+        } else {
+            codeEl.classList.add('invalid');
+        }
+    }
+}
+
 if (location.pathname.indexOf('detail') >= 0) {
+    const advices = qa('.advice.fixed');
+
+    [].forEach.call(advices, advice => {
+        const closeBtn = q('.close-btn', advice);
+        addListener('click', closeBtn, () => { showAdvice(advice, false); });
+    });
+
+    $('.swipe-btn').swipe();
+
     bind(searchToJson());
 
 } else if (location.pathname.indexOf('auth') >= 0) {
-    const digits = qa('.code .digit');
+    const digits = qa('.auth-screen .digit input');
     
+    addListener('keypress keydown keyup input change paste', digits, numberFilter);
     addListener('keyup', digits, handleDigitKeyup);
+
+    digits[0].focus();
 
 } else {
 
 }
-
-// http://127.0.0.1:8080/detail.html?nombre=American%20Pie%20Presents%3A%20Girls%20Rules&precio=55.00&tarjeta=baz%20***6789

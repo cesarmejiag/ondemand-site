@@ -54,6 +54,7 @@ function images(cb) {
  */
 function scripts(cb) {
     const files = [
+        `${srcPath.js}/jquery.swipe.js`,
         `${srcPath.js}/scripts.js`
     ]
 
