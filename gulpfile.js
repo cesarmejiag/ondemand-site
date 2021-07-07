@@ -16,11 +16,11 @@ const srcPath = {
 }
 
 const destPath = {
-    css   : 'public/assets/css',
-    fonts : 'public/assets/fonts',
-    images: 'public/assets/images',
-    js    : 'public/assets/js',
-    root  : 'public'
+    css   : 'docs/assets/css',
+    fonts : 'docs/assets/fonts',
+    images: 'docs/assets/images',
+    js    : 'docs/assets/js',
+    root  : 'docs'
 }
 
 

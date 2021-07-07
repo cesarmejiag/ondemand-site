@@ -63,9 +63,9 @@ body, html {
 }
 
 body {
-    color: #252e3f;
+    color: #222E41;
     font-family: 'Poppins Regular', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
 
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
@@ -145,29 +145,29 @@ header .close-btn {
 }
 
 header h1 {
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
 }
 
 main {
     height: 100%;
-    line-height: 140%;
     padding: 10px 0 25px;
 }
 
 footer {
     background-color: #f5f5f5;
-    font-size: 14px;
-    padding: 20px 0;
+    font-size: 12px;
+    padding: 30px 0;
     text-align: center;
 }
 
 .label {
-    color: #767f90;
-    font-size: 16px;
+    color: #747F92;
+    font-size: 14px;
 }
 
 .value {
+    color: #222E41;
     font-size: 16px;
 }
 
@@ -179,31 +179,43 @@ footer {
 }
 
 .detail-screen h2 {
-    font-size: 23px;
+    font-size: 20px;
     margin: 0;
 }
 
 .detail-screen small {
-    font-size: 75%;
+    font-size: 12px;
 }
 
 .detail-screen .price {
-    line-height: 100%;
+    line-height: 150%;
     margin-bottom: 2.13em;
     margin-top: .83em;
 }
 
 .detail-screen .amount {
-    color: #f0b54d;
-    font-family: 'Poppins Bold', sans-serif;
-    font-size: 22px;
-    line-height: 100%;
+    font-family: 'Poppins Medium',sans-serif;
+    font-size: 20px;
 }
 
 .detail-screen .card-value {
     background: transparent no-repeat left center url("../images/icon-card.svg");
     background-size: 25px auto;
     padding-left: 45px;
+}
+
+.detail-screen .advice {
+    background-color: #E6F2FB;
+    border-radius: 12px;
+    display: flex;
+    font-size: 14px;
+    margin-top: 40px;
+    padding: 15px 20px;
+}
+
+.detail-screen .advice .icon {
+    flex-shrink: 0;
+    margin-right: 10px;
 }
 
 .detail-screen .pay-btn-wrapper {
@@ -224,7 +236,7 @@ footer {
 
 .detail-screen .pay-btn::after {
     background: no-repeat center center url("../images/icon-chevron-right.svg");
-    background-size: 12px auto;
+    background-size: 8px auto;
     content: "";
     display: inline-block;
     margin-left: 5px;
@@ -246,10 +258,6 @@ footer {
     width: 20px;
 }
 
-.auth-screen .valid {
-    background: transparent no-repeat center center url("../images/icon-checked.svg");
-}
-
 .auth-screen .digits {
     display: flex;
     margin-left: -7px;
@@ -266,7 +274,7 @@ footer {
 .auth-screen .digit input[type=number] {
     appearance: none;
     border: none;
-    border-bottom: 1px solid #5fc460;
+    border-bottom: 1px solid #222E41;
     outline: none;
     padding: 10px 0;
     text-align: center;
@@ -274,18 +282,44 @@ footer {
 }
 
 .auth-screen .hint {
-    font-size: 15px;
+    font-size: 14px;
     margin-top: 20px;
     text-align: center;
+}
+
+.auth-screen .code.valid .is-valid {
+    background: transparent no-repeat center center url("../images/icon-checked.svg");
+}
+
+.auth-screen .code.valid .hint {
+    color: #00C851;
+}
+
+.auth-screen .code.valid .digit input[type=password],
+.auth-screen .code.valid .digit input[type=number] {
+    border-bottom: 1px solid #00C851;
+}
+
+.auth-screen .code.invalid .is-valid {
+    background: transparent no-repeat center center url("../images/icon-invalid.svg");
+}
+
+.auth-screen .code.invalid .hint {
+    color: #FC3737;
+}
+
+.auth-screen .code.invalid .digit input[type=password],
+.auth-screen .code.invalid .digit input[type=number] {
+    border-bottom: 1px solid #FC3737;
 }
 
 .auth-screen .forgot-btn {
     background-color: transparent;
     border: none;
-    color: #7abe4e;
+    color: #5DC137;
     display: block;
     font-family: 'Poppins Medium', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     margin: 0 auto;
     max-width: 125px;
     padding: 0;
@@ -293,6 +327,26 @@ footer {
 }
 
 /* Resume screen */
+.resume-screen header {
+    background: no-repeat center center url("../images/resume-header.svg");
+    background-size: 100% auto;
+    margin-bottom: -10%;
+    padding: 0;
+    position: relative;
+}
+
+.resume-screen header::before {
+    content: "";
+    display: block;
+    padding-bottom: 52.22222%;
+}
+
+.resume-screen header .close-btn {
+    background: transparent no-repeat center center url("../images/icon-close-white.svg");
+    left: 30px;
+    top: 32px;
+}
+
 .resume-screen .success {
     background: no-repeat center center url("../images/icon-checked.svg");
     height: 68px;
@@ -302,13 +356,13 @@ footer {
 
 .resume-screen h2 {
     font-family: 'Poppins Bold', sans-serif;
-    font-size: 26px;
-    margin: 0 0 13px;
+    font-size: 22px;
+    margin: 0 0 5px;
 }
 
 .resume-screen .date {
-    color: rgb(118, 127, 144);
-    margin-bottom: 15px;
+    color: #747F92;
+    margin-bottom: 14px;
 }
 
 .resume-screen .price small {
@@ -317,7 +371,7 @@ footer {
 
 .resume-screen .amount {
     font-family: 'Poppins Medium', sans-serif;
-    font-size: 40px;
+    font-size: 36px;
     line-height: 100%;
     margin-bottom: 15px;
 }
