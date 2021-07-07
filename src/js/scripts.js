@@ -180,7 +180,9 @@ if (location.pathname.indexOf('detail') >= 0) {
         addListener('click', closeBtn, () => { showAdvice(advice, false); });
     });
 
-    $('.swipe-btn').swipe();
+    $('.swipe-btn').swipe({cb: function() {
+        console.log('swipe from detail');
+    }});
 
     bind(searchToJson());
 
