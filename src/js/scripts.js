@@ -1,40 +1,23 @@
 /**
- * Add handler when an event occur to an element.
- * @param {string} events
- * @param {Node|NodeList} els
- * @param {function} handler
- */
-function addListener(events, els, handler) {
-    const add = (events, el, handler) => {
-        events.split(' ').forEach(event => el.addEventListener(event, handler));
-    };
-
-    if (els instanceof NodeList) {
-        [].forEach.call(els, el => add(events, el, handler));
-    } else {
-        add(events, els, handler);
-    }
-}
-
-/**
  * Bind JSON to HTML.
  * @param {object} values
  */
 function bind(values) {
-    const tags = qa('[data-id]');
+    const $tags = $('[data-id]');
 
-    [].forEach.call(tags, tag => {
-        const id = tag.dataset['id'];
+    $tags.each(function () {
+        const $tag = $(this);
+        const id = $tag.data('id');
         const value = values[id];
 
         if (id === 'precio') {
-            tag.innerHTML = formatAmount(value);
+            $tag.html(formatAmount(value));
         } else if (id === 'saldo') {
             if (value === 'false') {
-                setTimeout(() => { showAdvice(tag, true); }, 500);
+                setTimeout(() => { showAdvice($tag, true); }, 500);
             }
         } else {
-            tag.innerHTML = value;
+            $tag.html(value);
         }
     });
 }
@@ -53,24 +36,21 @@ function formatAmount(amount) {
  * @param {KeyboardEvent} event
  */
 function handleDigitKeyup({ target, keyCode }) {
-    const parent = target.parentNode;
+    const $parent = $(target.parentNode);
 
     if (keyCode === 8) {
-        const prev = parent.previousElementSibling;
+        if ($parent.prev().length > 0) {
+            const $input = $parent.prev().find('input');
 
-        if (prev) {
-            const input = q('input', prev);
-            input.value = '';
-            input.focus();
+            $input.val('');
+            $input.focus();
         }
 
     } else if (keyCode > 47 && keyCode < 58) {
         if (target.value !== '') {
-            const next = parent.nextElementSibling;
-
-            if (next) {
-                const input = q('input', next);
-                input.focus();
+            if ($parent.next().length > 0) {
+                const $input = $parent.next().find('input');
+                $input.focus();
             }
         }
     }
@@ -80,9 +60,9 @@ function handleDigitKeyup({ target, keyCode }) {
 
 /**
  * Apply number filter.
- * @param {Event} e
+ * @param {Event} event
  */
-function numberFilter(e) {
+function numberFilter(event) {
     const filter = /^\d{0,1}$/;
 
     if (filter.test(this.value)) {
@@ -98,26 +78,6 @@ function numberFilter(e) {
 }
 
 /**
- * Do querySelector.
- * @param {string} selector
- * @param {HTMLElement} context
- * @returns Node
- */
- function q(selector, context) {
-    return (context || document).querySelector(selector);
-}
-
-/**
- * Do querySelectorAll.
- * @param {string} selector
- * @param {HTMLElement[]} context
- * @returns NodeList
- */
-function qa(selector, context) {
-    return (context || document).querySelectorAll(selector);
-}
-
-/**
  * Make request.
  * @param {string} url 
  * @param {string} method
@@ -130,10 +90,10 @@ function request(url, method, body, headers, callback) {
         url: 'https://omm6oug5pg.execute-api.us-east-1.amazonaws.com/desarrollo/oauth2/v1/token',
         method: 'POST',
         body: { 'grant_type': 'client_credentials' },
-        beforeSend: function(jqXHR) {
+        beforeSend: function (jqXHR) {
             jqXHR.setRequestHeader('Authorization', "Basic " + btoa('18h8vanvrh4pui1lrntc1niljf' + ":" + '1ge31bhjrdk9d0ja14mft8qepi4clkt805jqb2svqvmb4so1v4g7'));
         },
-        success: function() {
+        success: function () {
             console.log(arguments);
         }
     });
@@ -162,14 +122,14 @@ function searchToJson() {
 
 /**
  * Show or hide advice.
- * @param {HTMLElement} el 
+ * @param {jQuery} $el 
  * @param {boolean} flag 
  */
-function showAdvice(el, flag) {
+function showAdvice($el, flag) {
     if (flag) {
-        el.classList.remove('no-visible');
+        $el.addClass('no-visible');
     } else {
-        el.classList.add('no-visible');
+        $el.removeClass('no-visible');
     }
 }
 
@@ -178,29 +138,33 @@ function showAdvice(el, flag) {
  * @returns {boolean}
  */
 function validateCode() {
-    const codeEl = q('.auth-screen .code');
-    const digits = qa('.auth-screen .digit input');
+    const $code = $('.auth-screen .code');
+    const $digits = $('.auth-screen .digit input');
     let code = "";
 
-    [].forEach.call(digits, digit => {
-        code += digit.value;
+    $digits.each(function () {
+        code += this.value;
     });
 
     if (code.length === 6) {
         if (code === '000001') {
-            codeEl.classList.add('valid');
+            $code.addClass('valid');
         } else {
-            codeEl.classList.add('invalid');
+            $code.addClass('invalid');
         }
     }
 }
 
 if (location.pathname.indexOf('detail') >= 0) {
-    const advices = qa('.advice.fixed');
+    const $advices = $('.advice.fixed');
 
-    [].forEach.call(advices, advice => {
-        const closeBtn = q('.close-btn', advice);
-        addListener('click', closeBtn, () => { showAdvice(advice, false); });
+    $advices.each(function () {
+        const $advice = $(this);
+        const $closeBtn = $advice.find('.close-btn');
+
+        $closeBtn.on('click', function () {
+            showAdvice($advice, false);
+        });
     });
 
     $('.swipe-btn').swipe({
@@ -212,12 +176,12 @@ if (location.pathname.indexOf('detail') >= 0) {
     bind(searchToJson());
 
 } else if (location.pathname.indexOf('auth') >= 0) {
-    const digits = qa('.auth-screen .digit input');
+    const $digits = $('.auth-screen .digit input');
 
-    addListener('keypress keydown keyup input change paste', digits, numberFilter);
-    addListener('keyup', digits, handleDigitKeyup);
+    $digits.on('keypress keydown keyup input change paste', numberFilter)
+    $digits.on('keyup', handleDigitKeyup);
 
-    digits[0].focus();
+    $digits.eq(0).focus();
 
 } else {
 
