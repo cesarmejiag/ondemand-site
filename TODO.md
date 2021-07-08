@@ -4,7 +4,7 @@ TODO
 - [x] Agregar swipe button
 - [x] Remover funciones vanilla para usar jQuery
 - [ ] Trabajar con cambio de pantallas
-- [ ] Limpiar inputs en caso de que el código sea válido o inválido
+- [x] Limpiar inputs en caso de que el código sea válido o inválido
 - [ ] Trabajar con peticiones AJAX
 - [ ] Enviar peticiones a los servicios
 

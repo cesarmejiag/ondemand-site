@@ -152,6 +152,13 @@ function validateCode() {
         } else {
             $code.addClass('invalid');
         }
+
+        setTimeout(() => {
+            $digits.each(function() { $(this).val(''); });
+            $digits.eq(0).focus();
+        }, 1000);
+    } else {
+        $code.removeClass('valid invalid');
     }
 }
 
