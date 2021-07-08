@@ -23,6 +23,14 @@ function bind(values) {
 }
 
 /**
+ * Change screen.
+ * @param {jQuery} $screen
+ */
+function changeScreen($screen) {
+    console.log('change screen');
+}
+
+/**
  * Get amount with currency format.
  * @param {number} amount 
  * @returns {string}
@@ -154,7 +162,7 @@ function validateCode() {
         }
 
         setTimeout(() => {
-            $digits.each(function() { $(this).val(''); });
+            $digits.each(function () { $(this).val(''); });
             $digits.eq(0).focus();
         }, 1000);
     } else {
@@ -162,34 +170,32 @@ function validateCode() {
     }
 }
 
-if (location.pathname.indexOf('detail') >= 0) {
-    const $advices = $('.advice.fixed');
 
-    $advices.each(function () {
-        const $advice = $(this);
-        const $closeBtn = $advice.find('.close-btn');
+// Initialize Detail Screen components.
+bind(searchToJson());
 
-        $closeBtn.on('click', function () {
-            showAdvice($advice, false);
-        });
+const $advices = $('.advice.fixed');
+
+$advices.each(function () {
+    const $advice = $(this);
+    const $closeBtn = $advice.find('.close-btn');
+
+    $closeBtn.on('click', function () {
+        showAdvice($advice, false);
     });
+});
 
-    $('.swipe-btn').swipe({
-        cb: function () {
-            console.log('swipe from detail');
-        }
-    });
+$('.detail-screen .swipe-btn').swipe({
+    cb: function () {
+        changeScreen($('.auth-screen'));
+    }
+});
 
-    bind(searchToJson());
 
-} else if (location.pathname.indexOf('auth') >= 0) {
-    const $digits = $('.auth-screen .digit input');
+// Initialize Auth Screen components.
+const $digits = $('.auth-screen .digit input');
 
-    $digits.on('keypress keydown keyup input change paste', numberFilter)
-    $digits.on('keyup', handleDigitKeyup);
+$digits.on('keypress keydown keyup input change paste', numberFilter)
+$digits.on('keyup', handleDigitKeyup);
 
-    $digits.eq(0).focus();
-
-} else {
-
-}
+$digits.eq(0).focus();
