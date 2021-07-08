@@ -25,9 +25,13 @@ function bind(values) {
 /**
  * Change screen.
  * @param {jQuery} $screen
+ * @param {function} callback
  */
-function changeScreen($screen) {
-    console.log('change screen');
+function changeScreen($screen, callback) {
+    $('.screen').addClass('no-visible');
+    $screen.removeClass('no-visible');
+
+    callback();
 }
 
 /**
@@ -108,6 +112,16 @@ function request(url, method, body, headers, callback) {
 }
 
 /**
+ * Do fake request.
+ * @param {function} callback
+ */
+function fakeRequest(code, callback) {
+    setTimeout(() => {
+        callback(code === '000001');
+    }, 1500);
+}
+
+/**
  * Parse location.search to JSON.
  * @returns object
  */
@@ -142,6 +156,28 @@ function showAdvice($el, flag) {
 }
 
 /**
+ * Show or hide loader.
+ * @param {boolean} show
+ */
+function showLoader(show) {
+    let $loader = $('.loader');
+    
+    if (show) {
+        if ($loader.length <= 0) {
+            $loader = $('<div class="loader">');
+        }
+
+        $('body').append($loader);
+        setTimeout(() => $loader.addClass('loader-visible'), 10);
+
+    } else {
+        $loader.removeClass('loader-visible');
+        setTimeout(() => $loader.remove(), 375);
+
+    }
+}
+
+/**
  * Validate code from client.
  * @returns {boolean}
  */
@@ -155,16 +191,25 @@ function validateCode() {
     });
 
     if (code.length === 6) {
-        if (code === '000001') {
-            $code.addClass('valid');
-        } else {
-            $code.addClass('invalid');
-        }
+        showLoader(true);
 
-        setTimeout(() => {
-            $digits.each(function () { $(this).val(''); });
-            $digits.eq(0).focus();
-        }, 1000);
+        fakeRequest(code, success => {
+            if (success) {
+                $code.addClass('valid');
+
+                changeScreen($('.resume-screen'), () => {
+                    showLoader(false);
+                });
+            } else {
+                showLoader(false);
+                $code.addClass('invalid');
+
+                setTimeout(() => {
+                    $digits.each(function () { $(this).val(''); });
+                    $digits.eq(0).focus();
+                }, 100);
+            }
+        });
     } else {
         $code.removeClass('valid invalid');
     }
@@ -187,7 +232,14 @@ $advices.each(function () {
 
 $('.detail-screen .swipe-btn').swipe({
     cb: function () {
-        changeScreen($('.auth-screen'));
+        showLoader(true);
+
+        setTimeout(() => {
+            changeScreen($('.auth-screen'), () => {
+                showLoader(false);
+                $('.auth-screen .digit input').eq(0).focus();
+            });
+        }, 500);
     }
 });
 
