@@ -98,17 +98,25 @@ function numberFilter(event) {
  * @param {function} callback 
  */
 function request(url, method, body, headers, callback) {
-    $.ajax({
-        url: 'https://omm6oug5pg.execute-api.us-east-1.amazonaws.com/desarrollo/oauth2/v1/token',
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Basic " + btoa("18h8vanvrh4pui1lrntc1niljf" + ":" + "1ge31bhjrdk9d0ja14mft8qepi4clkt805jqb2svqvmb4so1v4g7"));
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Cookie", "XSRF-TOKEN=b4a54f1b-afe5-4aee-9a76-00f920418b6e");
+
+    /* var urlencoded = new URLSearchParams();
+    urlencoded.append("grant_type", "client_credentials"); */
+
+    var requestOptions = {
         method: 'POST',
-        body: { 'grant_type': 'client_credentials' },
-        beforeSend: function (jqXHR) {
-            jqXHR.setRequestHeader('Authorization', "Basic " + btoa('18h8vanvrh4pui1lrntc1niljf' + ":" + '1ge31bhjrdk9d0ja14mft8qepi4clkt805jqb2svqvmb4so1v4g7'));
-        },
-        success: function () {
-            console.log(arguments);
-        }
-    });
+        headers: myHeaders,
+        body: "grant_type=client_credentials",
+        redirect: 'follow'
+    };
+
+    fetch("https://omm6oug5pg.execute-api.us-east-1.amazonaws.com/desarrollo/oauth2/v1/token", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 }
 
 /**
@@ -161,7 +169,7 @@ function showAdvice($el, flag) {
  */
 function showLoader(show) {
     let $loader = $('.loader');
-    
+
     if (show) {
         if ($loader.length <= 0) {
             $loader = $('<div class="loader">');
@@ -235,10 +243,32 @@ $('.detail-screen .swipe-btn').swipe({
         showLoader(true);
 
         setTimeout(() => {
-            changeScreen($('.auth-screen'), () => {
-                showLoader(false);
-                $('.auth-screen .digit input').eq(0).focus();
-            });
+            console.log('scripts.js: Open digital sign')
+
+            if (typeof showDigitalSign === 'function' || typeof showDigitalSign === 'object') {
+                showDigitalSign(function (success) {
+                    if (success) {
+                        $code.addClass('valid');
+
+                        changeScreen($('.resume-screen'), () => {
+                            showLoader(false);
+                        });
+                    } else {
+                        showLoader(false);
+                        $code.addClass('invalid');
+
+                        setTimeout(() => {
+                            $digits.each(function () { $(this).val(''); });
+                            $digits.eq(0).focus();
+                        }, 100);
+                    }
+                });
+
+                /* changeScreen($('.auth-screen'), () => {
+                    showLoader(false);
+                    $('.auth-screen .digit input').eq(0).focus();
+                }); */
+            }
         }, 500);
     }
 });
@@ -251,3 +281,33 @@ $digits.on('keypress keydown keyup input change paste', numberFilter)
 $digits.on('keyup', handleDigitKeyup);
 
 $digits.eq(0).focus();
+
+
+// Initialize close buttons.
+$('.screen header .close-btn').on('click', function () {
+    console.log('scripts.js: Closing WebView');
+
+    if (typeof closeMoviePayment === 'function' || typeof closeMoviePayment === 'object') {
+        closeMoviePayment();
+    }
+});
+
+
+// Initialize share button.
+$('.share-btn').on('click', function () {
+    console.log('scripts.js: Sharing ticket');
+
+    if (typeof shareTicket === 'function' || typeof shareTicket === 'object') {
+        shareTicket();
+    }
+});
+
+
+// Initialize movie button.
+$('.movie-btn').on('click', function () {
+    console.log('scripts.js: Play movie');
+
+    if (typeof playMovie === 'function' || typeof playMovie === 'object') {
+        playMovie();
+    }
+});
