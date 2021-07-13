@@ -245,7 +245,11 @@ $('.detail-screen .swipe-btn').swipe({
         setTimeout(() => {
             console.log('scripts.js: Open digital sign')
 
-            if (typeof showDigitalSign === 'function' || typeof showDigitalSign === 'object') {
+            if ('webkit' in window) {
+                window.webkit.messageHandlers.showDigitalSign.postMessage("showDigitalSign");
+            }
+
+            /* if (typeof showDigitalSign === 'function' || typeof showDigitalSign === 'object') {
                 showDigitalSign(function (success) {
                     if (success) {
                         $code.addClass('valid');
@@ -263,12 +267,12 @@ $('.detail-screen .swipe-btn').swipe({
                         }, 100);
                     }
                 });
+            } */
 
-                /* changeScreen($('.auth-screen'), () => {
-                    showLoader(false);
-                    $('.auth-screen .digit input').eq(0).focus();
-                }); */
-            }
+            /* changeScreen($('.auth-screen'), () => {
+                showLoader(false);
+                $('.auth-screen .digit input').eq(0).focus();
+            }); */
         }, 500);
     }
 });
@@ -297,8 +301,8 @@ $('.screen header .close-btn').on('click', function () {
 $('.share-btn').on('click', function () {
     console.log('scripts.js: Sharing ticket');
 
-    if (typeof shareTicket === 'function' || typeof shareTicket === 'object') {
-        shareTicket();
+    if ('webkit' in window) {
+        window.webkit.messageHandlers.shareTicket.postMessage("shareTicket");
     }
 });
 
@@ -307,7 +311,7 @@ $('.share-btn').on('click', function () {
 $('.movie-btn').on('click', function () {
     console.log('scripts.js: Play movie');
 
-    if (typeof playMovie === 'function' || typeof playMovie === 'object') {
-        playMovie();
+    if ('webkit' in window) {
+        window.webkit.messageHandlers.playMovie.postMessage("playMovie");
     }
 });
