@@ -23,6 +23,17 @@ function bind(values) {
 }
 
 /**
+ * Parse string to object and then bind.
+ * @param {string} strJson 
+ */
+function bindFromStr(strJson) {
+    try {
+        const json = JSON.parse(strJson);
+        bind(json);
+    } catch (err) { console.log(err); }
+}
+
+/**
  * Change screen.
  * @param {jQuery} $screen
  * @param {function} callback
