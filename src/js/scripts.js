@@ -287,6 +287,7 @@ $digits.eq(0).focus();
 $('.screen header .close-btn').on('click', function () {
     console.log('scripts.js: Closing WebView');
 
+    alert("typeof showDigitalSign: " + typeof showDigitalSign);
     if (typeof closeMoviePayment === 'function' || typeof closeMoviePayment === 'object') {
         closeMoviePayment();
     }
