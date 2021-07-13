@@ -286,7 +286,7 @@ $digits.eq(0).focus();
 // Initialize close buttons.
 $('.screen header .close-btn').on('click', function () {
     console.log('scripts.js: Closing WebView');
-    $('.detail-screen main').prepend('typeof closeMoviePayment' + typeof closeMoviePayment);
+    $('.detail-screen main').prepend('typeof closeMoviePayment: ' + typeof closeMoviePayment);
     if (typeof closeMoviePayment === 'function' || typeof closeMoviePayment === 'object') {
         closeMoviePayment();
     }
