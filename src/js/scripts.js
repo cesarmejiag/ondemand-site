@@ -288,7 +288,7 @@ $('.screen header .close-btn').on('click', function () {
     console.log('scripts.js: Closing WebView');
     
     if ('webkit' in window) {
-        window.webkit.messageHandlers.closeMoviePayment.postMessage();
+        window.webkit.messageHandlers.closeMoviePayment.postMessage("closeMoviePayment");
     }
 });
 
