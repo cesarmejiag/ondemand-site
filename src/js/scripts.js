@@ -101,36 +101,6 @@ function numberFilter(event) {
 }
 
 /**
- * Make request.
- * @param {string} url 
- * @param {string} method
- * @param {object} body
- * @param {object} headers 
- * @param {function} callback 
- */
-function request(url, method, body, headers, callback) {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Basic " + btoa("18h8vanvrh4pui1lrntc1niljf" + ":" + "1ge31bhjrdk9d0ja14mft8qepi4clkt805jqb2svqvmb4so1v4g7"));
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    myHeaders.append("Cookie", "XSRF-TOKEN=b4a54f1b-afe5-4aee-9a76-00f920418b6e");
-
-    /* var urlencoded = new URLSearchParams();
-    urlencoded.append("grant_type", "client_credentials"); */
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: "grant_type=client_credentials",
-        redirect: 'follow'
-    };
-
-    fetch("https://omm6oug5pg.execute-api.us-east-1.amazonaws.com/desarrollo/oauth2/v1/token", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-}
-
-/**
  * Do fake request.
  * @param {function} callback
  */
@@ -138,6 +108,31 @@ function fakeRequest(code, callback) {
     setTimeout(() => {
         callback(code === '000001');
     }, 1500);
+}
+
+/**
+ * @param {string} strJson
+ */
+function payMovie(strJson) {
+    const handleErr = err => {
+        const message = typeof err === 'object' ? err.message : err;
+        console.log(JSON.stringify({ message }));
+    }
+
+    try {
+        const json = JSON.parse(strJson);
+
+        request.auth(function (authRes) {
+            if (typeof authRes['access_token'] === 'string') {
+                request.pay(authRes['access_token'], json['headers'], json['transaccion'], function (payRes) {
+                    if ('webkit' in window) {
+                        window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify(payRes));
+                    }
+                }, handleErr);
+            } else { handleErr(authRes); }
+        }, handleErr);
+
+    } catch (err) { handleErr(err); }
 }
 
 /**
@@ -259,31 +254,6 @@ $('.detail-screen .swipe-btn').swipe({
             if ('webkit' in window) {
                 window.webkit.messageHandlers.showDigitalSign.postMessage("showDigitalSign");
             }
-
-            /* if (typeof showDigitalSign === 'function' || typeof showDigitalSign === 'object') {
-                showDigitalSign(function (success) {
-                    if (success) {
-                        $code.addClass('valid');
-
-                        changeScreen($('.resume-screen'), () => {
-                            showLoader(false);
-                        });
-                    } else {
-                        showLoader(false);
-                        $code.addClass('invalid');
-
-                        setTimeout(() => {
-                            $digits.each(function () { $(this).val(''); });
-                            $digits.eq(0).focus();
-                        }, 100);
-                    }
-                });
-            } */
-
-            /* changeScreen($('.auth-screen'), () => {
-                showLoader(false);
-                $('.auth-screen .digit input').eq(0).focus();
-            }); */
         }, 500);
     }
 });
@@ -301,7 +271,7 @@ $digits.eq(0).focus();
 // Initialize close buttons.
 $('.screen header .close-btn').on('click', function () {
     console.log('scripts.js: Closing WebView');
-    
+
     if ('webkit' in window) {
         window.webkit.messageHandlers.closeMoviePayment.postMessage("closeMoviePayment");
     }
