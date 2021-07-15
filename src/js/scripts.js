@@ -117,6 +117,9 @@ function payMovie(strJson) {
     const handleErr = err => {
         const message = typeof err === 'object' ? err.message : err;
         console.log(JSON.stringify({ message }));
+        if ('webkit' in window) {
+            window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(message));
+        }
     }
 
     try {
