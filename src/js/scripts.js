@@ -127,7 +127,7 @@ function payMovie(strJson) {
 
         request.auth(function (authRes) {
             if (typeof authRes['access_token'] === 'string') {
-                request.pay(authRes['access_token'], json['headers'], json['transaccion'], function (payRes) {
+                request.pay(authRes['access_token'], json['headers'], json['requestBody'], function (payRes) {
                     if ('webkit' in window) {
                         window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify(payRes));
                     }
