@@ -127,7 +127,7 @@ function payMovie(strJson) {
 
         /* request.auth(function (authRes) {
             if (typeof authRes['access_token'] === 'string') {
-                request.pay(authRes['access_token'], json['headers'], json['requestBodyy'], function (payRes) {
+                request.pay(authRes['access_token'], json['headers'], json['requestBody'], function (payRes) {
                     if (payRes.codigo == '201') {
                         if ('webkit' in window) {
                             window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, message: payRes.mensaje } }));
@@ -145,7 +145,7 @@ function payMovie(strJson) {
             handleErr({ error: { code: 500, message: err.message } });
         }); */
 
-        request.pay('', json['headers'], json['requestBodyy'], function (payRes) {
+        request.pay('', json['headers'], json['requestBody'], function (payRes) {
             if (payRes.codigo == '201') {
                 if ('webkit' in window) {
                     window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, message: payRes.mensaje } }));
