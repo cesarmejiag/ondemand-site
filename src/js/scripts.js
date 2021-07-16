@@ -145,7 +145,7 @@ function payMovie(strJson) {
             handleErr({ error: { code: 500, message: err.message } });
         }); */
 
-        request.pay(authRes['access_token'], json['headers'], json['requestBodyy'], function (payRes) {
+        request.pay('', json['headers'], json['requestBodyy'], function (payRes) {
             if (payRes.codigo == '201') {
                 if ('webkit' in window) {
                     window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, message: payRes.mensaje } }));
