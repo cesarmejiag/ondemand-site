@@ -148,7 +148,7 @@ function payMovie(strJson) {
         request.pay('', json['headers'], json['requestBody'], function (payRes) {
             if (payRes.codigo == '201') {
                 if ('webkit' in window) {
-                    window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, message: payRes.mensaje } }));
+                    window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, data: payRes } }));
                 }
             } else {
                 handleErr({ error: { code: payRes.codigo, message: payRes.mensaje } });
