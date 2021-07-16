@@ -115,10 +115,10 @@ function fakeRequest(code, callback) {
  */
 function payMovie(strJson) {
     const handleErr = err => {
-        const message = typeof err === 'object' ? err.message : err;
-        console.log(JSON.stringify({ message }));
+        // const message = typeof err === 'object' ? err.message : err;
+        console.log(JSON.stringify(err));
         if ('webkit' in window) {
-            window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(message));
+            window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(err));
         }
     }
 
