@@ -117,9 +117,7 @@ function payMovie(strJson) {
     const handleErr = err => {
         // const message = typeof err === 'object' ? err.message : err;
         console.log(JSON.stringify(err));
-        if ('webkit' in window) {
-            window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(err));
-        }
+        window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(err));
     }
 
     try {
@@ -145,16 +143,19 @@ function payMovie(strJson) {
             handleErr({ error: { code: 500, message: err.message } });
         }); */
 
+        window.webkit.messageHandlers.showLoader.postMessage("showLoader");
+
         request.pay('', json['headers'], json['requestBody'], function (payRes) {
             if (payRes.codigo == '201') {
-                if ('webkit' in window) {
-                    window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, data: payRes } }));
-                }
+                window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, data: payRes } }));
             } else {
                 handleErr({ error: { code: payRes.codigo, message: payRes.mensaje } });
             }
-        }, function(err) {
+
+            window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
+        }, function (err) {
             handleErr({ error: { code: 500, message: err.message } });
+            window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
         });
 
     } catch (err) { handleErr(err); }
@@ -274,11 +275,8 @@ $('.detail-screen .swipe-btn').swipe({
         showLoader(true);
 
         setTimeout(() => {
-            console.log('scripts.js: Open digital sign')
-
-            if ('webkit' in window) {
-                window.webkit.messageHandlers.showDigitalSign.postMessage("showDigitalSign");
-            }
+            console.log('scripts.js: Open digital sign');
+            window.webkit.messageHandlers.showDigitalSign.postMessage("showDigitalSign");
         }, 500);
     }
 });
@@ -296,28 +294,19 @@ $digits.eq(0).focus();
 // Initialize close buttons.
 $('.screen header .close-btn').on('click', function () {
     console.log('scripts.js: Closing WebView');
-
-    if ('webkit' in window) {
-        window.webkit.messageHandlers.closeMoviePayment.postMessage("closeMoviePayment");
-    }
+    window.webkit.messageHandlers.closeMoviePayment.postMessage("closeMoviePayment");
 });
 
 
 // Initialize share button.
 $('.share-btn').on('click', function () {
     console.log('scripts.js: Sharing ticket');
-
-    if ('webkit' in window) {
-        window.webkit.messageHandlers.shareTicket.postMessage("shareTicket");
-    }
+    window.webkit.messageHandlers.shareTicket.postMessage("shareTicket");
 });
 
 
 // Initialize movie button.
 $('.movie-btn').on('click', function () {
     console.log('scripts.js: Play movie');
-
-    if ('webkit' in window) {
-        window.webkit.messageHandlers.playMovie.postMessage("playMovie");
-    }
+    window.webkit.messageHandlers.playMovie.postMessage("playMovie");
 });
