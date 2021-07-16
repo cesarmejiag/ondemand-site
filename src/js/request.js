@@ -28,7 +28,7 @@ const request = {
         const url = "https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago";
         const raw = JSON.stringify(body);
 
-        headers["Authorization"] = "Bearer " + accessToken;
+        // headers["Authorization"] = "Bearer " + accessToken;
         request.send(url, 'POST', raw, headers, success, error);
     },
 

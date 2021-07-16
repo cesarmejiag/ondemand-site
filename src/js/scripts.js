@@ -125,7 +125,7 @@ function payMovie(strJson) {
     try {
         const json = JSON.parse(strJson);
 
-        request.auth(function (authRes) {
+        /* request.auth(function (authRes) {
             if (typeof authRes['access_token'] === 'string') {
                 request.pay(authRes['access_token'], json['headers'], json['requestBodyy'], function (payRes) {
                     if (payRes.codigo == '201') {
@@ -142,6 +142,18 @@ function payMovie(strJson) {
                 handleErr({ error: { code: -1, message: authRes.mensaje } }); 
             }
         }, function() {
+            handleErr({ error: { code: 500, message: err.message } });
+        }); */
+
+        request.pay(authRes['access_token'], json['headers'], json['requestBodyy'], function (payRes) {
+            if (payRes.codigo == '201') {
+                if ('webkit' in window) {
+                    window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, message: payRes.mensaje } }));
+                }
+            } else {
+                handleErr({ error: { code: payRes.codigo, message: payRes.mensaje } });
+            }
+        }, function(err) {
             handleErr({ error: { code: 500, message: err.message } });
         });
 
