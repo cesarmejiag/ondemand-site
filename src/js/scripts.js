@@ -138,8 +138,12 @@ function payMovie(strJson) {
                 }, function(err) {
                     handleErr({ error: { code: 500, message: err.message } });
                 });
-            } else { handleErr(authRes); }
-        }, handleErr);
+            } else { 
+                handleErr({ error: { code: -1, message: authRes.mensaje } }); 
+            }
+        }, function() {
+            handleErr({ error: { code: 500, message: err.message } });
+        });
 
     } catch (err) { handleErr(err); }
 }
