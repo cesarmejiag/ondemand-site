@@ -21,11 +21,15 @@ const request = {
      * @param {string} accessToken
      * @param {object} headers
      * @param {object} body
+     * @param {boolean} production
      * @param {function} success
      * @param {function} error
      */
-    pay: function (accessToken, headers, body, success, error) {
-        const url = "https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago";
+    pay: function (accessToken, headers, body, production, success, error) {
+        const url = production 
+            ? "https://api.baz.app/superapp/pagos/captacion/traspasos/v1/boton-pago"
+            : "https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago";
+            
         const raw = JSON.stringify(body);
 
         // headers["Authorization"] = "Bearer " + accessToken;

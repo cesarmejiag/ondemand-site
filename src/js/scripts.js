@@ -1,3 +1,5 @@
+let environment = false;
+
 /**
  * Bind JSON to HTML.
  * @param {object} values
@@ -145,7 +147,7 @@ function payMovie(strJson) {
 
         window.webkit.messageHandlers.showLoader.postMessage("showLoader");
 
-        request.pay('', json['headers'], json['requestBody'], function (payRes) {
+        request.pay('', json['headers'], json['requestBody'], environment, function (payRes) {
             if (payRes.codigo == '201') {
                 window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, data: payRes } }));
             } else {
@@ -257,7 +259,10 @@ function validateCode() {
 
 
 // Initialize Detail Screen components.
-bind(searchToJson());
+const searchJson = searchToJson();
+
+environment = searchJson['environment'] === 'true';
+bind(searchJson);
 
 const $advices = $('.advice.fixed');
 
