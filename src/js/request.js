@@ -26,8 +26,8 @@ const request = {
      */
     pay: function (headers, body, production, success, error) {
         const url = production 
-            // ? "https://api.appbazgs.com/superapp/pagos/captacion/traspasos/v1/boton-pago"
-            ? "https://api.baz.app/superapp/pagos/captacion/traspasos/v1/boton-pago"
+            ? "https://api.bazappgs.com/superapp/pagos/captacion/traspasos/v1/boton-pago"
+            // ? "https://api.baz.app/superapp/pagos/captacion/traspasos/v1/boton-pago"
             : "https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago";
             
         const raw = JSON.stringify(body);
