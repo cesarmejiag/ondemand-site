@@ -18,21 +18,19 @@ const request = {
 
     /**
      * Pay.
-     * @param {string} accessToken
      * @param {object} headers
      * @param {object} body
      * @param {boolean} production
      * @param {function} success
      * @param {function} error
      */
-    pay: function (accessToken, headers, body, production, success, error) {
+    pay: function (headers, body, production, success, error) {
         const url = production 
             ? "https://api.appbazgs.com/superapp/pagos/captacion/traspasos/v1/boton-pago"
             : "https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago";
             
         const raw = JSON.stringify(body);
 
-        // headers["Authorization"] = "Bearer " + accessToken;
         request.send(url, 'POST', raw, headers, success, error);
     },
 
