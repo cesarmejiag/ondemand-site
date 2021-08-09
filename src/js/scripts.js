@@ -131,16 +131,16 @@ function payMovie(strJson) {
             if (payRes.codigo == '201') {
                 window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, data: payRes } }));
             } else {
-                handleErr({ error: { code: payRes.codigo, message: payRes.mensaje } });
+                handleErr({ error: { code: payRes.codigo, message: payRes.mensaje }, weberror: 900, weberrormessage: "Error de servicio." });
             }
 
             window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
         }, function (err) {
-            handleErr({ error: { code: 500, message: err.message } });
+            handleErr({ error: { code: 500, message: err.message }, weberror: 901, weberrormessage: "Error en el fetch web." });
             window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
         });
 
-    } catch (err) { handleErr({ error: { code: 500, message: err.message } }); }
+    } catch (err) { handleErr({ error: { code: 500, message: err.message }, weberror: 902, weberrormessage: "Se perdió la conexión a internet." }); }
 }
 
 /**
