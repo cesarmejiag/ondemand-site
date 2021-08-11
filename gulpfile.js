@@ -60,7 +60,8 @@ function scripts(cb) {
     ]
 
     const babelInit = {
-        presets: ['@babel/env']
+        // presets: ['@babel/env']
+        presets: ['@babel/preset-env']
     }
 
     return src(files)
