@@ -29,6 +29,7 @@ const request = {
             ? "https://api.bazappgs.com/superapp/pagos/captacion/traspasos/v1/boton-pago"
             // ? "https://api.baz.app/superapp/pagos/captacion/traspasos/v1/boton-pago"
             : "https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago";
+            // : "http://127.0.0.1:3000"
             
         const raw = JSON.stringify(body);
 
@@ -57,11 +58,13 @@ const request = {
             .catch(error); */
         $.ajax({
             url, 
-            method, 
+            method,
+            contentType: 'application/json',
+            processData: false, 
             headers: jsonHeaders, 
             data: body,
             success,
             error
-        })
+        });
     }
 };

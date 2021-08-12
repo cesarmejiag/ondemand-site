@@ -122,25 +122,28 @@ function payMovie(strJson) {
         window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(err));
     }
 
+    window.webkit.messageHandlers.showLoader.postMessage("showLoader");
+
     try {
         const json = JSON.parse(strJson);
-
-        window.webkit.messageHandlers.showLoader.postMessage("showLoader");
 
         request.pay(json['headers'], json['requestBody'], environment, function (payRes) {
             if (payRes.codigo == '201') {
                 window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, data: payRes } }));
             } else {
-                handleErr({ error: { code: payRes.codigo, message: payRes.mensaje }, weberror: 900, weberrormessage: "Error de servicio." });
+                handleErr({ error: { code: payRes.codigo, message: payRes.mensaje }, weberror: 900, weberrormessage: "El error lo envío el servicio" });
             }
 
             window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
-        }, function (err) {
-            handleErr({ error: { code: 500, message: err.message }, weberror: 901, weberrormessage: "Error en el fetch web." });
+        }, function (jqXHR, textStatus, errorThrown) {
+            handleErr({ error: { code: 500, message: errorThrown }, weberror: 901, weberrormessage: errorThrown });
             window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
         });
 
-    } catch (err) { handleErr({ error: { code: 500, message: err.message }, weberror: 902, weberrormessage: "Se perdió la conexión a internet." }); }
+    } catch (err) { 
+        handleErr({ error: { code: 500, message: err.message }, weberror: 902, weberrormessage: "Error al hacer la petición" }); 
+        window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
+    }
 }
 
 /**
