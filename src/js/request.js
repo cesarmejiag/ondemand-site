@@ -45,7 +45,7 @@ const request = {
      * @param {function} error
      */
     send: function (url, method, body, jsonHeaders, success, error) {
-        const headers = new Headers();
+        /* const headers = new Headers();
 
         for (let prop in jsonHeaders) {
             headers.append(prop, jsonHeaders[prop]);
@@ -54,6 +54,14 @@ const request = {
         fetch(url, { method, headers, body, redirect: 'follow' })
             .then(response => response.json())
             .then(success)
-            .catch(error);
+            .catch(error); */
+        $.ajax({
+            url, 
+            method, 
+            headers: jsonHeaders, 
+            data: body,
+            success,
+            error
+        })
     }
 };

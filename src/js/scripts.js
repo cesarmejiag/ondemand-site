@@ -122,13 +122,7 @@ function payMovie(strJson) {
         window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(err));
     }
 
-    window.webkit.messageHandlers.showLoader.postMessage("showLoader");
-
-    setTimeout(function() {
-        window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
-    }, 5000);
-
-    /* try {
+    try {
         const json = JSON.parse(strJson);
 
         window.webkit.messageHandlers.showLoader.postMessage("showLoader");
@@ -146,7 +140,7 @@ function payMovie(strJson) {
             window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
         });
 
-    } catch (err) { handleErr({ error: { code: 500, message: err.message }, weberror: 902, weberrormessage: "Se perdió la conexión a internet." }); } */
+    } catch (err) { handleErr({ error: { code: 500, message: err.message }, weberror: 902, weberrormessage: "Se perdió la conexión a internet." }); }
 }
 
 /**
