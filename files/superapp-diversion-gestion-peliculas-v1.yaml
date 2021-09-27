@@ -1,0 +1,2170 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Api de Películas onDemand - Totalplay
+  description: |-
+    Documentacion para consumo de API Videos Bajo demanda TotalPlay
+    `Para poder interactuar con los servicios de totalplay iptv será entregado un token de autenticación que se deberá incluir como Header ‘Authorization’ en todas las peticiones HTTP.`
+ 
+host: apigateway.superappbaz.com
+basePath: /integracion/superapp/diversion/gestion-peliculas/v1
+
+schemes:
+  - https
+produces:
+  - application/json
+
+securityDefinitions:
+  Bearer:
+    description: >
+      Para acceder a la API se debe pasar un token válido en todas las consultas.
+      La siguiente sintaxis se debe utilizar en el encabezado 'Authorization' :
+        Bearer: 2zzLJmBAtTNIU8nF8e8XbmDvaNGs
+    type: apiKey
+    name: Authorization
+    in: header
+ 
+security:
+  - Bearer: []
+
+paths:
+  /peliculas/categorias:
+    get:
+      tags:
+      - Películas
+      summary: Consulta categorias de películas
+      description: |- 
+        Este servicio regresa información del club (alias, tipo de club, imágenes), así como una lista con las categorías presentes en el club. En cada elemento de la lista se encuentra información general de la categoría, así como un listado de los videos bajo demanda que la conforman.
+      operationId: busquedas
+      produces:
+      - "application/json"
+      parameters:
+      
+        - name: x-sicu
+          in: header
+          description: sicu
+          required: true
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+        
+        - name: x-id-interaccion
+          in: header
+          description: Id-interaccion
+          required: true
+          type: string
+          default: |- 
+              `RFC4122 Identificador unico de correlacion.
+              En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000.`
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: "Super movil"
+          
+        - name: x-id-dispositivo
+          in: header
+          description: Id dispositivo
+          required: false
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+          
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema del dispositivo
+          required: false
+          type: string
+          default: "Android" 
+          
+        - name: x-version-dispositivo
+          in: header
+          description: Version dispositivo
+          required: false
+          type: string
+          default: "6.0" 
+          
+        - name: x-version-aplicacion
+          in: header
+          description: Version aplicativo
+          required: false
+          type: string
+          default: "2.1.1"  
+          
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo dispositivo
+          required: false
+          type: string
+          default: "P40" 
+          
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Fabricante dispositivo
+          required: false
+          type: string
+          default: "Huawei"  
+        
+        - name: x-serie-procesador
+          in: header
+          description: Serie procesador
+          required: false
+          type: string
+          default: "mt6735"
+        
+        - name: x-operador-telefonia
+          in: header
+          description: Operador Telefonía 
+          required: false
+          type: string
+          default: "Telcel"
+          
+        - name: x-latitud
+          in: header
+          description: latitud del dispositivo
+          required: false 
+          type: string
+          default: "19.49781290"
+          
+        - name: x-longitud
+          in: header
+          description: longitud del dispositivo
+          required: false
+          type: string
+          default: "-99.12698712"
+          
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario
+          required: true
+          type: string
+          default: "OPSDFDX12313DDASD"
+        
+        - name: x-id-lealtad
+          in: header
+          description: |- 
+                Identificador de cliente
+                `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: "99553877"
+        
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/Categorias"
+            
+        400:
+          description: Solicitud incorrecta
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error400"
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "mensaje": "Petición no válida, favor de validar su información",
+                "folio": "22920190128134317232",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "detalles": [
+                  "Faltan parámetros requeridos, favor de validar la petición"
+                ]
+              }
+
+        404:
+          description: Recurso no encontrado
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error404"
+          examples:
+            application/json: |-
+              {
+                "codigo": "404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "mensaje": "No se encontró información",
+                "folio": "22920190128134317233",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "detalles": [
+                  "No se obtuvo información relacionada con los parametros de entrada"
+                ]
+              }
+
+        500:
+          description: Error interno de servidor
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error500"
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "mensaje": "Problemas al procesar su solicitud favor de contactar a su administrador",
+                "folio": "22920181120162829642",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "detalles": [
+                  "Problemas internos"
+                ]
+              }
+              
+      security:
+        - Bearer: []
+  
+  /peliculas/categorias/resumen:
+    get:
+      tags:
+      - Películas
+      summary: Consulta resumen de categorias de películas
+      description: |- 
+        Este servicio regresa información del club (alias, tipo de club, imágenes), así como una lista con las categorías presentes en el club y 5 películas por cada categoría. En cada elemento de la lista se encuentra información general de la categoría, así como un listado de los videos bajo demanda que la conforman.
+      operationId: resumen
+      produces:
+      - "application/json"
+      parameters:
+      
+        - name: x-sicu
+          in: header
+          description: sicu
+          required: true
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+        
+        - name: x-id-interaccion
+          in: header
+          description: |- 
+              `RFC4122 Identificador unico de correlacion.
+              En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+              123e4567-e89b-12d3-a456-426655440000.`
+          required: true
+          type: string
+          default: "123e4567-e89b-12d3-a456-426655440000"
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: "Super movil"
+          
+        - name: x-id-dispositivo
+          in: header
+          description: Id dispositivo
+          required: false
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+          
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema del dispositivo
+          required: false
+          type: string
+          default: "Android" 
+          
+        - name: x-version-dispositivo
+          in: header
+          description: Version dispositivo
+          required: false
+          type: string
+          default: "6.0" 
+          
+        - name: x-version-aplicacion
+          in: header
+          description: Version aplicativo
+          required: false
+          type: string
+          default: "2.1.1"  
+          
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo dispositivo
+          required: false
+          type: string
+          default: "P40" 
+          
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Fabricante dispositivo
+          required: false
+          type: string
+          default: "Huawei"  
+        
+        - name: x-serie-procesador
+          in: header
+          description: Serie procesador
+          required: false
+          type: string
+          default: "mt6735"
+        
+        - name: x-operador-telefonia
+          in: header
+          description: Operador Telefonía 
+          required: false
+          type: string
+          default: "Telcel"
+          
+        - name: x-latitud
+          in: header
+          description: latitud del dispositivo
+          required: false 
+          type: string
+          default: "19.49781290"
+          
+        - name: x-longitud
+          in: header
+          description: longitud del dispositivo
+          required: false
+          type: string
+          default: "-99.12698712"
+          
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario
+          required: true
+          type: string
+          default: "OPSDFDX12313DDASD"
+
+        - name: x-id-lealtad
+          in: header
+          description: |- 
+                Identificador de cliente
+                `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: "99553877"
+        
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/categoriasResumen"
+          examples:
+            application/json: |-
+              {
+                "mensaje": "Operación Exitosa.",
+                "folio": "kioapigeermczdev01-16075-1106504-1",
+                "resultado": {
+                  "categoriasResumen": [
+                    {
+                      "id": 1,
+                      "nombre": "Estreno",
+                      "videos": [
+                        {
+                          "id": "78948",
+                          "idAlias": "EI2Dh891G8AdFI1BE98D3991gjaDFJ",
+                          "nombreOriginal": "Wild Mountain Thyme",
+                          "nombre": "Amor en las montañas",
+                          "anio": 2018,
+                          "genero": "Drama",
+                          "comprada": true,
+                          "precio": 55,
+                          "imagen": {
+                            "urlBase": "https://totalplay.mx/IMGS",
+                            "principal": {
+                              "id": 815369,
+                              "formato": "jpg",
+                              "categoria": "VOD"
+                            },
+                            "vertical": {
+                              "id": 815368,
+                              "formato": "png",
+                              "categoria": "VOD"
+                            },
+                            "posterior": {
+                              "id": 815367,
+                              "formato": "jpg",
+                              "categoria": "VOD"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "peliculasGratis": [
+                    {
+                      "id": "78948",
+                      "idAlias": "EI2Dh891G8AdFI1BE98D3991gjaDFJ",
+                      "nombreOriginal": "Wild Mountain Thyme",
+                      "nombre": "Amor en las montañas",
+                      "anio": 2018,
+                      "genero": "Drama",
+                      "comprada": true,
+                      "imagen": {
+                        "urlBase": "https://url.com",
+                        "principal": {
+                          "id": 815369,
+                          "formato": "jpg",
+                          "categoria": "VOD"
+                        },
+                        "vertical": {
+                          "id": 815368,
+                          "formato": "png",
+                          "categoria": "VOD"
+                        },
+                        "posterior": {
+                          "id": 815367,
+                          "formato": "jpg",
+                          "categoria": "VOD"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }  
+            
+        400:
+          description: Solicitud incorrecta
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error400"
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "mensaje": "Petición no válida, favor de validar su información",
+                "folio": "22920190128134317232",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "detalles": [
+                  "Faltan parámetros requeridos, favor de validar la petición"
+                ]
+              }
+
+        404:
+          description: Recurso no encontrado
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error404"
+          examples:
+            application/json: |-
+              {
+                "codigo": "404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "mensaje": "No se encontró información",
+                "folio": "22920190128134317233",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "detalles": [
+                  "No se obtuvo información relacionada con los parametros de entrada"
+                ]
+              }
+
+        500:
+          description: Error interno de servidor
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error500"
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "mensaje": "Problemas al procesar su solicitud favor de contactar a su administrador",
+                "folio": "22920181120162829642",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "detalles": [
+                  "Problemas internos"
+                ]
+              }
+              
+      security:
+        - Bearer: []
+  
+  /peliculas/categorias/{id}:
+    get:
+      tags:
+        - Películas
+      summary: Consulta las películas de una categoría en específico
+      description: |-
+        Este servicio regresa los elementos de video bajo demanda contenidos de un club y de una categoría específica.
+      operationId: "busquedaCategoria"
+      produces:
+      - "application/json"
+      parameters:
+      
+        - name: x-sicu
+          in: header
+          description: sicu
+          required: true
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+        
+        - name: x-id-interaccion
+          in: header
+          description: |- 
+              `RFC4122 Identificador unico de correlacion.
+              En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+              123e4567-e89b-12d3-a456-426655440000.`
+          required: true
+          type: string
+          default: "123e4567-e89b-12d3-a456-426655440000"
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: "Super movil"
+          
+        - name: x-id-dispositivo
+          in: header
+          description: Id dispositivo
+          required: false
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+          
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema del dispositivo
+          required: false
+          type: string
+          default: "Android" 
+          
+        - name: x-version-dispositivo
+          in: header
+          description: Version dispositivo
+          required: false
+          type: string
+          default: "6.0" 
+          
+        - name: x-version-aplicacion
+          in: header
+          description: Version aplicativo
+          required: false
+          type: string
+          default: "2.1.1"  
+          
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo dispositivo
+          required: false
+          type: string
+          default: "P40" 
+          
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Fabricante dispositivo
+          required: false
+          type: string
+          default: "Huawei"  
+        
+        - name: x-serie-procesador
+          in: header
+          description: Serie procesador
+          required: false
+          type: string
+          default: "mt6735"
+        
+        - name: x-operador-telefonia
+          in: header
+          description: Operador Telefonía 
+          required: false
+          type: string
+          default: "Telcel"
+          
+        - name: x-latitud
+          in: header
+          description: latitud del dispositivo
+          required: false 
+          type: string
+          default: "19.49781290"
+          
+        - name: x-longitud
+          in: header
+          description: longitud del dispositivo
+          required: false
+          type: string
+          default: "-99.12698712"
+          
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario
+          required: true
+          type: string
+          default: "OPSDFDX12313DDASD"
+
+        - name: x-id-lealtad
+          in: header
+          description: |-
+                Identificador de cliente
+                `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: "99553877"
+          
+        - name: id
+          in: path
+          description: El nombre de categoria a buscar
+          required: true
+          type: string
+          default: "1"
+
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/Categoria"
+                
+        400:
+          description: Solicitud incorrecta
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error400"
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "mensaje": "Petición no válida, favor de validar su información",
+                "folio": "22920190128134317232",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "detalles": [
+                  "Faltan parámetros requeridos, favor de validar la petición"
+                ]
+              }
+
+        404:
+          description: Recurso no encontrado
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error404"
+          examples:
+            application/json: |-
+              {
+                "codigo": "404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "mensaje": "No se encontró información",
+                "folio": "22920190128134317233",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "detalles": [
+                  "No se obtuvo información relacionada con los parametros de entrada"
+                ]
+              }
+
+        500:
+          description: Error interno de servidor
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error500"
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "mensaje": "Problemas al procesar su solicitud favor de contactar a su administrador",
+                "folio": "22920181120162829642",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "detalles": [
+                  "Problemas internos"
+                ]
+              }
+      security:
+        - Bearer: []
+        
+  /peliculas/{id}:
+    get:
+      tags:
+      - Películas
+      summary: Consulta el detalle de una película bajo demanda
+      description: Este servicio regresa el detalle de una pelicula bajo demanda específica.
+      produces:
+        - application/json
+      parameters:
+        - name: x-sicu
+          in: header
+          description: sicu
+          required: true
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+        
+        - name: x-id-interaccion
+          in: header
+          description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          required: true
+          type: string
+          default: "123e4567-e89b-12d3-a456-426655440000"
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: "Super movil"
+          
+        - name: x-id-dispositivo
+          in: header
+          description: Id dispositivo
+          required: false
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+          
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema del dispositivo
+          required: false
+          type: string
+          default: "Android" 
+          
+        - name: x-version-dispositivo
+          in: header
+          description: Version dispositivo
+          required: false
+          type: string
+          default: "6.0" 
+          
+        - name: x-version-aplicacion
+          in: header
+          description: Version aplicativo
+          required: false
+          type: string
+          default: "2.1.1"  
+          
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo dispositivo
+          required: false
+          type: string
+          default: "P40" 
+          
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Fabricante dispositivo
+          required: false
+          type: string
+          default: "Huawei"  
+        
+        - name: x-serie-procesador
+          in: header
+          description: Serie procesador
+          required: false
+          type: string
+          default: "mt6735"
+        
+        - name: x-operador-telefonia
+          in: header
+          description: Operador Telefonía 
+          required: false
+          type: string
+          default: "Telcel"
+          
+        - name: x-latitud
+          in: header
+          description: latitud del dispositivo
+          required: false 
+          type: string
+          default: "19.49781290"
+          
+        - name: x-longitud
+          in: header
+          description: longitud del dispositivo
+          required: false
+          type: string
+          default: "-99.12698712"
+          
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario
+          required: true
+          type: string
+          default: "OPSDFDX12313DDASD"
+
+        - name: x-id-lealtad
+          in: header
+          description: |-
+                Identificador de cliente
+                `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: "99553877"
+          
+        - name: id
+          in: path
+          description: El id de la película bajo demanda a consultar
+          required: true
+          type: string
+          default: "1"  
+
+      responses:
+        200:
+          description: Ok
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/Pelicula"
+                
+        400:
+          description: Solicitud incorrecta
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error400"
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "mensaje": "Petición no válida, favor de validar su información",
+                "folio": "22920190128134317232",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Diversion-Gestion-Peliculas.1001",
+                "detalles": [
+                  "Faltan parámetros requeridos, favor de validar la petición"
+                ]
+              }
+
+        404:
+          description: Recurso no encontrado
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error404"
+          examples:
+            application/json: |-
+              {
+                "codigo": "404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "mensaje": "No se encontró información",
+                "folio": "22920190128134317233",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#404.Superapp-Diversion-Gestion-Peliculas.1002",
+                "detalles": [
+                  "No se obtuvo información relacionada con los parametros de entrada"
+                ]
+              }
+
+        500:
+          description: Error interno de servidor
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error500"
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "mensaje": "Problemas al procesar su solicitud favor de contactar a su administrador",
+                "folio": "22920181120162829642",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Diversion-Gestion-Peliculas.1003",
+                "detalles": [
+                  "Problemas internos"
+                ]
+              }
+      security:
+        - Bearer: []
+        
+  /peliculas/{id}/compras:
+    post:
+      tags:
+        - Películas
+      summary: Registra una compra de un video bajo demanda.
+      description: |-
+        Este servicio será utilizado para registrar una compra foránea en el sistema de Totalplay. El código HTTP 200 indicará éxito en la ejecución del servicio.
+      produces:
+        - application/json
+      parameters:
+      
+        - name: x-sicu
+          in: header
+          description: sicu
+          required: true
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+        
+        - name: x-id-interaccion
+          in: header
+          description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          required: true
+          type: string
+          default: "123e4567-e89b-12d3-a456-426655440000"
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: "Super móvil"
+          
+        - name: x-id-dispositivo
+          in: header
+          description: Id dispositivo
+          required: false
+          type: string
+          default: "3bad1290ac4600a569162efaa09117ea"
+          
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema del dispositivo
+          required: false
+          type: string
+          default: "Android" 
+          
+        - name: x-version-dispositivo
+          in: header
+          description: Version dispositivo
+          required: false
+          type: string
+          default: "6.0" 
+          
+        - name: x-version-aplicacion
+          in: header
+          description: Version aplicativo
+          required: false
+          type: string
+          default: "2.1.1"  
+          
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo dispositivo
+          required: false
+          type: string
+          default: "P40" 
+          
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Fabricante dispositivo
+          required: false
+          type: string
+          default: "Huawei"  
+        
+        - name: x-serie-procesador
+          in: header
+          description: Serie procesador
+          required: false
+          type: string
+          default: "mt6735"
+        
+        - name: x-operador-telefonia
+          in: header
+          description: Operador Telefonía 
+          required: false
+          type: string
+          default: "Telcel"
+          
+        - name: x-latitud
+          in: header
+          description: latitud del dispositivo
+          required: false 
+          type: string
+          default: "19.49781290"
+          
+        - name: x-longitud
+          in: header
+          description: longitud del dispositivo
+          required: false
+          type: string
+          default: "-99.12698712"
+          
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario
+          required: true
+          type: string
+          default: "OPSDFDX12313DDASD"
+
+        - name: x-id-lealtad
+          in: header
+          description: |- 
+                Identificador de cliente
+                `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: "99553877"
+          
+        - name: id
+          in: path
+          description: El identificador de la pelicula bajo demanda a comprar
+          required: true
+          type: string
+          default: "1"  
+
+        - in: body
+          name: Parámetros de entrada
+          description: Objeto de consulta
+          required: true
+          schema:
+            $ref: "#/definitions/RequestPeliculaPago"
+          
+      responses:
+        201:
+          description: Creado
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/respuestaGenerica"
+          examples:
+            application/json: |-
+              {
+                "mensaje": "Operación Exitosa.",
+                "folio": "kioapigeermczdev01-16075-1106504-1"
+              }
+          
+        400:
+          description: Solicitud incorrecta
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error400"
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.superapp-diversion-gestion-peliculas.1001",
+                "mensaje": "Petición no válida, favor de validar su información",
+                "folio": "22920190128134317232",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-diversion-gestion-peliculas.1001",
+                "detalles": [
+                  "Faltan parámetros requeridos, favor de validar la petición"
+                ]
+              }
+
+        500:
+          description: Error interno de servidor
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: |- 
+                `RFC4122 Identificador unico de correlacion.
+                En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:
+                123e4567-e89b-12d3-a456-426655440000.`
+          schema:
+            $ref: "#/definitions/error500"
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.superapp-diversion-gestion-peliculas.1003",
+                "mensaje": "Problemas al procesar su solicitud favor de contactar a su administrador",
+                "folio": "22920181120162829642",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-diversion-gestion-peliculas.1003",
+                "detalles": [
+                  "Problemas internos"
+                ]
+              }
+      security:
+        - Bearer: []
+  
+definitions:
+  RequestPeliculaPago:
+    type: object
+    required:
+      - transaccion
+    properties:
+      transaccion: 
+        type: object 
+        required:
+          - calidadPelicula
+          - monto
+          - numeroReferencia
+          - fechaOperacion
+          - numeroMovimiento
+          - numeroCuentaCliente
+          - peliculaGratuita
+        properties:
+          calidadPelicula:
+            type: string
+            description: x
+            example: "HD"
+          monto:  
+            type: string 
+            description: | 
+              Monto a pagar por la renta del VOD
+              `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+            example: '350.50'
+          numeroReferencia :  
+            type: string 
+            description: | 
+              Identificador único de compra del VOD
+              `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+            example: 'SKU3008749'
+          fechaOperacion:
+            type: string
+            description: Fecha de la operación
+            example: "2021-06-24"
+          numeroMovimiento:
+            type: string
+            description: Número de movimiento de la operación
+            example: "000140"
+          numeroCuentaCliente: 
+            type: string 
+            description: | 
+              Numero de cuenta del cliente. 
+              `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+            example: '46241334918295'
+          peliculaGratuita:
+            type: boolean
+            description: Bandera que indica si la película es gratis.
+            example: false
+
+  respuestaGenerica:
+    type: object
+    properties:
+      mensaje:
+        type: string
+        description: Descripción de la operación
+        example: "Operación Exitosa."
+      folio:
+        type: string
+        description: Número de folio de la operación
+        example: "kioapigeermczdev01-16075-1106504-1"
+
+  categoriasResumen:
+    title: categoriasResumen
+    type: object
+    properties:
+      mensaje: 
+        type: string
+        description: Código de exito
+        example: "Operación Exitosa."
+      folio: 
+        type: string
+        description: Número de folio de la operación.
+        example: "kioapigeermczdev01-16075-1106504-1"
+      resultado:
+        type: object
+        properties:
+          categoriasResumen:
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  description: Id de la categoria
+                  example: 1 
+                nombre:
+                  type: string
+                  description: Nombre de la categoría 
+                  example: "Estreno"
+                videos:
+                    description: Muestra las películas que pertenecen a esa categoria
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: string
+                          description: Id de la película mostrada
+                          example: "78948"
+                        idAlias:
+                          type: string
+                          description: Id de la película mostrada
+                          example: "EI2Dh891G8AdFI1BE98D3991gjaDFJ"
+                        nombreOriginal:
+                          type: string
+                          description: Título Original de la película
+                          example: "Wild Mountain Thyme"
+                        nombre:
+                          type: string
+                          description: Nombre para otros paises.
+                          example: "Amor en las montañas"
+                        anio:
+                          type: integer
+                          description: Año.
+                          example: 2018
+                        genero:
+                          type: string
+                          description: Género de la pelicula
+                          example: "Drama"
+                        comprada:
+                          type: boolean
+                          description: Estatus de compra.
+                          example: true
+                        precio:
+                          type: integer
+                          format: int32
+                          description: Precio de la Película
+                          example: 55
+                        imagen:
+                          type: object
+                          properties:
+                              urlBase: 
+                                type: string
+                                description: URL base que se complementará en base a la vista que este explorando el cliente
+                                example: "https://totalplay.mx/IMGS"
+                              principal:
+                                type: object
+                                description: Portada principal al momento de elegir el título.
+                                properties:
+                                    id:
+                                      type: integer
+                                      format: int64
+                                      description: Id de la imagen a mostrar
+                                      example: 815369
+                                    formato:
+                                      type: string
+                                      description: Formato en el que se encuentra la imagen.
+                                      example: "jpg"
+                                    categoria:
+                                      type: string
+                                      description: La categoria a la que pertenece la portada
+                                      example: "VOD"
+                              vertical:
+                                type: object
+                                description: Portada  al momento de elegir el título.
+                                properties:
+                                    id:
+                                      type: integer
+                                      format: int64
+                                      description: Id de la imagen a mostrar
+                                      example: 815368
+                                    formato:
+                                      type: string
+                                      description: Formato en el que se encuentra la imagen.
+                                      example: "png"
+                                    categoria:
+                                      type: string
+                                      description: La categoria a la que pertenece la portada
+                                      example: "VOD"
+                              posterior:
+                                type: object
+                                description: Portada que se muestra al fondo
+                                properties:
+                                    id:
+                                      type: integer
+                                      format: int64
+                                      description: Id de la imagen a mostrar
+                                      example: 815367
+                                    formato:
+                                      type: string
+                                      description: Formato en el que se encuentra la imagen.
+                                      example: "jpg"
+                                    categoria:
+                                      type: string
+                                      description: La categoria a la que pertenece la portada
+                                      example: "VOD"
+          peliculasGratis:
+            type: array
+            items:
+              properties:
+                id:
+                  type: string
+                  description: Id de la película mostrada
+                  example: "78948"
+                idAlias:
+                  type: string
+                  description: Id de la película mostrada
+                  example: "EI2Dh891G8AdFI1BE98D3991gjaDFJ"
+                nombreOriginal:
+                  type: string
+                  description: Título Original de la película
+                  example: "Wild Mountain Thyme"
+                nombre:
+                  type: string
+                  description: Nombre para otros paises.
+                  example: "Amor en las montañas"
+                anio:
+                  type: integer
+                  description: Año.
+                  example: 2018
+                genero:
+                  type: string
+                  description: Género de la pelicula
+                  example: "Drama"
+                comprada:
+                  type: boolean
+                  description: Estatus de compra.
+                  example: true
+                imagen:
+                  type: object
+                  properties:
+                      urlBase: 
+                        type: string
+                        description: URL base que se complementará en base a la vista que este explorando el cliente
+                        example: "https://url.com"
+                      principal:
+                        type: object
+                        description: Portada principal al momento de elegir el título.
+                        properties:
+                            id:
+                              type: integer
+                              format: int64
+                              description: Id de la imagen a mostrar
+                              example: 815369
+                            formato:
+                              type: string
+                              description: Formato en el que se encuentra la imagen.
+                              example: "jpg"
+                            categoria:
+                              type: string
+                              description: La categoria a la que pertenece la portada
+                              example: "VOD"
+                      vertical:
+                        type: object
+                        description: Portada  al momento de elegir el título.
+                        properties:
+                            id:
+                              type: integer
+                              format: int64
+                              description: Id de la imagen a mostrar
+                              example: 815368
+                            formato:
+                              type: string
+                              description: Formato en el que se encuentra la imagen.
+                              example: "png"
+                            categoria:
+                              type: string
+                              description: La categoria a la que pertenece la portada
+                              example: "VOD"
+                      posterior:
+                        type: object
+                        description: Portada que se muestra al fondo
+                        properties:
+                            id:
+                              type: integer
+                              format: int64
+                              description: Id de la imagen a mostrar
+                              example: 815367
+                            formato:
+                              type: string
+                              description: Formato en el que se encuentra la imagen.
+                              example: "jpg"
+                            categoria:
+                              type: string
+                              description: La categoria a la que pertenece la portada
+                              example: "VOD"
+
+  Categorias:
+    title: categorias
+    type: object
+    properties:
+      mensaje: 
+        type: string
+        description: Código de exito
+        example: "Operación Exitosa."
+      folio: 
+        type: string
+        description: Número de folio de la operación.
+        example: "kioapigeermczdev01-16075-1106504-1"
+      resultado:
+        type: object
+        properties:
+          categorias:
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  description: Id de la categoria
+                  example: 1 
+                nombre:
+                  type: string
+                  description: Nombre de la categoría 
+                  example: "Estreno"
+                videos:
+                    description: Muestra las películas que pertenecen a esa categoria
+                    type: array
+                    items:
+                      properties:
+                        id:
+                          type: string
+                          description: Id de la película mostrada
+                          example: "78948"
+                        nombreOriginal:
+                          type: string
+                          description: Título Original de la película
+                          example: "Wild Mountain Thyme"
+                        nombre:
+                          type: string
+                          description: Nombre para otros paises.
+                          example: "Amor en las montañas"
+                        anio:
+                          type: integer
+                          description: Año
+                          example: 2012
+                        descripcion:
+                          type: string
+                          description: Sinopsis de la pelicula
+                          example: "Anthony y Rosemary son dos amantes irlandeses cuyas familias se ven envueltas en una enemistad por una parcela que separa sus dos granjas. Adaptación del musical \"Outside Mullingar\"."
+                        clasificacion:
+                          type: string
+                          description: Clasificacion de la película
+                          example: "B"
+                        duracion:
+                          type: integer
+                          format: int64
+                          description: Tiempo de duración en minutos
+                          example: 102
+                        imagen:
+                          type: object
+                          properties:
+                              urlBase: 
+                                type: string
+                                description: URL base que se complementará en base a la vista que este explorando el cliente
+                                example: "https://url.com"
+                              principal:
+                                type: object
+                                description: Portada principal al momento de elegir el título.
+                                properties:
+                                    id:
+                                      type: integer
+                                      format: int64
+                                      description: Id de la imagen a mostrar
+                                      example: 815369
+                                    formato:
+                                      type: string
+                                      description: Formato en el que se encuentra la imagen.
+                                      example: "jpg"
+                                    categoria:
+                                      type: string
+                                      description: La categoria a la que pertenece la portada
+                                      example: "VOD"
+                              vertical:
+                                type: object
+                                description: Portada  al momento de elegir el título.
+                                properties:
+                                    id:
+                                      type: integer
+                                      format: int64
+                                      description: Id de la imagen a mostrar
+                                      example: 815368
+                                    formato:
+                                      type: string
+                                      description: Formato en el que se encuentra la imagen.
+                                      example: "png"
+                                    categoria:
+                                      type: string
+                                      description: La categoria a la que pertenece la portada
+                                      example: "VOD"
+                              posterior:
+                                type: object
+                                description: Portada que se muestra al fondo
+                                properties:
+                                    id:
+                                      type: integer
+                                      format: int64
+                                      description: Id de la imagen a mostrar
+                                      example: 815369
+                                    formato:
+                                      type: string
+                                      description: Formato en el que se encuentra la imagen.
+                                      example: "jpg"
+                                    categoria:
+                                      type: string
+                                      description: La categoria a la que pertenece la portada
+                                      example: "VOD"
+                        formatoVideo:
+                          type: object
+                          description: Formato en el cual el cliente compró la película. 
+                          properties:
+                              hd:
+                                type: object
+                                description: Propiedades del formato HD
+                                properties:
+                                    tipos:
+                                      type: object
+                                      properties:
+                                          idioma:
+                                           type: string
+                                           description: Idioma en que se eligió la película.
+                                           example: "Español"
+                                          precio:
+                                            type: integer
+                                            format: int32
+                                            description: Precio de la Película
+                                            example: 55
+                                          url:
+                                            type: string
+                                            description: Url perteneciente a la película solicitdada
+                                            example: "https://url.com"
+                                          diasExpiracion:
+                                            type: integer
+                                            format: int64
+                                            description: Días que estará disponible la película
+                                            example: 5
+                                          subTitulosIncorporados:
+                                            type: boolean
+                                            description: Indica si contine subtitulos
+                                            example: false
+                                          subtitulos:
+                                            type: array
+                                            description: En caso de traer subtitulos, indica sus propiedades
+                                            items:
+                                              properties:
+                                                descripcion:
+                                                  type: string
+                                                  description: Idioma de los subtitulos en caso de haber.
+                                                  example: "Sin subtitulos"
+                                                url:
+                                                  type: string
+                                                  description: URL perteneciente a los subtitulos elegidos
+                                                  example: "https://url.com"
+                              sd:
+                                type: object
+                                properties:
+                                    tipos:
+                                      type: object
+                                      properties:
+                                          idioma:
+                                           type: string
+                                           description: Idioma en que se eligió la película.
+                                           example: "Español"
+                                          precio:
+                                            type: integer
+                                            format: int32
+                                            description: Precio de la Película
+                                            example: 55
+                                          url:
+                                            type: string
+                                            description: Url perteneciente a la película solicitdada
+                                            example: " "
+                                          diasExpiracion:
+                                            type: integer
+                                            format: int64
+                                            description: Días que estará disponible la película
+                                            example: 5
+                                          subTitulosIncorporados:
+                                            type: boolean
+                                            description: Indica si contine subtitulos
+                                            example: false
+                                          subtitulos:
+                                            type: array
+                                            description: En caso de traer subtitulos, indica sus propiedades
+                                            items:
+                                              properties:
+                                                descripcion:
+                                                  type: string
+                                                  description: Idioma de los subtitulos en caso de haber.
+                                                  example: "Sin subtitulos"
+                                                url:
+                                                  type: string
+                                                  description: URL perteneciente a los subtitulos elegidos
+                                                  example: "https://url.com"
+                        formatoTrailer:
+                            type: object
+                            description: Formato y propiedades del trailer
+                            properties:
+                                idioma:
+                                  type: string
+                                  description: Idioma en que se reproduce el trailer.
+                                  example: "Español"
+                                url: 
+                                  type: string
+                                  description: URL perteneciente al Trailer
+                                  example: "https://url.com"
+  Categoria:
+    title: categoria
+    type: object
+    properties:
+      mensaje: 
+        type: string
+        description: Código de exito
+        example: "Operación Exitosa."
+      folio: 
+        type: string
+        description: Número de folio de la operación.
+        example: "kioapigeermczdev01-16075-1106504-1"
+      resultado:
+        type: object
+        properties:
+          categoria:
+            type: object
+            properties:
+                videos:
+                  description: Muestra las películas que pertenecen a esa categoria
+                  type: array
+                  items:
+                    properties:
+                      id:
+                        type: string
+                        description: Id de la película mostrada
+                        example: "78948"
+                      nombreOriginal:
+                        type: string
+                        description: Título Original de la película
+                        example: "Wild Mountain Thyme"
+                      nombre:
+                        type: string
+                        description: Nombre para otros paises.
+                        example: "Amor en las montañas"
+                      anio:
+                          type: integer
+                          description: Año
+                          example: 2012
+                      descripcion:
+                        type: string
+                        description: Sinopsis de la pelicula
+                        example: "Anthony y Rosemary son dos amantes irlandeses cuyas familias se ven envueltas en una enemistad por una parcela que separa sus dos granjas. Adaptación del musical \"Outside Mullingar\"."
+                      clasificacion:
+                        type: string
+                        description: Clasificacion de la película
+                        example: "B"
+                      duracion:
+                        type: integer
+                        format: int64
+                        description: Tiempo de duración en minutos
+                        example: 102
+                      imagen:
+                        type: object
+                        properties:
+                            urlBase: 
+                              type: string
+                              description: URL base que se complementará en base a la vista que este explorando el cliente
+                              example: "https://url.com"
+                            principal:
+                              type: object
+                              description: Portada principal al momento de elegir el título.
+                              properties:
+                                  id:
+                                    type: integer
+                                    format: int64
+                                    description: Id de la imagen a mostrar
+                                    example: 815369
+                                  formato:
+                                    type: string
+                                    description: Formato en el que se encuentra la imagen.
+                                    example: "jpg"
+                                  categoria:
+                                    type: string
+                                    description: La categoria a la que pertenece la portada
+                                    example: "VOD"
+                            vertical:
+                              type: object
+                              description: Portada  al momento de elegir el título.
+                              properties:
+                                  id:
+                                    type: integer
+                                    format: int64
+                                    description: Id de la imagen a mostrar
+                                    example: 815368
+                                  formato:
+                                    type: string
+                                    description: Formato en el que se encuentra la imagen.
+                                    example: "png"
+                                  categoria:
+                                    type: string
+                                    description: La categoria a la que pertenece la portada
+                                    example: "VOD"
+                            posterior:
+                              type: object
+                              description: Portada que se muestra al fondo
+                              properties:
+                                  id:
+                                    type: integer
+                                    format: int64
+                                    description: Id de la imagen a mostrar
+                                    example: 815369
+                                  formato:
+                                    type: string
+                                    description: Formato en el que se encuentra la imagen.
+                                    example: "jpg"
+                                  categoria:
+                                    type: string
+                                    description: La categoria a la que pertenece la portada
+                                    example: "VOD"        
+                      formatoVideo:
+                          type: object
+                          description: Formato en el cual el cliente compró la película. 
+                          properties:
+                              hd:
+                                type: object
+                                description: Propiedades del formato HD
+                                properties:
+                                    tipos:
+                                      type: object
+                                      properties:
+                                          idioma:
+                                           type: string
+                                           description: Idioma en que se eligió la película.
+                                           example: "Español"
+                                          precio:
+                                            type: integer
+                                            format: int32
+                                            description: Precio de la Película
+                                            example: 55
+                                          url:
+                                            type: string
+                                            description: Url perteneciente a la película solicitdada
+                                            example: "https://url.com"
+                                          diasExpiracion:
+                                            type: integer
+                                            format: int64
+                                            description: Días que estará disponible la película
+                                            example: 5
+                                          subTitulosIncorporados:
+                                            type: boolean
+                                            description: Indica si contine subtitulos
+                                            example: false
+                                          subtitulos:
+                                            type: array
+                                            description: En caso de traer subtitulos, indica sus propiedades
+                                            items:
+                                              properties:
+                                                descripcion:
+                                                  type: string
+                                                  description: Idioma de los subtitulos en caso de haber.
+                                                  example: "Sin subtitulos"
+                                                url:
+                                                  type: string
+                                                  description: URL perteneciente a los subtitulos elegidos
+                                                  example: "https://url.com"
+                              sd:
+                                type: object
+                                properties:
+                                    tipos:
+                                      type: object
+                                      properties:
+                                          idioma:
+                                           type: string
+                                           description: Idioma en que se eligió la película.
+                                           example: "Español"
+                                          precio:
+                                            type: integer
+                                            format: int32
+                                            description: Precio de la Película
+                                            example: 55
+                                          url:
+                                            type: string
+                                            description: Url perteneciente a la película solicitdada
+                                            example: "https://url.com"
+                                          diasExpiracion:
+                                            type: integer
+                                            format: int64
+                                            description: Días que estará disponible la película
+                                            example: 5
+                                          subTitulosIncorporados:
+                                            type: boolean
+                                            description: Indica si contine subtitulos
+                                            example: false
+                                          subtitulos:
+                                            type: array
+                                            description: En caso de traer subtitulos, indica sus propiedades
+                                            items:
+                                              properties:
+                                                descripcion:
+                                                  type: string
+                                                  description: Idioma de los subtitulos en caso de haber.
+                                                  example: "Sin subtitulos"
+                                                url:
+                                                  type: string
+                                                  description: URL perteneciente a los subtitulos elegidos
+                                                  example: "https://url.com"
+                      formatoTrailer:
+                          type: object
+                          description: Formato y propiedades del trailer
+                          properties:
+                              idioma:
+                                type: string
+                                description: Idioma en que se reproduce el trailer.
+                                example: "Español"
+                              url: 
+                                type: string
+                                description: URL perteneciente al Trailer
+                                example: "https://url.com"
+                    
+  Pelicula:
+    title: pelicula
+    type: object
+    properties:
+      mensaje: 
+        type: string
+        description: Código de exito
+        example: "Operación Exitosa."
+      folio: 
+        type: string
+        description: Número de folio de la operación.
+        example: "kioapigeermczdev01-16075-1106504-1"
+      resultado:
+        type: object
+        properties:
+          video:
+            type: object
+            properties:
+                id:
+                  type: string
+                  description: Id de la película mostrada
+                  example: "78948"
+                nombreOriginal:
+                  type: string
+                  description: Título Original de la película
+                  example: "Wild Mountain Thyme"
+                nombre:
+                  type: string
+                  description: Nombre para otros paises.
+                  example: "Amor en las montañas"
+                anio:
+                  type: integer
+                  description: Año
+                  example: 2012
+                descripcion:
+                  type: string
+                  description: Sinopsis de la pelicula
+                  example: "Anthony y Rosemary son dos amantes irlandeses cuyas familias se ven envueltas en una enemistad por una parcela que separa sus dos granjas. Adaptación del musical \"Outside Mullingar\"."
+                clasificacion:
+                  type: string
+                  description: Clasificacion de la película
+                  example: "B"
+                duracion:
+                  type: integer
+                  format: int64
+                  description: Tiempo de duración en minutos
+                  example: 102
+                imagen:
+                  type: object
+                  properties:
+                      urlBase: 
+                        type: string
+                        description: URL base que se complementará en base a la vista que este explorando el cliente
+                        example: "https://url.com"
+                      principal:
+                        type: object
+                        description: Portada principal al momento de elegir el título.
+                        properties:
+                            id:
+                              type: integer
+                              format: int64
+                              description: Id de la imagen a mostrar
+                              example: 815369
+                            formato:
+                              type: string
+                              description: Formato en el que se encuentra la imagen.
+                              example: "jpg"
+                            categoria:
+                              type: string
+                              description: La categoria a la que pertenece la portada
+                              example: "VOD"
+                      vertical:
+                        type: object
+                        description: Portada  al momento de elegir el título.
+                        properties:
+                            id:
+                              type: integer
+                              format: int64
+                              description: Id de la imagen a mostrar
+                              example: 815368
+                            formato:
+                              type: string
+                              description: Formato en el que se encuentra la imagen.
+                              example: "png"
+                            categoria:
+                              type: string
+                              description: La categoria a la que pertenece la portada
+                              example: "VOD"
+                      posterior:
+                        type: object
+                        description: Portada que se muestra al fondo
+                        properties:
+                            id:
+                              type: integer
+                              format: int64
+                              description: Id de la imagen a mostrar
+                              example: 815369
+                            formato:
+                              type: string
+                              description: Formato en el que se encuentra la imagen.
+                              example: "jpg"
+                            categoria:
+                              type: string
+                              description: La categoria a la que pertenece la portada
+                              example: "VOD"        
+                formatoVideo:
+                          type: object
+                          description: Formato en el cual el cliente compró la película. 
+                          properties:
+                              hd:
+                                type: object
+                                description: Propiedades del formato HD
+                                properties:
+                                    tipos:
+                                      type: object
+                                      properties:
+                                          idioma:
+                                           type: string
+                                           description: Idioma en que se eligió la película.
+                                           example: "Español"
+                                          precio:
+                                            type: integer
+                                            format: int32
+                                            description: Precio de la Película
+                                            example: 55
+                                          url:
+                                            type: string
+                                            description: Url perteneciente a la película solicitdada
+                                            example: "https://url.com"
+                                          diasExpiracion:
+                                            type: integer
+                                            format: int64
+                                            description: Días que estará disponible la película
+                                            example: 5
+                                          subTitulosIncorporados:
+                                            type: boolean
+                                            description: Indica si contine subtitulos
+                                            example: false
+                                          subtitulos:
+                                            type: array
+                                            description: En caso de traer subtitulos, indica sus propiedades
+                                            items:
+                                              properties:
+                                                descripcion:
+                                                  type: string
+                                                  description: Idioma de los subtitulos en caso de haber.
+                                                  example: "Sin subtitulos"
+                                                url:
+                                                  type: string
+                                                  description: URL perteneciente a los subtitulos elegidos
+                                                  example: "https://url.com"
+                              sd:
+                                type: object
+                                properties:
+                                    tipos:
+                                      type: object
+                                      properties:
+                                          idioma:
+                                           type: string
+                                           description: Idioma en que se eligió la película.
+                                           example: "Español"
+                                          precio:
+                                            type: integer
+                                            format: int32
+                                            description: Precio de la Película
+                                            example: 55
+                                          url:
+                                            type: string
+                                            description: Url perteneciente a la película solicitdada
+                                            example: "https://url.com"
+                                          diasExpiracion:
+                                            type: integer
+                                            format: int64
+                                            description: Días que estará disponible la película
+                                            example: 5
+                                          subTitulosIncorporados:
+                                            type: boolean
+                                            description: Indica si contine subtitulos
+                                            example: false
+                                          subtitulos:
+                                            type: array
+                                            description: En caso de traer subtitulos, indica sus propiedades
+                                            items:
+                                              properties:
+                                                descripcion:
+                                                  type: string
+                                                  description: Idioma de los subtitulos en caso de haber.
+                                                  example: "Sin subtitulos"
+                                                url:
+                                                  type: string
+                                                  description: URL perteneciente a los subtitulos elegidos
+                                                  example: "https://url.com"
+                formatoTrailer:
+                    type: object
+                    description: Formato y propiedades del trailer
+                    properties:
+                        idioma:
+                          type: string
+                          description: Idioma en que se reproduce el trailer.
+                          example: "Español"
+                        url: 
+                          type: string
+                          description: URL perteneciente al Trailer
+                          example: "https://url.com"
+                          
+  error400:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Código del error
+        example: "400.Superapp-Diversion-Gestion-Peliculas.1001"
+      mensaje:
+        type: string
+        description: Descripción del error
+        example: "Petición no válida, favor de validar su información"
+      folio:
+        type: string
+        description: Número de folio de la operación
+        example: "22920190128134317232"
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error
+        example: "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Diversion-Gestion-Peliculas.1001"
+      detalles:
+        type: array
+        description: Lista de detalles de error
+        items:
+          type: string
+          description: Mensaje del error
+          example: "Faltan parámetros requeridos, favor de validar la petición"
+
+  error404:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Código del error
+        example: "404.Superapp-Diversion-Gestion-Peliculas.1002"
+      mensaje:
+        type: string
+        description: Descripción del error
+        example: "No se encontró información"
+      folio:
+        type: string
+        description: Número de folio de la operación
+        example: "22920190128134317233"
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error
+        example: "https://baz-developer.bancoazteca.com.mx/info#404.Superapp-Diversion-Gestion-Peliculas.1002"
+      detalles:
+        type: array
+        description: Lista de detalles de error
+        items:
+          type: string
+          description: Mensaje del error
+          example: "No se obtuvo información relacionada con los parametros de entrada"
+
+  error500:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Código del error
+        example: "500.Superapp-Diversion-Gestion-Peliculas.1003"
+      mensaje:
+        type: string
+        description: Descripción del error
+        example: "Problemas al procesar su solicitud favor de contactar a su administrador"
+      folio:
+        type: string
+        description: Número de folio de la operación
+        example: "22920181120162829642"
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error
+        example: "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Diversion-Gestion-Peliculas.1003"
+      detalles:
+        type: array
+        description: Lista de detalles de error
+        items:
+          type: string
+          description: Mensaje del error
+          example: "Problemas internos"
+          
+  summary:
+    type: object
+    properties:
+      api-name:
+        type: string
+        description: API que muestra las categorias de las películas OnDemand
+        example: "API de categorias de películas OnDemand"
+      peliculas-categorias-get:
+        type: object
+        properties:
+          displayName:
+            type: string
+            description: Consulta categorias de películas
+            example: "Consulta categorias de películas"
+      peliculas-categorias-resumen-get:
+        type: object
+        properties:
+          displayName:
+            type: string
+            description: Consulta las películas de una categoría en específico
+            example: "Consulta las películas de una categoría en específico"
+      peliculas-categorias-id-get:
+        type: object
+        properties:
+          displayName:
+            type: string
+            description: Consulta las películas de una categoría en específico
+            example: "Consulta las películas de una categoría en específico"
+      peliculas-id-get:
+        type: object
+        properties:
+          displayName:
+            type: string
+            description: Consulta el detalle de una película bajo demanda
+            example: "Consulta el detalle de una película bajo demanda"

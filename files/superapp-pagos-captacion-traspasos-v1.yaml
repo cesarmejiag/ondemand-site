@@ -1,0 +1,1115 @@
+swagger: '2.0'
+info:
+  version: '1.0.1'
+  title: API de Traspasos
+  description: |
+    Especificación diseñada para traspasos.
+
+host: apigateway.superappbaz.com
+
+basePath: /integracion/superapp/pagos/captacion/traspasos/v1
+
+schemes:
+  - https 
+
+produces:
+  - application/json
+  
+securityDefinitions:
+  Bearer:  
+    description: >
+      Para acceder a la API se debe pasar un token válido en todas las
+      consultas. La siguiente sintaxis se debe utilizar en el encabezado
+      'Authorization' :
+        Bearer: 2zzLJmBAtTNIU8nF8e8XbmDvaNGs
+    type: apiKey
+    name: Authorization
+    in: header
+    
+security:
+  - Bearer: []
+
+paths:  
+  /telefonos:
+    post:
+      description: Traspasos entre cuentas de mexico por numero de telefono.
+      summary: Traspasos entre cuentas de mexico por numero de telefono.
+      tags:
+        - Traspasos
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        
+        - name: x-sicu
+          in: header
+          description: identificador unico de cliente.
+          required: true
+          type: string
+          default: '3bad1290ac4600a569162efaa09117ea'
+
+        - name: x-id-interaccion
+          in: header
+          description: "RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000"
+          required: true
+          type: string
+          default: '123e4567-e89b-12d3-a456-426655440000'
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: 'Super móvil'
+
+        - name: x-id-dispositivo
+          in: header
+          description: RFCA122 Identificador de dispositivo.
+          required: false
+          type: string
+          default: '3bad1290ac4600a569162efaa09117ea'
+
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema operativo.
+          required: false
+          type: string
+          default: 'Android' 
+
+        - name: x-version-dispositivo
+          in: header
+          description: Version del dispositivo.
+          required: false
+          type: string
+          default: '6.0'
+
+        - name: x-version-aplicacion
+          in: header
+          description: Version de la aplicacion.
+          required: false
+          type: string
+          default: '2.1.1'
+
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo del dispositivo.
+          required: false
+          type: string
+          default: 'P40'
+
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Nombre del fabricante del dispositivo.
+          required: false
+          type: string
+          default: 'Huawei'
+
+        - name: x-serie-procesador
+          in: header
+          description: Serie del procesador.
+          required: false
+          type: string
+          default: 'mt6735'
+
+        - name: x-operador-telefonia
+          in: header
+          description: Operador de telefonía. 
+          required: false
+          type: string
+          default: 'Telcel'
+
+        - name: x-latitud
+          in: header
+          description: latitud.
+          required: false
+          type: string
+          default: '19.49781290'
+
+        - name: x-longitud
+          in: header
+          description: longitud.
+          required: false
+          type: string
+          default: '-99.12698712'
+
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario.
+          required: true
+          type: string
+          default: 'SRfVZrTYvdm7mzzZmcuiDViACkAx'
+        
+        - name: x-id-lealtad
+          in: header
+          description: |- 
+                Identificador de cliente
+                Importante: Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: '99553877'
+        
+        - in: body
+          name: body
+          description: Informacion de entrada para el traspaso entre cuentas por numero de telefono.
+          schema:
+            $ref: '#/definitions/entradaTraspasosTelefonosTransaccion'       
+            
+      responses:
+        201:
+          description: Creado exitosamente.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/respuestaTraspasosTelefonos'
+          examples:
+            application/json: |-
+              {
+                "mensaje": "Operación exitosa.",
+                "folio": "864232520200521141446",
+                "resultado": {
+                  "numeroMovimiento": "30000017",
+                  "fechaOperacion": "2021-06-03",
+                  "horaOperacion": "11:22"
+                }
+              }
+
+        400:
+          description: Petición incorrecta.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/Error400'
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.Superapp-Pagos-Captacion-Traspasos.400001",
+                "mensaje": "El servidor no pudo interpretar la solicitud dada una sintaxis inválida.",
+                "folio": "838147720200521141247",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Pagos-Captacion-Traspasos.400001",
+                "detalles": [
+                  "Datos requeridos en body ..."
+                ]
+              }
+
+        500:
+          description: Error inesperado.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.Superapp-Pagos-Captacion-Traspasos.500001",
+                "mensaje": "Ocurrio algo inesperado.",
+                "folio": "838147720200521141247",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Pagos-Captacion-Traspasos.500001",
+                "detalles": [
+                  "No se pudo conectar al servidor"
+                ]
+              }
+              
+      security:
+        - Bearer: []
+
+  /cuentas:
+    post:
+      description: Traspasos entre cuentas por numero de cuenta.
+      summary: Traspasos entre cuentas por numero de cuenta.
+      tags:
+        - Traspasos
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        
+        - name: x-sicu
+          in: header
+          description: identificador unico de cliente.
+          required: true
+          type: string
+          default: '3bad1290ac4600a569162efaa09117ea'
+
+        - name: x-id-interaccion
+          in: header
+          description: "RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000"
+          required: true
+          type: string
+          default: '123e4567-e89b-12d3-a456-426655440000'
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: 'Super móvil'
+
+        - name: x-id-dispositivo
+          in: header
+          description: RFCA122 Identificador de dispositivo.
+          required: false
+          type: string
+          default: '3bad1290ac4600a569162efaa09117ea'
+
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema operativo.
+          required: false
+          type: string
+          default: 'Android' 
+
+        - name: x-version-dispositivo
+          in: header
+          description: Version del dispositivo.
+          required: false
+          type: string
+          default: '6.0'
+
+        - name: x-version-aplicacion
+          in: header
+          description: Version de la aplicacion.
+          required: false
+          type: string
+          default: '2.1.1'
+
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo del dispositivo.
+          required: false
+          type: string
+          default: 'P40'
+
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Nombre del fabricante del dispositivo.
+          required: false
+          type: string
+          default: 'Huawei'
+
+        - name: x-serie-procesador
+          in: header
+          description: Serie del procesador.
+          required: false
+          type: string
+          default: 'mt6735'
+
+        - name: x-operador-telefonia
+          in: header
+          description: Operador de telefonía. 
+          required: false
+          type: string
+          default: 'Telcel'
+
+        - name: x-latitud
+          in: header
+          description: latitud.
+          required: false
+          type: string
+          default: '19.49781290'
+
+        - name: x-longitud
+          in: header
+          description: longitud.
+          required: false
+          type: string
+          default: '-99.12698712'
+
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario.
+          required: true
+          type: string
+          default: 'SRfVZrTYvdm7mzzZmcuiDViACkAx'
+
+        - name: x-id-lealtad
+          in: header
+          description: |- 
+                Identificador de cliente
+                Importante: Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: '99553877'
+
+        - in: body
+          name: body
+          description: Informacion de entrada para el traspaso entre cuentas por numero de cuenta.
+          schema:
+            $ref: '#/definitions/entradaTraspasosCuentasTransaccion'       
+            
+      responses:
+        201:
+          description: Creado exitosamente.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/salidaTraspasosCuentas'
+          examples:
+            application/json: |-
+              {
+                "mensaje": "Operación exitosa.",
+                "folio": "864232520200521141446",
+                "resultado": {
+                  "numeroMovimiento": "000140",
+                  "fechaOperacion": "2021-06-03",
+                  "horaOperacion": "11:22"
+                }
+              }
+
+        400:
+          description: Petición incorrecta.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/Error400'
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.Superapp-Pagos-Captacion-Traspasos.400001",
+                "mensaje": "El servidor no pudo interpretar la solicitud dada una sintaxis inválida.",
+                "folio": "838147720200521141247",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Pagos-Captacion-Traspasos.400001",
+                "detalles": [
+                  "Datos requeridos en body ..."
+                ]
+              }
+
+        500:
+          description: Error inesperado.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.Superapp-Pagos-Captacion-Traspasos.500001",
+                "mensaje": "Ocurrio algo inesperado.",
+                "folio": "838147720200521141247",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Pagos-Captacion-Traspasos.500001",
+                "detalles": [
+                  "No se pudo conectar al servidor"
+                ]
+              }
+              
+      security:
+        - Bearer: []
+
+  /boton-pago:
+    post:
+      description: Traspasos entre cuentas por numero de cuenta.
+      summary: Traspasos entre cuentas por numero de cuenta.
+      tags:
+        - Traspasos
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        
+        - name: x-sicu
+          in: header
+          description: identificador unico de cliente.
+          required: true
+          type: string
+          default: '3bad1290ac4600a569162efaa09117ea'
+
+        - name: x-id-interaccion
+          in: header
+          description: "RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000"
+          required: true
+          type: string
+          default: '123e4567-e89b-12d3-a456-426655440000'
+
+        - name: x-nombre-dispositivo
+          in: header
+          description: Nombre del dispositivo
+          required: false
+          type: string
+          default: 'Super móvil'
+
+        - name: x-id-dispositivo
+          in: header
+          description: RFCA122 Identificador de dispositivo.
+          required: false
+          type: string
+          default: '3bad1290ac4600a569162efaa09117ea'
+
+        - name: x-sistema-dispositivo
+          in: header
+          description: Sistema operativo.
+          required: false
+          type: string
+          default: 'Android' 
+
+        - name: x-version-dispositivo
+          in: header
+          description: Version del dispositivo.
+          required: false
+          type: string
+          default: '6.0'
+
+        - name: x-version-aplicacion
+          in: header
+          description: Version de la aplicacion.
+          required: false
+          type: string
+          default: '2.1.1'
+
+        - name: x-modelo-dispositivo
+          in: header
+          description: Modelo del dispositivo.
+          required: false
+          type: string
+          default: 'P40'
+
+        - name: x-fabricante-dispositivo
+          in: header
+          description: Nombre del fabricante del dispositivo.
+          required: false
+          type: string
+          default: 'Huawei'
+
+        - name: x-serie-procesador
+          in: header
+          description: Serie del procesador.
+          required: false
+          type: string
+          default: 'mt6735'
+
+        - name: x-operador-telefonia
+          in: header
+          description: Operador de telefonía. 
+          required: false
+          type: string
+          default: 'Telcel'
+
+        - name: x-latitud
+          in: header
+          description: latitud.
+          required: false
+          type: string
+          default: '19.49781290'
+
+        - name: x-longitud
+          in: header
+          description: longitud.
+          required: false
+          type: string
+          default: '-99.12698712'
+
+        - name: x-token-usuario
+          in: header
+          description: Token de usuario.
+          required: true
+          type: string
+          default: 'SRfVZrTYvdm7mzzZmcuiDViACkAx'
+        
+        - name: x-id-lealtad
+          in: header
+          description: |- 
+                Identificador de cliente
+                Importante: Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+          required: false
+          type: string
+          default: '99553877'
+          
+        - name: x-id-operacion-conciliacion
+          in: header
+          description: |-
+            Identificador de rastreo para conciliacion por parte del negocio
+          required: false
+          type: string
+          default: "Q685828920200407191603"
+          
+        - in: body
+          name: body
+          description: Informacion de entrada para el traspaso entre cuentas por numero de cuenta.
+          schema:
+            $ref: '#/definitions/entradaBotonPago'       
+            
+      responses:
+        201:
+          description: Creado exitosamente.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/salidaBotonPago'
+          examples:
+            application/json: |-
+              {
+                "mensaje": "Operación exitosa.",
+                "folio": "864232520200521141446",
+                "resultado": {
+                  "numeroMovimiento": "000140",
+                  "fechaOperacion": "2021-06-03",
+                  "horaOperacion": "11:22",
+                  "descripcionOrigen": "Cuenta Cargo 0127234124152",
+                  "descripcionDestino": "Cuenta Abono 01271234534512"
+                }
+              }
+
+        400:
+          description: Petición incorrecta.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/Error400'
+          examples:
+            application/json: |-
+              {
+                "codigo": "400.Superapp-Pagos-Captacion-Traspasos.400001",
+                "mensaje": "El servidor no pudo interpretar la solicitud dada una sintaxis inválida.",
+                "folio": "838147720200521141247",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Pagos-Captacion-Traspasos.400001",
+                "detalles": [
+                  "Datos requeridos en body ..."
+                ]
+              }
+
+        500:
+          description: Error inesperado.
+          headers:
+            x-id-interaccion:
+              type: string 
+              description: Id interaccion
+          schema:
+            $ref: '#/definitions/Error500'
+          examples:
+            application/json: |-
+              {
+                "codigo": "500.Superapp-Pagos-Captacion-Traspasos.500001",
+                "mensaje": "Ocurrio algo inesperado.",
+                "folio": "838147720200521141247",
+                "info": "https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Pagos-Captacion-Traspasos.500001",
+                "detalles": [
+                  "No se pudo conectar al servidor"
+                ]
+              }
+              
+      security:
+        - Bearer: []
+
+definitions:
+  entradaTraspasosCuentasTransaccion:
+    type: object
+    required:
+      - transaccion
+    properties:
+      transaccion:
+        $ref: '#/definitions/entradaTraspasosCuentas'
+  entradaTraspasosCuentas:
+    type: object
+    required:
+      - tokenOperacion
+      - altaCuentaFrecuente
+      - operacionCuentaFrecuente
+      - beneficiario
+      - traspaso
+    properties:
+      primerTokenVerificacion:
+        type: string
+        description: Primer Token de verificacion obtenido por la API de factor de autenticacion o componente de la superApp.
+        example: 'fac2ac44565db5312fb407c3c9482d04'
+      tokenOperacion:
+        type: string
+        description: |-
+          Token de operación.
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: '57465386'
+      altaCuentaFrecuente:
+        type: boolean
+        description: |
+          Bandera para indicar si la cuenta sera una cuenta frecuente.
+        example: true
+      operacionCuentaFrecuente:
+        type: boolean
+        description: |
+          Bandera para indicar si la operacion sera una operacion frecuente.
+        example: true
+      beneficiario:
+        $ref: '#/definitions/beneficiariosTelefono'
+      traspaso:
+        type: object
+        required:
+          - idTipo
+          - cuentaOrigen
+          - monto
+          - concepto
+        properties:
+          idTipo:
+            type: string
+            description: |
+              Identificador de tipo de traspaso.
+              - 01 - BAZ
+              - 02 - DAPP
+            example: '01'
+          cuentaOrigen:
+            type: string
+            description: |
+              Numero de cuenta del cliente.
+              `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+            example: '46241334918295'
+          monto:
+            type: string
+            format: double
+            description: |
+              Monto que se transferira al beneficiario.
+              `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+            example: '10.50'
+          concepto:
+            type: string
+            description: |
+              Concepto de la transferencia.
+            example: 'Trasp. a Cta: 46241334918295'
+  
+  entradaBotonPago:
+    type: object
+    required:
+      - transaccion
+    properties:
+      transaccion:
+        type: object
+        required:
+          - tokenOperacion
+          - geolocalizacion
+          - beneficiario
+          - traspaso
+        properties:
+          primerTokenVerificacion:
+            type: string
+            description: |
+              Primer Token de verificacion obtenido por la API de factor de autenticacion o componente de la superApp.
+            example: 'fac2ac44565db5312fb407c3c9482d04'
+          tokenOperacion:
+            type: string
+            description: |-
+              Token de operación.
+              `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+            example: '57465386'
+          requiereFactura:
+            type: boolean
+            description: |
+              Bandera para indicar si la operacion requere facturación.
+            example: true
+          geolocalizacion:
+            type: object
+            required:
+              - latitud
+              - longitud
+            properties:
+              latitud:
+                type: string
+                description: |-
+                  Latitud obtenida por la aplicacion.
+                  `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+                example: '99304762'
+              longitud:
+                type: string
+                description: |-
+                  Latitud obtenida por la aplicacion.
+                  `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+                example: '19760562'
+                
+          beneficiario:
+            $ref: '#/definitions/beneficiariosBotonPago'
+          traspaso:
+            type: object
+            required:
+              - cuentaOrigen
+              - monto
+              - concepto
+            properties:
+              cuentaOrigen:
+                type: string
+                description: |
+                  Numero de cuenta del cliente.
+                  `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+                example: '46241334918295'
+              monto:
+                type: string
+                format: double
+                description: |
+                  Monto que se transferira al beneficiario.
+                  `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+                example: '10.50'
+              concepto:
+                type: string
+                description: |
+                  Concepto de la transferencia.
+                example: 'Cargo por donación'
+    
+          detallePago:
+            type: object
+            properties:
+              comision:
+                type: string
+                format: double
+                description: |-
+                  Comision definida por negocio.
+                example: '0.0'
+              iva:
+                type: string
+                format: double
+                description: |-
+                  IVA de la comision
+                example: '0.0'
+              montoEnvio:
+                type: string
+                format: double
+                description: |-
+                  Costo de envio de articulos
+                example: '0.0'
+              cantidadProductos:
+                type: string
+                description: |-
+                  Cantidad de productos comprados en el botón
+                example: '1'
+              idReferenciaPago:
+                type: string
+                description: |-
+                  Identificador unico de compra al boton de pago (SKU/Referencia de Pago)
+                example: 'SKU3008749'
+  
+  beneficiariosBotonPago:
+    type: object
+    description: Datos de destino traspaso.
+    properties:
+      idEmpresaCifrado:
+        type: string
+        description: |-
+          Identificador de la empresa en catalogo ALNOVA.
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: 'LA70SDF87G6D087F96GS88D7FG6'
+      idEmpresa:
+        type: string
+        description: |-
+          Identificador de la empresa en catalogo ALNOVA.
+        example: 'FAZ0000001'
+      nombre:
+        type: string
+        description: |-
+          Nombre de beneficiario a transferir.
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: 'FUNDACIÓN TV AZTECA, AC'
+      alias:
+        type: string
+        description: Alias que se le asigna al beneficiario a transferir.
+        example: 'Donativos de Fundación'
+    required:
+      - idEmpresaCifrado
+      - idEmpresa
+      - nombre
+      
+  salidaTraspasosCuentas:
+    type: object
+    properties:
+      mensaje:
+        type: string
+        description: Recurso creado exitosamente.
+        example: 'Operación exitosa.'
+      folio: 
+        type: string
+        description: Número de folio de la operación.
+        example: '864232520200521141446'
+      resultado:
+        type: object
+        properties:
+          fechaOperacion:
+            type: string
+            description: |
+              Fecha en la que se realizo la operacion.
+            example: '2021-06-03'
+          horaOperacion:
+            type: string
+            description: |
+              Hora en la que se realizo la operacion.
+            example: '11:22'
+          numeroMovimiento:
+            type: string
+            description: |
+              Numero de movimiento de la operacion.
+            example: '000140'
+ 
+  entradaTraspasosTelefonosTransaccion:
+    type: object
+    required:
+      - transaccion
+    properties:
+      transaccion:
+        $ref: '#/definitions/entradaTraspasosTelefonos'
+
+  entradaTraspasosTelefonos:
+    type: object
+    required:
+      - tokenOperacion
+      - altaCuentaFrecuente
+      - operacionCuentaFrecuente
+      - beneficiario
+      - traspaso
+    properties:
+      primerTokenVerificacion:
+        type: string
+        description: |
+          Primer Token de verificacion obtenido por la API de factor de autenticacion o componente de la superApp.
+        example: 'fac2ac44565db5312fb407c3c9482d04'
+      tokenOperacion:
+        type: string
+        description: |-
+          Token de operación.
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: '57465386'
+      altaCuentaFrecuente:
+        type: boolean
+        description: |
+          Bandera para indicar si la cuenta sera una cuenta frecuente.
+        example: true
+      operacionCuentaFrecuente:
+        type: boolean
+        description: |
+          Bandera para indicar si la operacion sera una operacion frecuente.
+        example: true      
+      beneficiario:
+        $ref: '#/definitions/beneficiariosTelefono'
+      traspaso:
+        $ref: '#/definitions/datosTraspaso'
+
+  beneficiariosTelefono:
+    type: object
+    required:
+      - datoBancario
+      - nombre
+    description: Datos de destino traspaso.
+    properties:
+      datoBancario:
+        type: string
+        description: |-
+          Dato bancario para la realizacion de la busqueda, ya sea por clabe, telefono, cuenta, tarjeta
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: '462441334916927'
+      nombre:
+        type: string
+        description: |-
+          Nombre de beneficiario a transferir.
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: 'JOSE ANDRES PEREZ'
+      alias:
+        type: string
+        description: Alias que se le asigna al beneficiario a transferir.
+        example: 'JOSE ANDRES P'
+
+  datosTraspaso:
+    type: object
+    required:
+      - numeroTelefonoOrigen
+      - monto
+      - concepto
+    properties:
+      numeroTelefonoOrigen:
+        type: string
+        description: |- 
+          Numero de telefono del cliente.
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: '2223460244'
+      monto:
+        type: string
+        format: double
+        description: |-
+          Monto que se transferira al beneficiario.
+          `Importante:` Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8.
+        example: '10.50'
+      concepto:
+        type: string
+        description: |
+          Concepto de la transferencia.
+        example: 'TRANSFERENCIA'
+
+  respuestaTraspasosTelefonos:
+    type: object
+    properties:
+      mensaje:
+        type: string
+        description: Recurso creado exitosamente.
+        example: 'Operación exitosa.'
+      folio: 
+        type: string
+        description: Número de folio de la operación.
+        example: '864232520200521141446'
+      resultado:
+        type: object
+        properties:
+          numeroMovimiento:
+            type: string
+            description: |
+              Numero de movimiento realizado por la operacion.
+            example: '30000017'
+          fechaOperacion:
+            type: string
+            description: |
+              Fecha en la que se realizo la operacion.
+            example: '2021-06-03'
+          horaOperacion:
+            type: string
+            description: |
+              Hora en la que se realizo la operacion.
+            example: '11:22'
+  
+  salidaBotonPago:
+    type: object
+    properties:
+      mensaje:
+        type: string
+        description: Recurso creado exitosamente.
+        example: 'Operación exitosa.'
+      folio: 
+        type: string
+        description: Número de folio de la operación.
+        example: '864232520200521141446'
+      resultado:
+        type: object
+        properties:
+          fechaOperacion:
+            type: string
+            description: |
+              Fecha en la que se realizo la operacion.
+            example: '2021-06-03'
+          horaOperacion:
+            type: string
+            description: |
+              Hora en la que se realizo la operacion.
+            example: '11:22'
+          numeroMovimiento:
+            type: string
+            description: |
+              Numero de movimiento de la operacion.
+            example: '000140'
+          descripcionOrigen:
+            type: string
+            description: |
+              Descripcion de origen para identificar el folio del cargo
+            example: 'Cuenta Cargo 0127234124152'
+          descripcionDestino:
+            type: string
+            description: |
+              Descripcion de destino para identificar el folio del abono
+            example: 'Cuenta Abono 01271234534512'
+        
+  #Bad Request 400001 (400)
+  Error400:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Código del error.
+        example: '400.Superapp-Pagos-Captacion-Traspasos.400001'
+      mensaje:
+        type: string
+        description: Descripción del error.
+        example: 'El servidor no pudo interpretar la solicitud dada una sintaxis inválida.'
+      folio:
+        type: string
+        description: Número de folio de la operación.
+        example: '838147720200521141247'
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error.
+        example: 'https://baz-developer.bancoazteca.com.mx/info#400.Superapp-Pagos-Captacion-Traspasos.400001'
+      detalles:
+        type: array
+        description: Lista de detalles de errores.
+        items:
+          type: string
+          example: 'Datos requeridos en body ...'
+
+  #Unauthorized 401001 (401)
+  Error401:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Código del error.
+        example: '401.Superapp-Pagos-Captacion-Traspasos.401001'
+      mensaje:
+        type: string
+        description: Descripción del error.
+        example: 'No estas autorizado, favor de validar.'
+      folio:
+        type: string
+        description: Número de folio de la operación.
+        example: '826152720200402113742'
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error.
+        example: 'https://baz-developer.bancoazteca.com.mx/info#401.Superapp-Pagos-Captacion-Traspasos.401001'
+      detalles:
+        type: array
+        description: Lista de detalles de errores.
+        items:
+          type: string
+          example: 'El x-idAcceso está expirado o no es válido, favor de solicitar uno nuevo.'
+
+  #Internal Server Error 500001 (500)
+  Error500:
+    type: object
+    properties:
+      codigo:
+        type: string
+        description: Código del error.
+        example: '500.Superapp-Pagos-Captacion-Traspasos.500001'
+      mensaje:
+        type: string
+        description: Descripción del error.
+        example: 'Ocurrio algo inesperado.'
+      folio:
+        type: string
+        description: Número de folio de la operación.
+        example: '838147720200521141247'
+      info:
+        type: string
+        description: Rutas de ayuda para atender el error.
+        example: 'https://baz-developer.bancoazteca.com.mx/info#500.Superapp-Pagos-Captacion-Traspasos.500001'
+      detalles:
+        type: array
+        description: Lista de detalles de errores.
+        items:
+          type: string
+          example: 'No se pudo conectar al servidor'
+
+  summary:
+    type: object
+    properties: 
+      api-name:
+        type: string
+        description: API de Traspasos.
+        example: 'API de Traspasos.' 
+      telefonos-post:
+        type: object
+        properties:
+          displayName: 
+            type: string
+            description: Traspasos entre cuentas de mexico por numero de telefono.
+            example: 'Traspasos entre cuentas de mexico por numero de telefono.'
+      cuentas-post:
+        type: object
+        properties:
+          displayName: 
+            type: string
+            description: Traspasos entre cuentas BAZ a otra cuenta BAZ.
+            example: 'Traspasos entre cuentas BAZ a otra cuenta BAZ.'

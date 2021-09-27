@@ -1,0 +1,342 @@
+swagger: "2.0"
+info:
+    version: "0.0.1"
+    title: API para gestion de sesiones
+    description: |
+        API para gestion de sesiones
+host: apigateway.superappbaz.com
+basePath: /integracion/superapp/canal/clientes/gestion-sesiones/v1
+schemes:
+    - https
+produces:
+    - application/json
+securityDefinitions:
+    Bearer:
+        description: >
+            Para acceder a la API se debe pasar un token válido en todas las consultas.
+            La siguiente sintaxis se debe utilizar en el encabezado 'Authorization' :
+              Bearer: 2zzLJmBAtTNIU8nF8e8XbmDvaNGs
+        type: apiKey
+        name: Authorizationz
+        in: header
+security:
+    - Bearer: []
+paths:
+    /portal/operaciones/{idOperacion}:
+        get:
+            description: Servicio para obtener informacion de Portal
+            summary: Servicio informacion operacion de Portal
+            tags:
+                - Operaciones Portal
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: path
+                  name: idOperacion
+                  type: string
+                  description: Identificador de operacion realizada
+                  required : true
+                  default: "12454"
+            responses:
+                200:
+                    description: Ok
+                    schema:
+                        $ref: "#/definitions/respuestaOperacionesPortal"
+                    examples:
+                        application/json: |-
+                          {
+                            "mensaje": "Operación Exitosa.",
+                            "folio": "4736b1f10a4af4d6-16075-1106504-1",
+                            "resultado": {
+                              "idFlujo": "RENTA_PELICULA",
+                              "headers": {
+                                "x-id-interaccion": "......",
+                                "x-sicu": ".....",
+                                "x-token-usuario": ".....",
+                                "header_1": ".......",
+                                "header_n": "......."
+                              },
+                              "datosFlujo": {
+                                "idPelicula": "12454",
+                                "numeroCuenta": "CUENTA_CIFRADA....",
+                                "key1": ".....",
+                                "key2": ".......",
+                                "keyN": {
+                                  "keyN1": "xxxxx",
+                                  "keyN2": "yyyyy",
+                                  "keyNM": 122433.5
+                                }
+                              }
+                            }
+                          }
+                              
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "400.superapp-canal-clientes-gestion-sesiones-v1.1001",
+                              "mensaje": "Parámetros de entrada incorrectos",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-sesiones-v1.1003",
+                              "detalles": [
+                                "Parámetro es requerido."
+                              ]
+                            }
+                404:
+                    description: "Recurso no encontrado."
+                    schema:
+                        $ref: "#/definitions/error404"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "404.superapp-canal-clientes-gestion-sesiones-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-sesiones-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "500.superapp-canal-clientes-gestion-sesiones-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-sesiones-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+            security:
+                - Bearer: []
+definitions:
+    respuestaOperacionesPortal:
+        type: object
+        properties:
+            mensaje:
+                type: string
+                description: "Mensaje resultado de la operación"
+                example: "Operación Exitosa."
+            folio:
+                type: string
+                description: "folio de transaccion del usuario"
+                example: "4736b1f10a4af4d6-16075-1106504-1"
+            resultado:
+                type: object
+                properties:
+                  idFlujo:
+                      type: string
+                      description: Flujo de la operacion realizada
+                      example: "RENTA_PELICULA"
+            headers:
+                type: object
+                description: headers de la solicitud
+                example: {"header_n": "......."}
+            datosFlujo:
+                type: object
+                properties:
+                    idPelicula:
+                      type: string
+                      description:  identificador de la pelicula
+                      example: 12345
+                    numeroCuenta:
+                      type: string
+                      description: |- 
+                        numero de cuenta . 
+                        `Descifre el valor de este campo con la llave privada (accesoPrivado) obtenida del api de seguridad con el cifrado RSA/ECB/PKCS1Padding encoding UTF-8`
+                      example: "4736b1f10a4af4d6-16075-1106504-1"
+                    key_1:
+                        type: object
+                        example: {"key_1_m": 122433.5,"key_1_1": "xxxxx",}
+                    key_2:
+                        type: object
+                        example: {"key_2_m": 122433.5,"key_2_1": "xxxxx",}
+                    key_n:
+                        type: object
+                        example: {"key_n_m": 122433.5,"key_n_1": "xxxxx",}
+    error400:
+        type: object
+        properties:
+            codigo:
+                type: string
+                description: Código del error
+                example: "400.superapp-canal-clientes-gestion-sesiones-v1.1001"
+            mensaje:
+                type: string
+                description: Descripción del error
+                example: "Parámetros de entrada incorrectos"
+            folio:
+                type: string
+                description: Número de folio de la operación
+                example: "SAPP2020122903410509363f904cf7"
+            info:
+                type: string
+                description: Rutas de ayuda para atender el error
+                example: "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-sesiones-v1.1003"
+            detalles:
+                type: array
+                items:
+                    type: string
+                    example: "El parámetro {nombre} es requerido."
+    error404:
+        type: object
+        properties:
+            codigo:
+                type: string
+                description: Código del error
+                example: "404.superapp-canal-clientes-gestion-sesiones-v1.1002"
+            mensaje:
+                type: string
+                description: Descripción del error
+                example: "Recurso no encontrado, favor de validar."
+            folio:
+                type: string
+                description: Número de folio de la operación
+                example: "SAPP2020122903410509363f904cf7"
+            info:
+                type: string
+                description: Rutas de ayuda para atender el error
+                example: "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-sesiones-v1.1002"
+            detalles:
+                type: array
+                items:
+                    type: string
+                    example: "La solicitud no devolvio informacion"
+    error500:
+        type: object
+        properties:
+            codigo:
+                type: string
+                description: Código del error
+                example: "500.superapp-canal-clientes-gestion-sesiones-v1.1003"
+            mensaje:
+                type: string
+                description: Descripción del error
+                example: "Error inesperado en la aplicación."
+            folio:
+                type: string
+                description: Número de folio de la operación
+                example: "SAPP2020122903410509363f904cf7"
+            info:
+                type: string
+                description: Rutas de ayuda para atender el error
+                example: "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-sesiones-v1.1003"
+            detalles:
+                type: array
+                items:
+                    type: string
+                    example: "El servidor no pudo resulver la solicitud"
+    summary:
+        type: object
+        properties:
+            api-name:
+                type: string
+                description: API para la gestion de usuarios en superapp
+                example: Enrolameinro-Transformacion-Digital-Gestion-Usuario-v1
+            operaciones-portal-idOperacion-get:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Servicio para obtener informacion de Portal

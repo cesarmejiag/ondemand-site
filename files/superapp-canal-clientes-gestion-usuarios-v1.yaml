@@ -1,0 +1,1817 @@
+swagger: "2.0"
+info:
+    version: "0.0.1"
+    title: API para gestion de usuarios
+    description: |
+        API para gestion de usuarios
+host: apigateway.superappbaz.com
+basePath: /integracion/superapp/canal/clientes/gestion-usuarios/v1
+schemes:
+    - https
+produces:
+    - application/json
+securityDefinitions:
+    Bearer:
+        description: >
+            Para acceder a la API se debe pasar un token válido en todas las consultas.
+            La siguiente sintaxis se debe utilizar en el encabezado 'Authorization' :
+              Bearer: 2zzLJmBAtTNIU8nF8e8XbmDvaNGs
+        type: apiKey
+        name: Authorizationz
+        in: header
+security:
+    - Bearer: []
+paths:
+    /clave-seguridad/bloqueos:
+        post:
+            description: Servicio para bloquear usuarios
+            tags:
+                - Bloqueo de usuarios
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+            responses:
+                200:
+                    description: Usuario bloqueado
+                    schema:
+                        $ref: "#/definitions/respuestaUsuarioBloqueado"
+                    examples:
+                        application/json: |-
+                            {
+                                "mensaje": "Operación exitosa",
+                                "folio": "01150848d58f6747-01150848d58f6747"
+                            }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                                "codigo": "400.superapp-enrolamiento-gestion-empleados.2.1",
+                                "mensaje": "Petición incorrecta",
+                                "folio": "awsapigeermczdev03-2337-11232-2",
+                                "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-enrolamiento-gestion-empleados.2.1",
+                                "detalles": [
+                                    "No se especificó el parámetro requerido"
+                                ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                                "codigo": "500.superapp-enrolamiento-gestion-empleados.-1.0",
+                                "mensaje": "Error interno de servidor",
+                                "folio": "awsapigeermczdev03-2337-11232-2",
+                                "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-enrolamiento-gestion-empleados.-1.0",
+                                "detalles": [
+                                    "La solicitud no se pudo realizar"
+                                ]
+                            }
+            security:
+                - Bearer: []
+    /bloqueos/estatus:
+        post:
+            description: Servicio para validar bloquedo de contraseña por numero de intentos fallidos de inicio de sesion
+            tags:
+                - Bloqueo de usuarios
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+            responses:
+                200:
+                    description: Usuario bloqueado
+                    schema:
+                        $ref: "#/definitions/respuestaBloqueosEstatus"
+                    examples:
+                      application/json: |-
+                        {
+                          "mensaje": "Operación Exitosa",
+                          "folio": "a052ac4a0314a777-a052ac4a0314a777",
+                          "resultado": {
+                            "bloqueoClaveSeguridad": true
+                          }
+                        }  
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                                "codigo": "400.superapp-enrolamiento-gestion-empleados.2.1",
+                                "mensaje": "Petición incorrecta",
+                                "folio": "awsapigeermczdev03-2337-11232-2",
+                                "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-enrolamiento-gestion-empleados.2.1",
+                                "detalles": [
+                                    "No se especificó el parámetro requerido"
+                                ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                                "codigo": "500.superapp-enrolamiento-gestion-empleados.-1.0",
+                                "mensaje": "Error interno de servidor",
+                                "folio": "awsapigeermczdev03-2337-11232-2",
+                                "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-enrolamiento-gestion-empleados.-1.0",
+                                "detalles": [
+                                    "La solicitud no se pudo realizar"
+                                ]
+                            }
+            security:
+                - Bearer: []
+    /credenciales:
+        put:
+            description: Actualiza contreaseña de credenciales
+            summary: Actualiza credenciales
+            tags:
+                - Credenciales
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: body
+                  name: body
+                  description: Objeto para la generacion de un folio
+                  required: true
+                  schema:
+                      $ref: "#/definitions/peticionContrasenia"
+            responses:
+                200:
+                    description: Ok
+                    headers:
+                        x-id-interaccion:
+                            description: "RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000"
+                            type: string
+                            default: "123e4567-e89b-12d3-a456-426655440000"
+                    schema:
+                        $ref: "#/definitions/respuestaContrasenia"
+                    examples:
+                        application/json: |-
+                            {
+                              "mensaje": "Operación Exitosa",
+                              "folio": "ENRO20201124050617040419287517",
+                              "resultado": {
+                                "actualizado": true
+                              }
+                            }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "400.superapp-canal-clientes-gestion-usuarios-v1.1001",
+                              "mensaje": "Parámetros de entrada incorrectos",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El parámetro {nombre} es requerido."
+                              ]
+                            }
+                404:
+                    description: "Recurso no encontrado."
+                    schema:
+                        $ref: "#/definitions/error404"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+            security:
+                - Bearer: []
+    /credenciales-recuperacion:
+        put:
+            description: Recupera la contraseña del usuario
+            summary: Recuperacion de credenciales
+            tags:
+                - Credenciales
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: body
+                  name: body
+                  description: Objeto para la generacion de un folio
+                  required: true
+                  schema:
+                      $ref: "#/definitions/peticionContrasenia"
+            responses:
+                200:
+                    description: Ok
+                    headers:
+                        x-id-interaccion:
+                            description: "RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000"
+                            type: string
+                            default: "123e4567-e89b-12d3-a456-426655440000"
+                    schema:
+                        $ref: "#/definitions/respuestaContrasenia"
+                    examples:
+                        application/json: |-
+                            {
+                              "mensaje": "Operación Exitosa",
+                              "folio": "ENRO20201124050617040419287517",
+                              "resultado": {
+                                "actualizado": true
+                              }
+                            }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "400.superapp-canal-clientes-gestion-usuarios-v1.1001",
+                              "mensaje": "Parámetros de entrada incorrectos",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El parámetro {nombre} es requerido."
+                              ]
+                            }
+                404:
+                    description: "Recurso no encontrado."
+                    schema:
+                        $ref: "#/definitions/error404"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+            security:
+                - Bearer: []
+    /preguntas-seguridad/respuestas:
+        post:
+            description: Respuesta de las preguntas
+            summary: Respuesta de las preguntas
+            tags:
+                - Credenciales
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: body
+                  name: body
+                  description: Objeto para la generacion de un folio
+                  required: true
+                  schema:
+                      $ref: "#/definitions/respuestasPreguntas"
+            responses:
+                200:
+                    description: Ok
+                    headers:
+                        x-id-interaccion:
+                            description: "RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000"
+                            type: string
+                            default: "123e4567-e89b-12d3-a456-426655440000"
+                    schema:
+                        $ref: "#/definitions/respuestaPreguntas"
+                    examples:
+                        application/json: |-
+                            {
+                              "mensaje": "Operación Exitosa",
+                              "folio": "ENRO20201124050617040419287517"
+                            }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "400.superapp-canal-clientes-gestion-usuarios-v1.1001",
+                              "mensaje": "Parámetros de entrada incorrectos",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El parámetro {nombre} es requerido."
+                              ]
+                            }
+                404:
+                    description: "Recurso no encontrado."
+                    schema:
+                        $ref: "#/definitions/error404"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+            security:
+                - Bearer: []
+    /token-verificaciones:
+      post:
+            description: Verificacion del token
+            summary: Verificacion del token
+            tags:
+                - Token
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: body
+                  name: body
+                  description: Token a validar
+                  required: true
+                  schema:
+                      $ref: "#/definitions/peticionTokenVerificaciones"
+            responses:
+                200:
+                    description: Ok
+                    headers:
+                        x-id-interaccion:
+                            description: "RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo: 123e4567-e89b-12d3-a456-426655440000"
+                            type: string
+                            default: "123e4567-e89b-12d3-a456-426655440000"
+                    schema:
+                        $ref: "#/definitions/respuestaTokenVerificaciones"
+                    examples:
+                        application/json: |-
+                          {
+                            "mensaje": "Operación Exitosa",
+                            "folio": "a052ac4a0314a777-a052ac4a0314a777"
+                          }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                          {
+                            "codigo": "400.superapp-canal-clientes-gestion-usuarios-v1.1001",
+                            "mensaje": "Parámetros de entrada incorrectos",
+                            "folio": "SAPP2020122903410509363f904cf7",
+                            "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                            "detalles": [
+                              "El parámetro {nombre} es requerido."
+                            ]
+                          }
+                404:
+                    description: "Recurso no encontrado."
+                    schema:
+                        $ref: "#/definitions/error404"
+                    examples:
+                        application/json: |-
+                          {
+                            "codigo": "404.superapp-canal-clientes-gestion-usuarios-v1.1002",
+                            "mensaje": "Recurso no encontrado, favor de validar.",
+                            "folio": "SAPP2020122903410509363f904cf7",
+                            "info": "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-usuarios-v1.1002",
+                            "detalles": [
+                              "La solicitud no devolvio informacion"
+                            ]
+                          }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                          {
+                            "codigo": "500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                            "mensaje": "Error inesperado en la aplicación.",
+                            "folio": "SAPP2020122903410509363f904cf7",
+                            "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                            "detalles": [
+                              "El servidor no pudo resulver la solicitud"
+                            ]
+                          }
+            security:
+                - Bearer: []
+    /usuarios/correos:
+        put:
+            summary: Actualiza correo electronico.
+            description: Realiza una actualizacion al correo electronico del usuario
+            tags:
+                - Usuarios
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: body
+                  name: body
+                  description: Correo electronico
+                  required: true
+                  schema:
+                      $ref: "#/definitions/correoElectronico"
+            responses:
+                200:
+                    description: Actualizado
+                    schema:
+                        $ref: "#/definitions/respuestaActualizaCorreo"
+                    headers:
+                        x-id-interaccion:
+                            description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones).
+                            type: string
+                            default: 123e4567-e89b-12d3-a456-426655440000
+                    examples:
+                        application/json: |-
+                            {
+                              "mensaje": "Operación Exitosa",
+                              "folio": "ENRO20201124050617040419287517",
+                              "resultado": {
+                                "actualizado": true
+                              }
+                            }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "400.superapp-canal-clientes-gestion-usuarios-v1.1001",
+                              "mensaje": "Parámetros de entrada incorrectos",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El parámetro {nombre} es requerido."
+                              ]
+                            }
+                404:
+                    description: Recurso no encontrado
+                    schema:
+                        $ref: "#/definitions/error404"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+    /usuarios/extendidos:
+        put:
+            summary: Actualiza usuarios extendidos.
+            description: Realiza una actualizacion a los usuarios extendidos.
+            tags:
+                - Usuarios
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: body
+                  name: body
+                  description: Correo electronico
+                  required: true
+                  schema:
+                      $ref: "#/definitions/peticionActualizaExtendidos"
+            responses:
+                200:
+                    description: Actualizado
+                    schema:
+                        $ref: "#/definitions/respuestaActualizaExtendidos"
+                    headers:
+                        x-id-interaccion:
+                            description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones).
+                            type: string
+                            default: 123e4567-e89b-12d3-a456-426655440000
+                    examples:
+                        application/json: |-
+                            {
+                              "mensaje": "Operación Exitosa",
+                              "folio": "ENRO20201124050617040419287517",
+                              "resultado": {
+                                "actualizado": true
+                              }
+                            }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "400.superapp-canal-clientes-gestion-usuarios-v1.1001",
+                              "mensaje": "Parámetros de entrada incorrectos",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El parámetro {nombre} es requerido."
+                              ]
+                            }
+                404:
+                    description: Recurso no encontrado
+                    schema:
+                        $ref: "#/definitions/error404"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                            {
+                              "codigo": "500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "mensaje": "Error inesperado en la aplicación.",
+                              "folio": "SAPP2020122903410509363f904cf7",
+                              "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                              "detalles": [
+                                "El servidor no pudo resulver la solicitud"
+                              ]
+                            }
+                            
+    /portal/operaciones:
+        post:
+            description: Servicio para operaciones de compra en el Portal
+            summary: Operaciones de Portal
+            tags:
+                - Operaciones Portal
+            consumes:
+                - application/json
+            produces:
+                - application/json
+            parameters:
+                - in: header
+                  name: x-sicu
+                  type: string
+                  required: true
+                  description: Identificador unico de cliente
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-id-interaccion
+                  type: string
+                  required: true
+                  description: RFC4122 Identificador unico de correlacion. En su representación textual canónica los dieciséis octetos de un UUID se representan como 32 dígitos hexadecimales (base 16) mostrados en cinco grupos separados por guiones de la forma 8-4-4-4-12, dando un total de 36 caracteres (32 caracteres alfanuméricos y cuatro guiones). Por ejemplo:123e4567-e89b-12d3-a456-426655440000
+                  default: 123e4567-e89b-12d3-a456-426655440000
+                - in: header
+                  name: x-nombre-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del dispositivo
+                  default: Super movil
+                - in: header
+                  name: x-id-dispositivo
+                  type: string
+                  required: false
+                  description: RFC4122 UID, cambia por instalación / reinstalación de la aplicación
+                  default: 3bad1290ac4600a569162efaa09117ea
+                - in: header
+                  name: x-sistema-dispositivo
+                  type: string
+                  required: false
+                  description: Sistema operativo
+                  default: Android
+                - in: header
+                  name: x-version-dispositivo
+                  type: string
+                  required: false
+                  description: Versión del dispositivo
+                  default: "6.0"
+                - in: header
+                  name: x-version-aplicacion
+                  type: string
+                  required: false
+                  description: Versión de la aplicación
+                  default: 2.1.1
+                - in: header
+                  name: x-modelo-dispositivo
+                  type: string
+                  required: false
+                  description: Modelo del dispositivo
+                  default: P40
+                - in: header
+                  name: x-fabricante-dispositivo
+                  type: string
+                  required: false
+                  description: Nombre del fabricante del dispositivo
+                  default: Huawei
+                - in: header
+                  name: x-serie-procesador
+                  type: string
+                  required: false
+                  description: Serie del procesador
+                  default: mt6735
+                - in: header
+                  name: x-operador-telefonia
+                  type: string
+                  required: false
+                  description: Operador de telefonia
+                  default: Telcel
+                - in: header
+                  name: x-latitud
+                  type: string
+                  required: false
+                  description: Latitud
+                  default: "19.49781290"
+                - in: header
+                  name: x-longitud
+                  type: string
+                  required: false
+                  description: Longitud
+                  default: "-99.12698712"
+                - in: header
+                  name: x-token-usuario
+                  type: string
+                  required: true
+                  description: Token de usuario
+                  default: SRfVZrTYvdm7mzzZmcuiDViACkAx
+                - in: header
+                  name: x-id-lealtad
+                  type: string
+                  required: false
+                  description: |
+                      'Identificador de cliente Cifrado AES'
+                  default: "99553877"
+                - in: body
+                  name: body
+                  description: Operacion a realizar
+                  required: true
+                  schema:
+                      $ref: "#/definitions/peticionesOperacionesPortal"
+            responses:
+                200:
+                    description: Ok
+                    schema:
+                        $ref: "#/definitions/respuestaTokenVerificaciones"
+                    examples:
+                        application/json: |-
+                          {
+                            "mensaje": "Operación Exitosa",
+                            "folio": "a052ac4a0314a777-a052ac4a0314a777"
+                          }
+                400:
+                    description: Solicitud incorrecta
+                    schema:
+                        $ref: "#/definitions/error400"
+                    examples:
+                        application/json: |-
+                          {
+                            "codigo": "400.superapp-canal-clientes-gestion-usuarios-v1.1001",
+                            "mensaje": "Parámetros de entrada incorrectos",
+                            "folio": "SAPP2020122903410509363f904cf7",
+                            "info": "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                            "detalles": [
+                              "Parámetro son requerido."
+                            ]
+                          }
+                500:
+                    description: Error interno de servidor.
+                    schema:
+                        $ref: "#/definitions/error500"
+                    examples:
+                        application/json: |-
+                          {
+                            "codigo": "500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                            "mensaje": "Error inesperado en la aplicación.",
+                            "folio": "SAPP2020122903410509363f904cf7",
+                            "info": "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003",
+                            "detalles": [
+                              "El servidor no pudo resulver la solicitud"
+                            ]
+                          }
+            security:
+                - Bearer: []
+definitions:
+    peticionesOperacionesPortal:
+        type: object
+        required: 
+          - idFlujo
+          - headers
+        properties:
+            idFlujo:
+                type: string
+                description: Flujo para realizar la operación.
+                example: "RENTA_PELICULA"
+            headers:
+                type: object
+                description: headers de la solicitud
+                example: {"header-n": "......."}
+            datosFlujo:
+                type: object
+                properties:
+                    idPelicula:
+                      type: string
+                      description:  identificador de la pelicula
+                      example: 12345
+                    numeroCuenta:
+                      type: string
+                      description: |- 
+                        numero de cuenta . 
+                        `Cifre el valor de este campo con la llave publica (accesoPrivado) obtenida del api de seguridad con el cifrado RSA/ECB/PKCS1Padding encoding UTF-8`
+                      example: "4736b1f10a4af4d6-16075-1106504-1"
+                    key1:
+                        type: object
+                        example: {"key1M": 122433.5,"key11": "xxxxx",}
+                    key2:
+                        type: object
+                        example: {"key2M": 122433.5,"key21": "xxxxx",}
+                    keyN:
+                        type: object
+                        example: {"keyNM": 122433.5,"keyN1": "xxxxx",}
+    respuestaUsuarioBloqueado:
+        type: object
+        required:
+            - mensaje
+            - folio
+        properties:
+            mensaje:
+                type: string
+                description: "Mensaje resultado de la operación"
+                example: "Operación exitosa"
+            folio:
+                type: string
+                description: "folio de transaccion del usuario"
+                example: "01150848d58f6747-01150848d58f6747"
+    peticionContrasenia:
+        type: object
+        properties:
+            nuevaContrasenia:
+                type: string
+                description: "nueva contraseña del usuario `Importante: Cifrado por front con especificaciones de identidad digital`"
+                example: "bP7d3n0HO+HA8DGhXZcQWGROJQVjAPOau7qzckF/UBvlBw8qUNidID7TlyZsYuG0CK4t7hsLbVHpTmJRFMvpZs7PdqPvHA1fz5b5N5sINxafyykKTuaqEB0R6fnmnzHHimR5WCljpEmVumoo3qGh5e/NM1QV+GBoloIAq9pNvm0="
+    respuestasPreguntas:
+        type: object
+        properties:
+            idPregunta:
+                type: integer
+                description: "Identificador de la pregunta"
+                example: 1
+            respuesta:
+                type: string
+                description: "Respuesta de la pregunta"
+                example: "Ciudad de México"
+    correoElectronico:
+        type: object
+        properties:
+            correoElectronico:
+                type: string
+                description: "correo electronico del usuario `Importante: Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8 <^CifradoMD^>.`"
+                example: "smedrano@elektra.com.mx"
+    peticionActualizaExtendidos:
+        type: object
+        properties:
+            telefonoNuevo:
+                type: string
+                example: "5556581791"
+                description: "Número de telefono nuevo `Importante: Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8 <^CifradoMD^>.`"
+            dispositivo:
+                $ref: "#/definitions/dispositivo"
+    peticionTokenVerificaciones:
+        type: object
+        properties:
+            token:
+                type: string
+                description: "token a verificar `Importante: Cifre el valor de éste campo con la llave pública (accesoSimetrico) con cifrado AES256 encoding UTF-8 <^CifradoMD^>.`"
+                example: "94a08da1fecbb6e8b46990538c7b50b2"
+    dispositivo:
+        type: object
+        required: ["idPush", "informacionHash", "tipo"]
+        properties:
+            tipo:
+                type: string
+                example: "ANDROID"
+            informacionHash:
+                type: string
+                example: "ANDROID"
+            idPush:
+                type: string
+                example: 12365478901236547890123654789021
+    respuestaContrasenia:
+        type: object
+        properties:
+            mensaje:
+                type: string
+                description: "Descripción de la operación"
+                example: "operacion exitosa"
+            folio:
+                type: string
+                description: "Número de folio de la operación"
+                example: "ENRO20201124050617040419287517"
+            resultado:
+                type: object
+                properties:
+                    valorActualizado:
+                        type: boolean
+                        description: "Resultado de la operacion"
+                        example: true
+    respuestaPreguntas:
+        type: object
+        properties:
+            mensaje:
+                type: string
+                example: "Operación Exitosa"
+            folio:
+                type: string
+                example: "ENRO20201124050617040419287517"
+                
+    respuestaActualizaCorreo:
+        type: object
+        properties:
+            mensaje:
+                type: string
+                example: "Operación Exitosa"
+            folio:
+                type: string
+                example: "ENRO20201124050617040419287517"
+            resultado:
+                type: object
+                properties:
+                    actualizado:
+                        type: boolean
+                        example: true
+    respuestaActualizaExtendidos:
+      type: object
+      properties:
+          mensaje:
+              type: string
+              example: "Operación Exitosa"
+          folio:
+              type: string
+              example: "ENRO20201124050617040419287517"
+          resultado:
+              type: object
+              properties:
+                  actualizado:
+                      type: boolean
+                      example: true
+    respuestaBloqueosEstatus:
+      type: object
+      properties:
+          mensaje:
+            type: string
+            example: "Operación Exitosa"
+          folio:
+            type: string
+            example: "a052ac4a0314a777-a052ac4a0314a777"
+          resultado:
+            type: object
+            properties:
+              bloqueoClaveSeguridad:
+                  type: boolean
+                  example: true
+    respuestaTokenVerificaciones:
+      type: object
+      properties:
+          mensaje:
+            type: string
+            example: "Operación Exitosa"
+          folio:
+            type: string
+            example: "a052ac4a0314a777-a052ac4a0314a777"
+    error400:
+        type: object
+        properties:
+            codigo:
+                type: string
+                description: Código del error
+                example: "400.superapp-canal-clientes-gestion-usuarios-v1.1001"
+            mensaje:
+                type: string
+                description: Descripción del error
+                example: "Parámetros de entrada incorrectos"
+            folio:
+                type: string
+                description: Número de folio de la operación
+                example: "SAPP2020122903410509363f904cf7"
+            info:
+                type: string
+                description: Rutas de ayuda para atender el error
+                example: "https://baz-developer.bancoazteca.com.mx/info#400.superapp-canal-clientes-gestion-usuarios-v1.1003"
+            detalles:
+                type: array
+                items:
+                    type: string
+                    example: "El parámetro {nombre} es requerido."
+    error404:
+        type: object
+        properties:
+            codigo:
+                type: string
+                description: Código del error
+                example: "404.superapp-canal-clientes-gestion-usuarios-v1.1002"
+            mensaje:
+                type: string
+                description: Descripción del error
+                example: "Recurso no encontrado, favor de validar."
+            folio:
+                type: string
+                description: Número de folio de la operación
+                example: "SAPP2020122903410509363f904cf7"
+            info:
+                type: string
+                description: Rutas de ayuda para atender el error
+                example: "https://baz-developer.bancoazteca.com.mx/info#404.superapp-canal-clientes-gestion-usuarios-v1.1002"
+            detalles:
+                type: array
+                items:
+                    type: string
+                    example: "La solicitud no devolvio informacion"
+    error500:
+        type: object
+        properties:
+            codigo:
+                type: string
+                description: Código del error
+                example: "500.superapp-canal-clientes-gestion-usuarios-v1.1003"
+            mensaje:
+                type: string
+                description: Descripción del error
+                example: "Error inesperado en la aplicación."
+            folio:
+                type: string
+                description: Número de folio de la operación
+                example: "SAPP2020122903410509363f904cf7"
+            info:
+                type: string
+                description: Rutas de ayuda para atender el error
+                example: "https://baz-developer.bancoazteca.com.mx/info#500.superapp-canal-clientes-gestion-usuarios-v1.1003"
+            detalles:
+                type: array
+                items:
+                    type: string
+                    example: "El servidor no pudo resulver la solicitud"
+    summary:
+        type: object
+        properties:
+            api-name:
+                type: string
+                description: API para la gestion de usuarios en superapp
+                example: Enrolameinro-Transformacion-Digital-Gestion-Usuario-v1
+            credenciales-put:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Servicio actualiza datos de la persona
+                        example: credenciales actualizadas correctamente
+            credenciales-recuperacion-put:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Servicio para la recuperacion la contraseña del usuario
+                        example: Servicio para la recuperacion la contraseña del usuario
+            preguntas-seguridad-respuestas-post:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Envia respuestas de seguridad
+            usuarios-correos-put:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Realiza una actualizacion al correo electronico del usuario
+            usuarios-extendidos-put:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Realiza una actualizacion a los usuarios extendidos.
+            clave-seguridad-bloqueos-post:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Servicio para bloquear usuarios.
+            token-verificaciones-post:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Servicio para verificacion del token.
+            operaciones-portal-post:
+                type: object
+                properties:
+                    displayName:
+                        type: string
+                        description: Servicio para operaciones de compra en el Portal

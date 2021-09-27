@@ -1,0 +1,36 @@
+{
+   "idFlujo":"RENTA_PELICULA",
+   "datosFlujo":{
+      "idPelicula":"120105",
+      "nombrePelicula":"El Escuadrón Suicida (2021)",
+      "numeroCuentaClienteCifradoRsa":"T8Kc4mKGnMqcZscWiuFm+c4/Wqd+XBMuFBu7PEnXPxUxy6d9XwQzwzUrt9Y5QoHAVWwyinuLLZa8\nlY7p+qTsXTzLCchx7Y56kSgTnwdIdtnneCAGM0C36UHbP0mJtcfKtVPjgk65ww1fdLSMPgNHl7KV\nlDyVFFPgUZZ9TMMH+Nx7/8BXZP0h+3FJBP1OTZSIeuj4PpdZlW/EC03rpgv1KZgc/2uzGcMQx/Ug\nSTDbeDnfv4hmYLiv8mnNCflOhQhpKkbL8fv7+rQkSXYBlKRrS0IgQIW5XobeaNApA3Y80Rp3Y0va\nb3SLKlFueCU2cXSg8zN2LM9VaArhuULTNHWuyg\u003d\u003d\n",
+      "botonPago":{
+         "section":"mi_diversion",
+         "flow":"mis_peliculas",
+         "amount":"249",
+         "commission":0.0,
+         "concept":"Cargo por renta de película",
+         "idCompany":"TP00000002",
+         "idOperacionConciliacion":"hc9xT1lvH0mWwhtjP1dAwQ",
+         "idReferencePay":"01010000012010520210168",
+         "iva":0.0,
+         "quantity":1,
+         "requireBill":true,
+         "shippingAmount":"249"
+      },
+      "compras":{
+         "calidadPelicula":"HD",
+         "montoCifrado":"KWUSuVfsSzpCdoDlXOF_iMD0OCuJ0HbLQtuzEoKGna8",
+         "numeroReferenciaCifradoAlnova":"ynl4Cu1UginYCoJIz7-yzkSv1WRYA5zEG4Oo3weBJfc",
+         "numeroCuentaClienteCifradoAlnova":"GHt6c-aF1DnMoFHO9fqphlUo49wtrmMXnZKfZnPdVww",
+         "fechaOperacion":"",
+         "numeroMovimiento":"",
+         "peliculaGratuita":false
+      }
+   },
+   "headers":{
+      "x-sicu":"89c6b6f0ba4c428680724d5b1639061a",
+      "x-id-interaccion":"fb970074-b73d-43f5-b472-84dd0e99b214",
+      "x-token-usuario":"b888fcb93d2cbafac9e9d9ef60a1aa6b"
+   }
+}

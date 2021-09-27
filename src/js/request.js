@@ -17,6 +17,19 @@ const request = {
     },
 
     /**
+     * Get movie by id operation.
+     * @param {string} idOperation 
+     */
+    movieById: function(idOperation, success, error) {
+        const url = 'https://apigateway.superappbaz.com/integracion/superapp/canal/clientes/gestion-sesiones/v1/portal/operaciones/' + idOperation;
+        request.send(url, 'GET', undefined, {
+            'x-sicu': '3bad1290ac4600a569162efaa09117ea',
+            'x-id-interaccion': '123e4567-e89b-12d3-a456-426655440000',
+            'x-token-usuario': 'SRfVZrTYvdm7mzzZmcuiDViACkAx'
+        }, success, error);
+    },
+
+    /**
      * Pay.
      * @param {object} headers
      * @param {object} body
