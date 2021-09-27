@@ -1,0 +1,43 @@
+{
+    "mensaje": "Operación Exitosa.",
+    "folio": "759cfc9dac0672a8-759cfc9dac0672a8",
+    "resultado": {
+        "idFlujo": "615235db3fedc927290850d3",
+        "headers": {
+            "x-sicu": "a46a165f2a4746e7abcc4de915c6000d",
+            "x-id-interaccion": "04d8fc1f-0748-4c95-901b-d0f73a81acad",
+            "x-token-usuario": "4070e906b0b39c577789f5971a2a16fb",
+            "x-token-auth-bearer": "eyJraWQiOiJkczdRNlBTbE9ZNStuMnJjXC9PdjJqTGp5eWZRS2VJdmFjRXcwWHlNQm80cz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyNnQ0OWQ1djhrYTZhcTlvZnFiajQyNWU5ZiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiVXN1YXJpb1wvZGVsZXRlIFVzdWFyaW9cL3JlYWQgVXN1YXJpb1wvdXBkYXRlIiwiYXV0aF90aW1lIjoxNjMyNzc3NjUyLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9FaEZuSU9JRzAiLCJleHAiOjE2MzI3ODEyNTIsImlhdCI6MTYzMjc3NzY1MiwidmVyc2lvbiI6MiwianRpIjoiNWM4MDg3ODktYTZiMi00NzQyLWJmMTctMWY5NzMwZjhjYzYyIiwiY2xpZW50X2lkIjoiMjZ0NDlkNXY4a2E2YXE5b2ZxYmo0MjVlOWYifQ.MUtRcnphaZ_OuaXhwfiUWYy50J6CNG6AQtxgBxOqSqhyJNIY0AhgOAP3FiDfrxgJkp7K90dcPTLPaBspQnoZAqrsbv8ZMhSEjZHWxxF2CxadjlHqyrlopPTMPzogBwL8p8duiussJaa90etMGFG5VjAsjCaLTU4frHCxMhrGzJguRW_7WHDPj3qs0GJm03A2HfHFg10PtRrTRz9kZqJXyQwkEsVlIgQ424fNiJGkUWMjQwhUtkKy58saZpO8gbUuSQvwu-KYjGxLVEjUZYXv6fQRiax00pPK6NKOq2chBE43-xmylC74TjNrfYDf44fuyUImq4iY53pmDVN0n82dLg"
+        },
+        "datosFlujo": {
+            "idPelicula": "46929",
+            "nombrePelicula": "Hacia la libertad",
+            "imagenPelicula": "https://imgn.cdn.iutpcdn.com/IMGS/VOD/COVER/347043-8c.jpg",
+            "numeroCuentaClienteCifradoRsa": "Ssk3KapqoUS/cYlFligkKLEa58cT85oxKkvP0fRma02MV490huywFm5mEnLSrEFCRebTHqPf8L0S\nuz7BoKdzD1YdqKK13Mg6oHMlfn/NwGGdGPxECi/mjzGyuW3KCboMeK1BtRY/3HLhw83MttXSVxec\nJvSqkQQf6k65haS8kptW5u2xYS+sL6pQSUnEeGV3tonlR6tfn7u7WX+A8YzaK63CoKBMw5QDfWW4\ngQ+mbynEeu7LpFtOf6AgG1ESwPVyybpqQrz4NSbwlOJN6uwJj6isRc8jUwo0RJ27uGbDZWoYVnbW\n99+GyHB0pK8Mz5/+A6ecZdz5Ep04eHgFhcSgiw==\n",
+            "numeroCuentaClienteCadenaBaz": "baz***3967",
+            "botonPago": {
+                "section": "mi_diversion",
+                "flow": "mis_peliculas",
+                "amount": "55",
+                "commission": 0.0,
+                "concept": "Cargo por renta de película",
+                "idCompany": "TP00000002",
+                "idOperacionConciliacion": "CP88kT1AmvzTNlgnU_LsPA",
+                "idReferencePay": "01010000004692920213967",
+                "iva": 0.0,
+                "quantity": 1,
+                "requireBill": true,
+                "shippingAmount": "55"
+            },
+            "compras": {
+                "calidadPelicula": "HD",
+                "montoCifrado": "1dfFtRHJAn3KJVyd8mONj8ceUhElp_2XtPn3u_P5y4o",
+                "numeroReferenciaCifradoAlnova": "pCfxyA1iCPkvRNLOQ_ParldflCc29U9G7MSpmgosocY",
+                "numeroCuentaClienteCifradoAlnova": "RuFt8OuqbmBUbuj7DnM088ymvBZAZeQ_NdXaAAGngYo",
+                "fechaOperacion": "",
+                "numeroMovimiento": "",
+                "peliculaGratuita": false
+            }
+        }
+    }
+}

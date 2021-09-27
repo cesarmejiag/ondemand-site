@@ -1,5 +1,3 @@
-let environment = false;
-
 /**
  * Bind JSON to HTML.
  * @param {object} values
@@ -116,34 +114,7 @@ function fakeRequest(code, callback) {
  * @param {string} strJson
  */
 function payMovie(strJson) {
-    const handleErr = err => {
-        // const message = typeof err === 'object' ? err.message : err;
-        console.log(JSON.stringify(err));
-        window.webkit.messageHandlers.errorPaymentResponse.postMessage("errorPaymentResponse|" + JSON.stringify(err));
-    }
 
-    window.webkit.messageHandlers.showLoader.postMessage("showLoader");
-
-    try {
-        const json = JSON.parse(strJson);
-
-        request.pay(json['headers'], json['requestBody'], environment, function (payRes) {
-            if (payRes.codigo == '201') {
-                window.webkit.messageHandlers.paymentResponse.postMessage("paymentResponse|" + JSON.stringify({ error: { code: 0, data: payRes } }));
-            } else {
-                handleErr({ error: { code: payRes.codigo, message: payRes.mensaje }, weberror: 900, weberrormessage: "El error lo envío el servicio" });
-            }
-
-            window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
-        }, function (jqXHR, textStatus, errorThrown) {
-            handleErr({ error: { code: 500, message: errorThrown }, weberror: 901, weberrormessage: errorThrown });
-            window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
-        });
-
-    } catch (err) { 
-        handleErr({ error: { code: 500, message: err.message }, weberror: 902, weberrormessage: "Error al hacer la petición" }); 
-        window.webkit.messageHandlers.hideLoader.postMessage("hideLoader");
-    }
 }
 
 /**
@@ -244,9 +215,25 @@ function validateCode() {
 // Initialize Detail Screen components.
 const searchJson = searchToJson();
 
-environment = searchJson['environment'] === 'true';
-// bind(searchJson);
-console.log(searchJson);
+showLoader(true);
+request.movieById(searchJson['idOperacion'], function (data) {
+    changeScreen($('.detail-screen'), function () {
+        const { nombrePelicula, numeroCuentaClienteCadenaBaz, botonPago: { amount } } = data.datosFlujo;
+        
+        $('.detail-screen').find('[data-id="nombre"]').text(nombrePelicula);
+        $('.detail-screen').find('[data-id="precio"]').text(formatAmount(amount));
+        $('.detail-screen').find('[data-id="tarjeta"]').text(numeroCuentaClienteCadenaBaz);
+        
+        showLoader(false);
+    });
+}, function () {
+
+});
+
+
+
+
+
 
 const $advices = $('.advice.fixed');
 
@@ -265,7 +252,7 @@ $('.detail-screen .swipe-btn').swipe({
 
         setTimeout(() => {
             console.log('scripts.js: Open digital sign');
-            window.webkit.messageHandlers.showDigitalSign.postMessage("showDigitalSign");
+
         }, 500);
     }
 });
@@ -283,19 +270,19 @@ $digits.eq(0).focus();
 // Initialize close buttons.
 $('.screen header .close-btn').on('click', function () {
     console.log('scripts.js: Closing WebView');
-    window.webkit.messageHandlers.closeMoviePayment.postMessage("closeMoviePayment");
+
 });
 
 
 // Initialize share button.
 $('.share-btn').on('click', function () {
     console.log('scripts.js: Sharing ticket');
-    window.webkit.messageHandlers.shareTicket.postMessage("shareTicket");
+
 });
 
 
 // Initialize movie button.
 $('.movie-btn').on('click', function () {
     console.log('scripts.js: Play movie');
-    window.webkit.messageHandlers.playMovie.postMessage("playMovie");
+
 });
