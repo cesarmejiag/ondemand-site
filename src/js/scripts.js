@@ -245,7 +245,8 @@ function validateCode() {
 const searchJson = searchToJson();
 
 environment = searchJson['environment'] === 'true';
-bind(searchJson);
+// bind(searchJson);
+console.log(searchJson);
 
 const $advices = $('.advice.fixed');
 
