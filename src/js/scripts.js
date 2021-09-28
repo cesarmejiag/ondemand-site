@@ -229,7 +229,7 @@ request.movieById(searchJson['idOperacion'], function (data) {
         globalHeaders = headers;
 
         $('.detail-screen').find('[data-id="nombre"]').text(nombrePelicula);
-        $('.detail-screen').find('[data-id="precio"]').text(formatAmount(botonPago.transaccion.detallePago.montoEnvio));
+        $('.detail-screen').find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
         $('.detail-screen').find('[data-id="tarjeta"]').text(numeroCuentaClienteCadenaBaz);
         
         showLoader(false);
@@ -263,13 +263,28 @@ $('.detail-screen .swipe-btn').swipe({
             const headers = {
                 "x-sicu": globalHeaders['x-sicu'],
                 "x-id-interaccion": globalHeaders['x-id-interaccion'],
-                "x-token-usuario": globalHeaders['x-token-usuario']
+                "x-token-usuario": globalHeaders['x-token-usuario'],
+                "accept": "",
+                "Authorization": "Bearer " + globalHeaders['x-token-auth-bearer'],
+                "x-nombre-dispositivo": "",
+                "x-id-dispositivo": "",
+                "x-sistema-dispositivo": "",
+                "x-version-dispositivo": "",
+                "x-version-aplicacion": "",
+                "x-modelo-dispositivo": "",
+                "x-fabricante-dispositivo": "",
+                "x-serie-procesador": "",
+                "x-operador-telefonia": "",
+                "x-latitud": "",
+                "x-longitud": "",
+                "x-id-operacion-conciliacion": globalHeaders['x-id-operacion-conciliacion'],
+                "x-id-lealtad": ""
             };
 
             showLoader(true);
-            request.paymentButton(headers, globalBotonPago, function (data) {
+            request.paymentButton({ "transaccion": globalBotonPago }, headers, function (data) {
                 console.log('scripts.js: Payment button. %o', data);
-                request.buyMovie(globalIdPelicula, headers, { ...globalCompras, fechaOperacion: data.resultado.fechaOperacion, numeroMovimiento: data.resultado.fechaOperacion }, function (data) {
+                request.buyMovie(globalIdPelicula, { "transaccion": { ...globalCompras, fechaOperacion: data.resultado.fechaOperacion, numeroMovimiento: data.resultado.fechaOperacion } }, headers, function (data) {
                     console.log('scripts.js: Buy movie. %o', data);
                     changeScreen($('.resume-screen'));
                     showLoader(false);
