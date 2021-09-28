@@ -1,3 +1,5 @@
+let globalIdPelicula, globalBotonPago, globalCompras, globalHeaders;
+
 /**
  * Bind JSON to HTML.
  * @param {object} values
@@ -217,11 +219,17 @@ const searchJson = searchToJson();
 
 showLoader(true);
 request.movieById(searchJson['idOperacion'], function (data) {
+    console.log('%o', data);
     changeScreen($('.detail-screen'), function () {
-        const { nombrePelicula, numeroCuentaClienteCadenaBaz, botonPago: { amount } } = data.datosFlujo;
+        const { datosFlujo: { idPelicula, nombrePelicula, numeroCuentaClienteCadenaBaz, botonPago, compras }, headers } = data.resultado;
         
+        globalIdPelicula = idPelicula;
+        globalBotonPago = botonPago.transaccion;
+        globalCompras = compras.transaccion;
+        globalHeaders = headers;
+
         $('.detail-screen').find('[data-id="nombre"]').text(nombrePelicula);
-        $('.detail-screen').find('[data-id="precio"]').text(formatAmount(amount));
+        $('.detail-screen').find('[data-id="precio"]').text(formatAmount(botonPago.transaccion.detallePago.montoEnvio));
         $('.detail-screen').find('[data-id="tarjeta"]').text(numeroCuentaClienteCadenaBaz);
         
         showLoader(false);
@@ -252,7 +260,21 @@ $('.detail-screen .swipe-btn').swipe({
 
         setTimeout(() => {
             console.log('scripts.js: Open digital sign');
+            const headers = {
+                "x-sicu": globalHeaders['x-sicu'],
+                "x-id-interaccion": globalHeaders['x-id-interaccion'],
+                "x-token-usuario": globalHeaders['x-token-usuario']
+            };
 
+            showLoader(true);
+            request.paymentButton(headers, globalBotonPago, function (data) {
+                console.log('scripts.js: Payment button. %o', data);
+                request.buyMovie(globalIdPelicula, headers, { ...globalCompras, fechaOperacion: data.resultado.fechaOperacion, numeroMovimiento: data.resultado.fechaOperacion }, function (data) {
+                    console.log('scripts.js: Buy movie. %o', data);
+                    changeScreen($('.resume-screen'));
+                    showLoader(false);
+                });
+            });
         }, 500);
     }
 });

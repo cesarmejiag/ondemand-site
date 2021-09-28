@@ -1,19 +1,9 @@
 const request = {
-    /**
-     * Authenticate.
-     * @param {function} success
-     * @param {function} error
-     */
-    auth: function (success, error) {
-        const url = "https://omm6oug5pg.execute-api.us-east-1.amazonaws.com/desarrollo/oauth2/v1/token";
-        const headers = {
-            "Authorization": "Basic " + btoa("18h8vanvrh4pui1lrntc1niljf" + ":" + "1ge31bhjrdk9d0ja14mft8qepi4clkt805jqb2svqvmb4so1v4g7"),
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Cookie": "XSRF-TOKEN=b4a54f1b-afe5-4aee-9a76-00f920418b6e"
-        };
-        const body = "grant_type=client_credentials";
 
-        request.send(url, 'POST', body, headers, success, error);
+    buyMovie: function (idMovie, headers, body, success, error) {
+        const url = 'apigateway.superappbaz.com/integracion/superapp/diversion/gestion-peliculas/v1/peliculas/' + idMovie + '/compras';
+
+        request.send(url, 'POST', body, headers, )
     },
 
     /**
@@ -21,14 +11,14 @@ const request = {
      * @param {string} idOperation 
      */
     movieById: function(idOperation, success, error) {
-        /* const url = 'https://apigateway.superappbaz.com/integracion/superapp/canal/clientes/gestion-sesiones/v1/portal/operaciones/' + idOperation;
+        const url = 'https://apigateway.superappbaz.com/integracion/superapp/canal/clientes/gestion-sesiones/v1/portal/operaciones/' + idOperation;
         request.send(url, 'GET', undefined, {
             'x-sicu': '3bad1290ac4600a569162efaa09117ea',
             'x-id-interaccion': '123e4567-e89b-12d3-a456-426655440000',
             'x-token-usuario': 'SRfVZrTYvdm7mzzZmcuiDViACkAx'
-        }, success, error); */
+        }, success, error);
         
-        setTimeout(function() {
+        /* setTimeout(function() {
             success({
                 "datosFlujo": {
                    "idPelicula": "46657",
@@ -68,27 +58,19 @@ const request = {
                 },
                 "idFlujo": "RENTA_PELICULA"
              });
-        }, 1000);
+        }, 1000); */
     },
 
     /**
-     * Pay.
-     * @param {object} headers
+     * Payment button.
      * @param {object} body
-     * @param {boolean} production
+     * @param {object} headers
      * @param {function} success
      * @param {function} error
      */
-    pay: function (headers, body, production, success, error) {
-        const url = production 
-            ? "https://api.bazappgs.com/superapp/pagos/captacion/traspasos/v1/boton-pago"
-            // ? "https://api.baz.app/superapp/pagos/captacion/traspasos/v1/boton-pago"
-            : "https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago";
-            // : "http://127.0.0.1:3000"
-            
-        const raw = JSON.stringify(body);
-
-        request.send(url, 'POST', raw, headers, success, error);
+    paymentButton: function (body, headers, success, error) {
+        const url = 'https://apigateway.superappbaz.com/integracion/superapp/pagos/captacion/traspasos/v1/boton-pago';
+        request.send(url, 'POST', body, headers, success, error);
     },
 
     /**
