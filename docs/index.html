@@ -146,32 +146,40 @@
         <!-- ./Resume Screen -->
 
         <!-- .Success Screen -->
-        <div class="screen success-screen no-visible">
+        <div class="screen success-screen ">
             <header>
                 <div class="container">
-                    <img src="" alt="logo">
+                    <img src="assets/images/baz-logo.svg" alt="logo">
                 </div>
             </header>
+            <div class="container giftcard-bg">
             <main>
-                <div class="container">
-                    <img class="icon-checked" src="assets/images/icon-checked.svg" alt="icon-checked">
+                <div class="giftcard-logo"></div>
+                <div class="white">
+                    <div class="success"></div>
                     <h3 class="text-center">¡Felicidades!</h3>
                     <div class="text-center">La tarjeta de regalo 
                         <span class="name" data-id="giftcard-name">Spotify Premium</span> de 
                         <span class="price" data-id="giftcard-price">$200.00</span><br/>
                         ya es tuya.
-                    </div>
-                    
-                    <div >
-                        <button class="success-btn">Continuar</button>
-                    </div>
                 </div>
             </main>
+            <footer class="footerCustom">
+                <div>
+                    <div class="swipe-wrapper">
+                        <div class="btn-continuar-custom">
+                            <!-- <div class="text">Desliza para rentar</div> -->
+                            <div class="slider">Continuar</div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
         </div>
         <!-- ./Success Screen -->
 
         <!-- Error Screen -->
-        <div class="screen error-screen">
+        <div class="screen error-screen no-visible">
             <header>
                <img src="" alt="logo">
             </header>
@@ -192,10 +200,9 @@
                         <img src="assets/images/icon-advice.svg" alt="warning pic">
                         <div class="folio">Folio: <span data-id="folio-err">500-21342134213123421342780-230</span></div>
                     </div>
-                    <btn class="reintentar-btn text-center">
-                        <img src="assets/images/icon-advice.svg" alt="warning pic">
-                        Reintentar
-                    </btn>
+                    <div class="reintentar-btn text-center">
+                        <button>Reintentar</button>
+                    </div>
                     <div class="text-center link-salir">Salir</div>
                 </div>
             </main>
