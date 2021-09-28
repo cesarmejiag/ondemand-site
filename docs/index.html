@@ -145,6 +145,63 @@
         </div>
         <!-- ./Resume Screen -->
 
+        <!-- .Success Screen -->
+        <div class="screen success-screen no-visible">
+            <header>
+                <div class="container">
+                    <img src="" alt="logo">
+                </div>
+            </header>
+            <main>
+                <div class="container">
+                    <img class="icon-checked" src="assets/images/icon-checked.svg" alt="icon-checked">
+                    <h3 class="text-center">¡Felicidades!</h3>
+                    <div class="text-center">La tarjeta de regalo 
+                        <span class="name" data-id="giftcard-name">Spotify Premium</span> de 
+                        <span class="price" data-id="giftcard-price">$200.00</span><br/>
+                        ya es tuya.
+                    </div>
+                    
+                    <div >
+                        <button class="success-btn">Continuar</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <!-- ./Success Screen -->
+
+        <!-- Error Screen -->
+        <div class="screen error-screen">
+            <header>
+               <img src="" alt="logo">
+            </header>
+            <main>
+                <div class="container">
+                    <img src="assets/images/icon-advice.svg" alt="warning pic">
+                    <h2>Algo Falló</h2>
+                    <div>Por el momento no podemos completar tu solicitud. Estamos trabajando
+                        para resolverlo.
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="advice reintentar">
+                        <img src="assets/images/icon-advice.svg" alt="warning pic">
+                        <div>Puedes intentar de nuevo.</div>
+                    </div>
+                    <div class="advice folio">
+                        <img src="assets/images/icon-advice.svg" alt="warning pic">
+                        <div class="folio">Folio: <span data-id="folio-err">500-21342134213123421342780-230</span></div>
+                    </div>
+                    <btn class="reintentar-btn text-center">
+                        <img src="assets/images/icon-advice.svg" alt="warning pic">
+                        Reintentar
+                    </btn>
+                    <div class="text-center link-salir">Salir</div>
+                </div>
+            </main>
+        </div>
+        <!-- ./error Screen -->
+
         <script src="assets/js/vendor/jquery.min.js"></script>
         <script src="assets/js/scripts.min.js"></script>
     </body>
