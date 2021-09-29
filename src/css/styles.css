@@ -237,7 +237,8 @@ footer {
 }
 /* Loader */
 .loader {
-    background: #fff;
+    background: #fff center center no-repeat url('../images/loader.svg');
+    background-size: 80px;
     height: 100%;
     left: 0;
     opacity: 0;
@@ -356,6 +357,10 @@ footer {
 
 .detail-screen .swipe-btn .text {
     font-size: 14px;
+}
+
+.detail-screen .button {
+    margin-top: auto;
 }
 
 /* Auth screen */

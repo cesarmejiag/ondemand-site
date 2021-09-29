@@ -227,7 +227,7 @@ function validateCode() {
 const searchJson = searchToJson();
 
 showLoader(true);
-request.movieById(searchJson['idOperacion'], function (data) {
+request.movieById(searchJson['id'], function (data) {
     console.log('%o', data);
     changeScreen($('.detail-screen'), function () {
         const { datosFlujo: { idPelicula, imagenPelicula, nombrePelicula, numeroCuentaClienteCadenaBaz, botonPago, compras, tokenOperacion }, headers } = data.resultado;
