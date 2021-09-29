@@ -527,9 +527,11 @@ footer {
 }
 
 .resume-screen .share-btn {
+    display: none;
     border: 1px solid #252E40;
     border-radius: 15em;
     margin-bottom: 15px;
+    visibility: hidden;
 }
 
 .resume-screen .share-btn::before {
@@ -572,7 +574,7 @@ footer {
 
 .success-screen main::after {
     background: rgb(0, 0, 0);
-    background: linear-gradient(0deg, rgba(0,0,0,1) 25%, rgba(255,255,255,0) 70%);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 45%, rgba(255,255,255,0) 70%);
     content: "";
     display: block;
     height: 100%;
@@ -621,7 +623,7 @@ footer {
 
 .success-screen .product-bg {
     background: no-repeat center top;
-    background-size: cover;
+    background-size: 150%;
     position: absolute;
     height: 100%;
     left: 0;
