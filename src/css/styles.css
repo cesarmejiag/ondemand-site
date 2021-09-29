@@ -248,6 +248,26 @@ footer {
     opacity: .65;
 }
 
+/* Button */
+.button {
+    align-items: center;
+    background: rgb(46 164 0);
+    background: linear-gradient(90deg, rgba(46, 164, 0, 1) 0%, rgba(93, 193, 55, 1) 100%);
+    border: none;
+    border-radius: 5em;
+    color: #fff;
+    display: flex;
+    font-family: 'Poppins Bold', sans-serif;
+    font-size: 18px;
+    height: 48px;
+    justify-content: center;
+    margin-top: auto;
+    padding: 7px 5px;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+}
+
 /* Detail screen */
 .detail-screen main .container {
     min-height: 100%;

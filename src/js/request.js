@@ -9,7 +9,7 @@ const request = {
      * @param {function} error 
      */
     buyMovie: function (idMovie, body, headers, success, error) {
-        const url = 'apigateway.superappbaz.com/integracion/superapp/diversion/gestion-peliculas/v1/peliculas/' + idMovie + '/compras';
+        const url = 'https://apigateway.superappbaz.com/integracion/superapp/diversion/gestion-peliculas/v1/peliculas/' + idMovie + '/compras';
         request.send(url, 'POST', body, headers, success)
     },
 

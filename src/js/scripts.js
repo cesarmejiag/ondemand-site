@@ -1,4 +1,4 @@
-let globalIdPelicula, globalBotonPago, globalCompras, globalHeaders;
+let globalIdPelicula, globalImagenPelicula, globalNombrePelicula, globalNumeroCuentaClienteCadenaBaz, globalBotonPago, globalCompras, globalTokenOperacion, globalHeaders;
 
 /**
  * Bind JSON to HTML.
@@ -44,7 +44,7 @@ function changeScreen($screen, callback) {
     $('.screen').addClass('no-visible');
     $screen.removeClass('no-visible');
 
-    callback();
+    typeof callback === 'function' && callback();
 }
 
 /**
@@ -110,13 +110,6 @@ function fakeRequest(code, callback) {
     setTimeout(() => {
         callback(code === '000001');
     }, 1500);
-}
-
-/**
- * @param {string} strJson
- */
-function payMovie(strJson) {
-
 }
 
 /**
@@ -221,27 +214,27 @@ showLoader(true);
 request.movieById(searchJson['idOperacion'], function (data) {
     console.log('%o', data);
     changeScreen($('.detail-screen'), function () {
-        const { datosFlujo: { idPelicula, nombrePelicula, numeroCuentaClienteCadenaBaz, botonPago, compras }, headers } = data.resultado;
+        const { datosFlujo: { idPelicula, imagenPelicula, nombrePelicula, numeroCuentaClienteCadenaBaz, botonPago, compras, tokenOperacion }, headers } = data.resultado;
         
         globalIdPelicula = idPelicula;
+        globalImagenPelicula = imagenPelicula;
+        globalNombrePelicula = nombrePelicula;
+        globalNumeroCuentaClienteCadenaBaz = numeroCuentaClienteCadenaBaz;
         globalBotonPago = botonPago.transaccion;
         globalCompras = compras.transaccion;
+        globalTokenOperacion = tokenOperacion;
         globalHeaders = headers;
 
-        $('.detail-screen').find('[data-id="nombre"]').text(nombrePelicula);
+        // Fill detail screen.
+        $('.detail-screen').find('[data-id="nombre"]').text(globalNombrePelicula);
         $('.detail-screen').find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
-        $('.detail-screen').find('[data-id="tarjeta"]').text(numeroCuentaClienteCadenaBaz);
+        $('.detail-screen').find('[data-id="tarjeta"]').text(globalNumeroCuentaClienteCadenaBaz);
         
         showLoader(false);
     });
 }, function () {
 
 });
-
-
-
-
-
 
 const $advices = $('.advice.fixed');
 
@@ -254,44 +247,39 @@ $advices.each(function () {
     });
 });
 
-$('.detail-screen .swipe-btn').swipe({
-    cb: function () {
-        showLoader(true);
+$('.rent-button').on('click', function() {
+    console.log('scripts.js: Click rent button.');
 
-        setTimeout(() => {
-            console.log('scripts.js: Open digital sign');
-            const headers = {
-                "x-sicu": globalHeaders['x-sicu'],
-                "x-id-interaccion": globalHeaders['x-id-interaccion'],
-                "x-token-usuario": globalHeaders['x-token-usuario'],
-                "accept": "",
-                "Authorization": "Bearer " + globalHeaders['x-token-auth-bearer'],
-                "x-nombre-dispositivo": "",
-                "x-id-dispositivo": "",
-                "x-sistema-dispositivo": "",
-                "x-version-dispositivo": "",
-                "x-version-aplicacion": "",
-                "x-modelo-dispositivo": "",
-                "x-fabricante-dispositivo": "",
-                "x-serie-procesador": "",
-                "x-operador-telefonia": "",
-                "x-latitud": "",
-                "x-longitud": "",
-                "x-id-operacion-conciliacion": globalHeaders['x-id-operacion-conciliacion'],
-                "x-id-lealtad": ""
-            };
+    const paymentButtonHeaders = { ...globalHeaders };
+    const buyMovieHeaders = { ...globalHeaders };
 
-            showLoader(true);
-            request.paymentButton({ "transaccion": globalBotonPago }, headers, function (data) {
-                console.log('scripts.js: Payment button. %o', data);
-                request.buyMovie(globalIdPelicula, { "transaccion": { ...globalCompras, fechaOperacion: data.resultado.fechaOperacion, numeroMovimiento: data.resultado.fechaOperacion } }, headers, function (data) {
-                    console.log('scripts.js: Buy movie. %o', data);
-                    changeScreen($('.resume-screen'));
-                    showLoader(false);
-                });
-            });
-        }, 500);
-    }
+    delete buyMovieHeaders['x-id-operacion-conciliacion'];
+
+    showLoader(true);
+    request.paymentButton({ "transaccion": { ...globalBotonPago, tokenOperacion: globalTokenOperacion } }, paymentButtonHeaders, function (data) {
+        console.log('scripts.js: Payment button. %o', data);
+
+        const { resultado: { fechaOperacion, horaOperacion } } = data;
+
+        request.buyMovie(globalIdPelicula, { "transaccion": { ...globalCompras, fechaOperacion: data.resultado.fechaOperacion, numeroMovimiento: data.resultado.numeroMovimiento } }, buyMovieHeaders, function (data) {
+            console.log('scripts.js: Buy movie. %o', data);
+
+            const { folio } = data;
+
+            // Fill resume screen.
+            $('.resume-screen').find('[data-id="fecha"]').text(`${fechaOperacion}, ${horaOperacion}`);
+            $('.resume-screen').find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
+            $('.resume-screen').find('[data-id="tarjeta"]').text(globalNumeroCuentaClienteCadenaBaz);
+            $('.resume-screen').find('[data-id="nombre"]').text(globalNombrePelicula);
+            $('.resume-screen').find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
+            $('.resume-screen').find('[data-id="folio"]').text(folio);
+            
+            $('.resume-screen').find('.see-movie-href').attr('href', `intent://?verPelicula?data=${btoa(globalIdPelicula)}#Intent;scheme=sappdl;action=android.intent.action.VIEW;S.browser_fallback_url=https%3A%2F%2Fplay.google.com/store/apps/details?id=mx.app.baz.superapp;end`);
+
+            changeScreen($('.resume-screen'));
+            showLoader(false);
+        });
+    });
 });
 
 
@@ -302,13 +290,6 @@ $digits.on('keypress keydown keyup input change paste', numberFilter)
 $digits.on('keyup', handleDigitKeyup);
 
 $digits.eq(0).focus();
-
-
-// Initialize close buttons.
-$('.screen header .close-btn').on('click', function () {
-    console.log('scripts.js: Closing WebView');
-
-});
 
 
 // Initialize share button.
