@@ -169,6 +169,22 @@ function showLoader(show) {
 }
 
 /**
+ * Show or hide error screen.
+ * @param {jqXHR} jqXHR
+ * @param {string} textStatus
+ * @param {string} errorThrown 
+ */
+function showErrorScreen(jqXHR, textStatus, errorThrown) {
+    const { responseJSON: { folio, mensaje } } = jqXHR;
+
+    $('.error-screen').find('[data-id="mensaje"]').text(mensaje);
+    $('.error-screen').find('[data-id="folio"]').text(folio);
+    
+    changeScreen($('.error-screen'));
+    showLoader(false);
+}
+
+/**
  * Validate code from client.
  * @returns {boolean}
  */
@@ -232,9 +248,7 @@ request.movieById(searchJson['idOperacion'], function (data) {
         
         showLoader(false);
     });
-}, function () {
-
-});
+}, showErrorScreen);
 
 const $advices = $('.advice.fixed');
 
@@ -278,8 +292,8 @@ $('.rent-button').on('click', function() {
 
             changeScreen($('.resume-screen'));
             showLoader(false);
-        });
-    });
+        }, showErrorScreen);
+    }, showErrorScreen);
 });
 
 

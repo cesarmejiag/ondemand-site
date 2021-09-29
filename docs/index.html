@@ -175,7 +175,7 @@
         <!-- ./Success Screen -->
 
         <!-- Error Screen -->
-        <div class="screen error-screen">
+        <div class="screen error-screen no-visible">
             <header>
                 <img src="assets/images/baz-logo.svg" alt="logo">
             </header>
@@ -183,18 +183,20 @@
                 <div class="container">
                     <div class="img-alert"></div>
                     <h1>Algo Falló</h1>
-                    <div>Por el momento no podemos completar tu solicitud. Estamos trabajando
-                        para resolverlo.
-                    </div>
+                    <div data-id="mensaje">Por el momento no podemos completar tu solicitud. Estamos trabajando para resolverlo.</div>
                 </div>
                 <div class="container">
                     <div class="advice reintentar">
-                        <img src="assets/images/retry-img.svg" alt="warning pic">
-                        <div> Puedes intentar de nuevo.</div>
+                        <div class="icon">
+                            <img src="assets/images/retry-img.svg" alt="warning pic">
+                        </div>
+                        <div class="text">Puedes intentar de nuevo.</div>
                     </div>
                     <div class="advice folio">
-                        <img src="assets/images/icon-advice.svg" alt="warning pic">
-                        <div class="folio"> Folio: <span data-id="folio-err">500-21342134213123421342780-230</span></div>
+                        <div class="icon">
+                            <img src="assets/images/icon-advice.svg" alt="warning pic">
+                        </div>
+                        <div class="text">Folio: <span data-id="folio">500-21342134213123421342780-230</span></div>
                     </div>
                 </div>
             </main>
@@ -209,7 +211,7 @@
                 </div>
             </footer>
         </div>
-        <!-- ./error Screen -->
+        <!-- ./Error Screen -->
 
         <script src="assets/js/vendor/jquery.min.js"></script>
         <script src="assets/js/scripts.min.js"></script>

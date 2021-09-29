@@ -633,7 +633,7 @@ background-image: src('/assets/images/background-spotify.PNG');
 }
 
 .error-screen .advice{
-    margin: 0px 0px 10px 0px;
+    margin: 15px 0 0;
 }
 
 .error-screen .advice.retry{
