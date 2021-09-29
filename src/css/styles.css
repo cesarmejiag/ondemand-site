@@ -232,7 +232,6 @@ footer {
     margin-top: 10px;
     padding: 0;
 }
-
 /* Loader */
 .loader {
     background: #fff;
@@ -522,4 +521,111 @@ footer {
 
 .resume-screen .movie-btn {
     color: #7abe4e;
+}
+
+/*success*/
+.success-screen{
+background-image: src('/assets/images/background-spotify.PNG');
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.success-screen .icon-checked{
+    width: 3em;
+}
+
+.success-screen .success {
+    background: no-repeat center center url("../images/icon-checked.svg");
+    height: 68px;
+    margin: 0 auto 40px;
+    width: 68px;
+}
+
+.success-screen .giftcard-bg{
+    background-image: linear-gradient(to bottom, rgba(30,215,96,1) 19%, rgba(0,0,0,1) 79%);  
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.success-screen .giftcard-logo{
+    background: no-repeat center top url("../images/logo-spotify.svg");
+    height: 50%;
+}
+
+.success-screen .white{
+    color: #fff;
+}
+
+.btn-continuar-custom {
+    width: 70% !important;
+    height: 60px !important;
+    align-items: center;
+    background: rgb(46 164 0);
+    background: linear-gradient( 90deg, #2ea400 0, #5dc137 100%);
+    border: none;
+    border-radius: 5em;
+    color: #fff;
+    display: flex;
+    font-family: 'Poppins Bold', sans-serif;
+    font-size: 18px;
+    height: 48px;
+    justify-content: center;
+
+    padding: 7px 5px;
+    position: relative;
+    text-align: center;
+    left: 16%;
+}
+
+.footerCustom{
+    background-color: transparent;
+    padding: 50px 0;
+}
+    /* error-screen*/
+.error-screen .img-alert {
+    background: no-repeat center center url("../images/warning-img.svg");
+    height: 68px;
+    width: 68px;
+}
+
+.error-screen .btn-retry{
+    width: 40% !important;
+    height: 40px !important;
+    align-items: center;
+    background: no-repeat left center url("../images/retry-img.svg");
+    border: solid 1px #151c25;
+    border-radius: 5em;
+    color: #000;
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    height: 48px;
+    justify-content: center;
+    padding: 0px 0px 0px 12px;
+    position: relative;
+    text-align: center;
+    left: 30%;
+}
+
+.error-screen .advice{
+    margin: 0px 0px 10px 0px;
+}
+
+.error-screen .advice.retry{
+    margin: 0px 0px 10px 0px;
+}
+
+.error-screen .btn-salir{
+    background-color: transparent;
+    border: none;
+    color: #5DC137;
+    font-family: 'Poppins Medium',sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 0;    
 }
