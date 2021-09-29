@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-        <meta name = "viewport" content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <title>baz</title>
 
         <!-- Favicons -->
@@ -15,6 +15,52 @@
         <link rel="stylesheet" href="../../assets/css/styles.min.css">
     </head>
     <body>
+        <!-- Monto de Giftcard -->
+        <div class="screen gitCard-amout no-visible">
+            <header>
+                <div class="container">
+                    <img alt="logo" class="logo" src="../../assets/images/baz-logo.svg">
+                </div>
+            </header>
+            <main>
+                <div class="container">
+                    <div class="setHomeBorder">
+                        <div class="name"><b>1. ¿Qué servicio pagas?</b></div>
+                        <div class="price" data-id="nombre">Spotify Premium</div>
+                    </div>
+                    <div class="account question-big">2. ¿Cuánto quieres pagar?</div>
+                    <div><b>Monto</b></div>
+                    <div class="Rectangle-5 colorPrice">
+                        <select class="seleccionFormatter">
+                            <option selected="0"> Selecciona</option>
+                            <option value="30.00" class="colorPrice"><span class="colorPrice">$30.00</span></option>
+                            <option value="50.00" class="colorPrice"><span class="colorPrice">$50.00</span></option>
+                            <option value="100.00" class="colorPrice"><span class="colorPrice">$100.00</span></option>
+                            <option value="200.00" class="colorPrice"><span class="colorPrice">$200.00</span></option>
+                        </select>
+                        <img src="../../assets/images/icon-chevron-down.svg" class="icon-chevron-down">
+                    </div>
+
+                    <button class="button">Continuar</button>
+                </div>
+            </main>
+
+            <!-- Advice -->
+            <!-- <div class="advice advice-warning fixed no-visible" data-id="saldo">
+                <button class="close-btn">Cerrar</button>
+
+                <div class="icon">
+                    <img src="../../assets/images/icon-advice.svg" alt="Icono avíso">
+                </div>
+                <div class="text">
+                    <div>No tienes saldo suficiente en tu cuenta.</div>
+                    <button class="btn">Recargar cuenta</button>
+                </div>
+            </div> -->
+            <!-- ./Advice -->
+        </div>
+        <!-- ./Detail Screen -->
+
         <!-- Detail Screen -->
         <div class="screen detail-screen no-visible">
             <header>
@@ -47,7 +93,7 @@
             <!-- Advice -->
             <div class="advice advice-warning fixed no-visible" data-id="saldo">
                 <button class="close-btn">Cerrar</button>
-    
+
                 <div class="icon">
                     <img src="../../assets/images/icon-advice.svg" alt="Icono avíso">
                 </div>
@@ -59,36 +105,6 @@
             <!-- ./Advice -->
         </div>
         <!-- ./Detail Screen -->
-
-        <!-- Auth Screen -->
-        <div class="screen auth-screen no-visible">
-            <header>
-                <div class="container">
-                    <img alt="logo" class="logo" src="../../assets/images/baz-logo.svg">
-                </div>
-            </header>
-            <main>
-                <div class="container">
-                    <div class="text-center">Ingresa tu clave para autorizar la operación</div>
-                    <div class="code">
-                        <div class="is-valid"></div>
-                        <div class="digits">
-                            <div class="digit"><input maxlength="1" pattern="[0-9]*" inputmode="numeric" type="password" autocomplete="off"></div>
-                            <div class="digit"><input maxlength="1" pattern="[0-9]*" inputmode="numeric" type="password" autocomplete="off"></div>
-                            <div class="digit"><input maxlength="1" pattern="[0-9]*" inputmode="numeric" type="password" autocomplete="off"></div>
-                            <div class="digit"><input maxlength="1" pattern="[0-9]*" inputmode="numeric" type="password" autocomplete="off"></div>
-                            <div class="digit"><input maxlength="1" pattern="[0-9]*" inputmode="numeric" type="password" autocomplete="off"></div>
-                            <div class="digit"><input maxlength="1" pattern="[0-9]*" inputmode="numeric" type="password" autocomplete="off"></div>
-                        </div>
-                        <div class="hint">Son 6 números.</div>
-                    </div>
-                    <div>
-                        <button class="forgot-btn">Olvidé mi clave</button>
-                    </div>
-                </div>
-            </main>
-        </div>
-        <!-- ./Auth Screen -->
 
         <!-- Resume Screen -->
         <div class="screen resume-screen no-visible">
