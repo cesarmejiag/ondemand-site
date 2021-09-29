@@ -14,10 +14,7 @@
         <div class="screen detail-screen no-visible">
             <header>
                 <div class="container">
-                    <div class="relative">
-                        <button class="close-btn">Cerrar</button>
-                        <h1>Rentar pelicula</h1>
-                    </div>
+                    <img alt="logo" class="logo" src="assets/images/baz-logo.svg">
                 </div>
             </header>
             <main>
@@ -62,10 +59,7 @@
         <div class="screen auth-screen no-visible">
             <header>
                 <div class="container">
-                    <div class="relative">
-                        <button class="close-btn">Cerrar</button>
-                        <h1>Clave</h1>
-                    </div>
+                    <img alt="logo" class="logo" src="assets/images/baz-logo.svg">
                 </div>
             </header>
             <main>
@@ -94,16 +88,19 @@
         <!-- Resume Screen -->
         <div class="screen resume-screen no-visible">
             <header>
-                <button class="close-btn">Cerrar</button>
+                <div class="container">
+                    <img alt="logo" class="logo" src="assets/images/baz-logo.svg">
+                </div>
             </header>
             <main>
+                <div class="baz-heading"></div>
                 <div class="container">
                     <div class="success"></div>
 
                     <h2>Renta exitosa</h2>
                     <div class="date" data-id="fecha">15 Jul 2021, 14:06</div>
                     <div class="price">
-                        <div class="amount">$55.00</div>
+                        <div class="amount" data-id="precio">$55.00</div>
                         <div><small>IVA incluido.</small></div>
                     </div>
                 </div>
@@ -133,7 +130,6 @@
                         <div>
                             <button class="share-btn">Compartir</button>
                             <button class="movie-btn">Continuar</button>
-                            <a class="see-movie-href button" href="#">Ver película</a>
                         </div>
                     </div>
                 </div>
@@ -145,39 +141,32 @@
         <div class="screen success-screen no-visible">
             <header>
                 <div class="container">
-                    <img src="assets/images/baz-logo.svg" alt="logo">
+                    <img alt="logo" class="logo" src="assets/images/baz-logo.svg">
                 </div>
             </header>
-            <div class="container giftcard-bg">
             <main>
-                <div class="giftcard-logo"></div>
-                <div class="white">
-                    <div class="success"></div>
-                    <h3 class="text-center">¡Felicidades!</h3>
-                    <div class="text-center">La tarjeta de regalo 
-                        <span class="name" data-id="giftcard-name">Spotify Premium</span> de 
-                        <span class="price" data-id="giftcard-price">$200.00</span><br/>
-                        ya es tuya.
-                </div>
-            </main>
-            <footer class="footerCustom">
-                <div>
-                    <div class="swipe-wrapper">
-                        <div class="btn-continuar-custom">
-                            <!-- <div class="text">Desliza para rentar</div> -->
-                            <div class="slider">Continuar</div>
-                        </div>
+                <!-- <div class="giftcard-logo"></div> -->
+                <div class="container">
+                    <div class="white">
+                        <div class="success"></div>
+                        <h1>¡Felicidades!</h1>
+                        <p data-id="nombre">American Pie Present: Girls Rules</p>
+                        <p>Ya es tuya por 24 hrs</p>
+
+                        <a class="see-movie-href button" href="#">Ver película</a>
                     </div>
                 </div>
-            </footer>
-        </div>
+                <div class="product-bg" data-id="imagen" style="background-image: url('https://imgn.cdn.iutpcdn.com/IMGS/VOD/COVER/344438-8c.jpg')"></div>
+            </main>
         </div>
         <!-- ./Success Screen -->
 
         <!-- Error Screen -->
         <div class="screen error-screen no-visible">
             <header>
-                <img src="assets/images/baz-logo.svg" alt="logo">
+                <div class="container">
+                    <img alt="logo" class="logo" src="assets/images/baz-logo.svg">
+                </div>
             </header>
             <main>
                 <div class="container">
@@ -186,12 +175,12 @@
                     <div data-id="mensaje">Por el momento no podemos completar tu solicitud. Estamos trabajando para resolverlo.</div>
                 </div>
                 <div class="container">
-                    <div class="advice reintentar">
+                    <!-- <div class="advice reintentar">
                         <div class="icon">
                             <img src="assets/images/retry-img.svg" alt="warning pic">
                         </div>
                         <div class="text">Puedes intentar de nuevo.</div>
-                    </div>
+                    </div> -->
                     <div class="advice folio">
                         <div class="icon">
                             <img src="assets/images/icon-advice.svg" alt="warning pic">
@@ -200,7 +189,7 @@
                     </div>
                 </div>
             </main>
-            <footer class="footerCustom">
+            <!-- <footer class="footerCustom">
                 <div>
                     <div >
                         <div class="btn-retry">
@@ -209,7 +198,7 @@
                         <div class="btn-salir">Salir</div>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
         </div>
         <!-- ./Error Screen -->
 

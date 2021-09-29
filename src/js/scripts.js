@@ -287,8 +287,6 @@ $('.rent-button').on('click', function() {
             $('.resume-screen').find('[data-id="nombre"]').text(globalNombrePelicula);
             $('.resume-screen').find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
             $('.resume-screen').find('[data-id="folio"]').text(folio);
-            
-            $('.resume-screen').find('.see-movie-href').attr('href', `intent://?verPelicula?data=${btoa(globalIdPelicula)}#Intent;scheme=sappdl;action=android.intent.action.VIEW;S.browser_fallback_url=https%3A%2F%2Fplay.google.com/store/apps/details?id=mx.app.baz.superapp;end`);
 
             changeScreen($('.resume-screen'));
             showLoader(false);
@@ -315,6 +313,17 @@ $('.share-btn').on('click', function () {
 
 // Initialize movie button.
 $('.movie-btn').on('click', function () {
-    console.log('scripts.js: Play movie');
+    console.log('scripts.js: Go to movie button click.');
 
+    $('.success-screen').find('[data-id="nombre"]').text(globalNombrePelicula);
+    $('.success-screen').find('.see-movie-href').attr('href', `intent://?verPelicula?data=${btoa(globalIdPelicula)}#Intent;scheme=sappdl;action=android.intent.action.VIEW;S.browser_fallback_url=https%3A%2F%2Fplay.google.com/store/apps/details?id=mx.app.baz.superapp;end`);
+
+    // Wait for image is already loaded.
+    if (globalImagenPelicula) {
+        $(`<img src="${globalImagenPelicula}">`).on('load', function() {
+            $('.success-screen').find('[data-id="imagen"]').attr('style', `background-image: url(${globalImagenPelicula})`).addClass('displayed');
+        });
+    }
+
+    changeScreen($('.success-screen'));
 });

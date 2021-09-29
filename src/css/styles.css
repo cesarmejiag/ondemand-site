@@ -146,8 +146,11 @@ button {
 }
 
 header {
-    text-align: center;
     padding: 20px 0;
+}
+
+header .logo {
+    display: block;
 }
 
 header .close-btn {
@@ -258,10 +261,11 @@ footer {
     color: #fff;
     display: flex;
     font-family: 'Poppins Bold', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     height: 48px;
     justify-content: center;
-    margin-top: auto;
+    margin: 0 auto;
+    max-width: 235px;
     padding: 7px 5px;
     text-align: center;
     text-decoration: none;
@@ -437,25 +441,20 @@ footer {
 }
 
 /* Resume screen */
-.resume-screen header {
-    background: no-repeat center center url("../images/resume-header.svg");
-    background-size: 100% auto;
-    margin-bottom: -10%;
-    padding: 0;
-    position: relative;
-}
-
-.resume-screen header::before {
-    content: "";
-    display: block;
-    padding-bottom: 52.22222%;
-}
-
 .resume-screen header .close-btn {
     background: transparent no-repeat center center url("../images/icon-close-white.svg");
     background-size: 16px auto;
     left: 30px;
     top: 32px;
+}
+
+.resume-screen .baz-heading {
+    background: no-repeat center center url("../images/resume-header.svg");
+    background-size: 100% auto;
+    content: "";
+    display: block;
+    margin-bottom: -10px;
+    padding-bottom: 52.22222%;
 }
 
 .resume-screen .success {
@@ -543,42 +542,145 @@ footer {
     color: #7abe4e;
 }
 
-/*success*/
-.success-screen{
-background-image: src('/assets/images/background-spotify.PNG');
-  background-repeat: no-repeat;
-  background-position: top;
+/* Success Screen */
+.success-screen {
+    background-image: src('/assets/images/background-spotify.png');
+    background-repeat: no-repeat;
+    background-position: top;
 }
 
-.success-screen .icon-checked{
+.success-screen .icon-checked {
     width: 3em;
+}
+
+.success-screen main {
+    align-items: flex-end;
+    background: #000;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    display: flex;
+    padding-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.success-screen main::after {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 25%, rgba(255,255,255,0) 70%);
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.success-screen .container {
+    width: 100%;
 }
 
 .success-screen .success {
     background: no-repeat center center url("../images/icon-checked.svg");
     height: 68px;
-    margin: 0 auto 40px;
+    margin: 0 auto 30px;
     width: 68px;
 }
 
-.success-screen .giftcard-bg{
-    background-image: linear-gradient(to bottom, rgba(30,215,96,1) 19%, rgba(0,0,0,1) 79%);  
-    border-top-left-radius: 35px;
-    border-top-right-radius: 35px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-
-}
-
-.success-screen .giftcard-logo{
+.success-screen .giftcard-logo {
     background: no-repeat center top url("../images/logo-spotify.svg");
     height: 50%;
 }
 
-.success-screen .white{
+.success-screen .white {
     color: #fff;
+    text-align: center;
+}
+
+.success-screen h1 {
+    font-family: 'Poppins Bold', sans-serif;
+    font-size: 22px;
+    margin: 0 0 .5em;
+    text-align: center;
+}
+
+.success-screen p {
+    margin: 0 0 .25em;
+}
+
+.success-screen .button {
+    margin-top: 35px
+}
+
+.success-screen .product-bg {
+    background: no-repeat center top;
+    background-size: cover;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    transition: opacity 575ms, transform 575ms;
+    transform: scale(1.1);
+    top: 0;
+    width: 100%;
+    z-index: -2;
+}
+
+.success-screen .product-bg.displayed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Error screen */
+.error-screen .img-alert {
+    background: no-repeat center center url("../images/warning-img.svg");
+    height: 48px;
+    width: 48px;
+}
+
+.error-screen h1 {
+    font-family: 'Poppins Bold', sans-serif;
+    font-size: 22px;
+    margin: 15px 0 5px;
+}
+
+.error-screen .btn-retry {
+    width: 40% !important;
+    height: 40px !important;
+    align-items: center;
+    background: no-repeat left center url("../images/retry-img.svg");
+    border: solid 1px #151c25;
+    border-radius: 5em;
+    color: #000;
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    height: 48px;
+    justify-content: center;
+    padding: 0px 0px 0px 12px;
+    position: relative;
+    text-align: center;
+    left: 30%;
+}
+
+.error-screen .advice {
+    margin: 15px 0 0;
+}
+
+.error-screen .advice.retry {
+    margin: 0px 0px 10px 0px;
+}
+
+.error-screen .btn-salir {
+    background-color: transparent;
+    border: none;
+    color: #5DC137;
+    font-family: 'Poppins Medium',sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 0;    
 }
 
 .btn-continuar-custom {
@@ -602,50 +704,7 @@ background-image: src('/assets/images/background-spotify.PNG');
     left: 16%;
 }
 
-.footerCustom{
+.footerCustom {
     background-color: transparent;
     padding: 50px 0;
-}
-    /* error-screen*/
-.error-screen .img-alert {
-    background: no-repeat center center url("../images/warning-img.svg");
-    height: 68px;
-    width: 68px;
-}
-
-.error-screen .btn-retry{
-    width: 40% !important;
-    height: 40px !important;
-    align-items: center;
-    background: no-repeat left center url("../images/retry-img.svg");
-    border: solid 1px #151c25;
-    border-radius: 5em;
-    color: #000;
-    display: flex;
-    font-family: 'Poppins', sans-serif;
-    font-size: 18px;
-    height: 48px;
-    justify-content: center;
-    padding: 0px 0px 0px 12px;
-    position: relative;
-    text-align: center;
-    left: 30%;
-}
-
-.error-screen .advice{
-    margin: 15px 0 0;
-}
-
-.error-screen .advice.retry{
-    margin: 0px 0px 10px 0px;
-}
-
-.error-screen .btn-salir{
-    background-color: transparent;
-    border: none;
-    color: #5DC137;
-    font-family: 'Poppins Medium',sans-serif;
-    font-size: 14px;
-    margin-top: 10px;
-    padding: 0;    
 }
