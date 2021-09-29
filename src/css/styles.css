@@ -232,7 +232,6 @@ footer {
     margin-top: 10px;
     padding: 0;
 }
-
 /* Loader */
 .loader {
     background: #fff;
@@ -586,5 +585,47 @@ background-image: src('/assets/images/background-spotify.PNG');
 .footerCustom{
     background-color: transparent;
     padding: 50px 0;
-    
+}
+    /* error-screen*/
+.error-screen .img-alert {
+    background: no-repeat center center url("../images/warning-img.svg");
+    height: 68px;
+    width: 68px;
+}
+
+.error-screen .btn-retry{
+    width: 40% !important;
+    height: 40px !important;
+    align-items: center;
+    background: no-repeat left center url("../images/retry-img.svg");
+    border: solid 1px #151c25;
+    border-radius: 5em;
+    color: #000;
+    display: flex;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    height: 48px;
+    justify-content: center;
+    padding: 0px 0px 0px 12px;
+    position: relative;
+    text-align: center;
+    left: 30%;
+}
+
+.error-screen .advice{
+    margin: 0px 0px 10px 0px;
+}
+
+.error-screen .advice.retry{
+    margin: 0px 0px 10px 0px;
+}
+
+.error-screen .btn-salir{
+    background-color: transparent;
+    border: none;
+    color: #5DC137;
+    font-family: 'Poppins Medium',sans-serif;
+    font-size: 14px;
+    margin-top: 10px;
+    padding: 0;    
 }

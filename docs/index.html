@@ -146,7 +146,7 @@
         <!-- ./Resume Screen -->
 
         <!-- .Success Screen -->
-        <div class="screen success-screen ">
+        <div class="screen success-screen no-visible">
             <header>
                 <div class="container">
                     <img src="assets/images/baz-logo.svg" alt="logo">
@@ -179,33 +179,39 @@
         <!-- ./Success Screen -->
 
         <!-- Error Screen -->
-        <div class="screen error-screen no-visible">
+        <div class="screen error-screen">
             <header>
-               <img src="" alt="logo">
+                <img src="assets/images/baz-logo.svg" alt="logo">
             </header>
             <main>
                 <div class="container">
-                    <img src="assets/images/icon-advice.svg" alt="warning pic">
-                    <h2>Algo Falló</h2>
+                    <div class="img-alert"></div>
+                    <h1>Algo Falló</h1>
                     <div>Por el momento no podemos completar tu solicitud. Estamos trabajando
                         para resolverlo.
                     </div>
                 </div>
                 <div class="container">
                     <div class="advice reintentar">
-                        <img src="assets/images/icon-advice.svg" alt="warning pic">
-                        <div>Puedes intentar de nuevo.</div>
+                        <img src="assets/images/retry-img.svg" alt="warning pic">
+                        <div> Puedes intentar de nuevo.</div>
                     </div>
                     <div class="advice folio">
                         <img src="assets/images/icon-advice.svg" alt="warning pic">
-                        <div class="folio">Folio: <span data-id="folio-err">500-21342134213123421342780-230</span></div>
+                        <div class="folio"> Folio: <span data-id="folio-err">500-21342134213123421342780-230</span></div>
                     </div>
-                    <div class="reintentar-btn text-center">
-                        <button>Reintentar</button>
-                    </div>
-                    <div class="text-center link-salir">Salir</div>
                 </div>
             </main>
+            <footer class="footerCustom">
+                <div>
+                    <div >
+                        <div class="btn-retry">
+                            <div class="slider">Reintentar</div>
+                        </div>
+                        <div class="btn-salir">Salir</div>
+                    </div>
+                </div>
+            </footer>
         </div>
         <!-- ./error Screen -->
 
