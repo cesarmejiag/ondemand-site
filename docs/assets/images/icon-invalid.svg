@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>mdpi/Group</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.752941 0 0 0 0 0.168627 0 0 0 0 0.172549 0 0 0 1.000000 0"/>
+        </filter>
+    </defs>
+    <g id="measure" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Aprobado_04-Copy-3" transform="translate(-180.000000, -181.000000)">
+            <g id="Group" transform="translate(44.000000, 165.000000)">
+                <g id="Iconos-sistema/accion/sds-icons-error" transform="translate(136.000000, 16.000000)">
+                    <g id="warning_black_24dp">
+                        <rect id="Rectangle" x="0" y="0" width="18" height="18"/>
+                        <path d="M3.3525,15.375 L14.6475,15.375 C15.8025,15.375 16.5225,14.1225 15.945,13.125 L10.2975,3.3675 C9.72,2.37 8.28,2.37 7.7025,3.3675 L2.055,13.125 C1.4775,14.1225 2.1975,15.375 3.3525,15.375 Z M9,10.125 C8.5875,10.125 8.25,9.7875 8.25,9.375 L8.25,7.875 C8.25,7.4625 8.5875,7.125 9,7.125 C9.4125,7.125 9.75,7.4625 9.75,7.875 L9.75,9.375 C9.75,9.7875 9.4125,10.125 9,10.125 Z M9.75,13.125 L8.25,13.125 L8.25,11.625 L9.75,11.625 L9.75,13.125 Z" id="Shape" fill="#fc3737" fill-rule="nonzero"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
