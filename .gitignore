@@ -1,8 +1,8 @@
 # Folders
 node_modules
+docs/assets
 
 # Files
 yarn-error.log
 yarn.lock
-docs/assets/css/styles.min.css
-docs/assets/js/scripts.min.css
+package-lock.json
