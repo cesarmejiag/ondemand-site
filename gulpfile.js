@@ -102,6 +102,20 @@ function styles(cb) {
 
 
 /**
+ * Copy all vendors to public folder.
+ * @param {function} cb
+ */
+function vendors (cb) {
+    const files = [
+        `${srcPath.js}/vendor/**/*.*`
+    ]
+
+    return src(files)
+        .pipe(dest(`${destPath.js}/vendor`))
+}
+
+
+/**
  * Handle watch event.
  * @param {function} cb 
  */
@@ -121,6 +135,7 @@ exports.fonts   = fonts
 exports.images  = images
 exports.scripts = scripts
 exports.styles  = styles
+exports.vendors = vendors
 exports.watcher = watcher
 
-exports.build = series(fonts, images, scripts, styles)
+exports.build = series(fonts, images, scripts, styles, vendors)

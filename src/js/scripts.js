@@ -179,10 +179,10 @@ function showLoader(show) {
  * @param {string} errorThrown
  */
 function showErrorScreen(jqXHR, textStatus, errorThrown) {
-  const { responseJSON: { folio, mensaje }, } = jqXHR;
-
-  $(".error-screen").find('[data-id="mensaje"]').text(mensaje);
-  $(".error-screen").find('[data-id="folio"]').text(folio);
+  const genericError = 'Tuvimos un problema al conectar con nuestros servicios.';
+  
+  $(".error-screen").find('[data-id="mensaje"]').text(jqXHR.responseJSON?.mensaje || genericError);
+  $(".error-screen").find('[data-id="folio"]').text(jqXHR.responseJSON?.folio || '-');
 
   changeScreen($(".error-screen"));
   showLoader(false);
