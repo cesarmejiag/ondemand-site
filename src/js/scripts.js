@@ -68,6 +68,31 @@ function formatAmount(amount) {
 }
 
 /**
+ * Determine the mobile operating system.
+ * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
+ * @returns {String}
+ */
+function getMobileOperatingSystem() {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  // Windows Phone must come first because its UA also contains "Android"
+  if (/windows phone/i.test(userAgent)) {
+    return "Windows Phone";
+  }
+
+  if (/android/i.test(userAgent)) {
+    return "Android";
+  }
+
+  // iOS detection from: http://stackoverflow.com/a/9039885/177710
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    return "iOS";
+  }
+
+  return "unknown";
+}
+
+/**
  * Handle digit keyup event.
  * @param {KeyboardEvent} event
  */
@@ -131,7 +156,7 @@ function searchToJson() {
 
   for (; i < pairs.length; i++) {
     if (pairs[i] === "") { continue; }
-    
+
     const parts = pairs[i].split("=");
     object[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
   }
@@ -180,9 +205,13 @@ function showLoader(show) {
  */
 function showErrorScreen(jqXHR, textStatus, errorThrown) {
   const genericError = 'Tuvimos un problema al conectar con nuestros servicios.';
-  
-  $(".error-screen").find('[data-id="mensaje"]').text(jqXHR.responseJSON?.mensaje || genericError);
-  $(".error-screen").find('[data-id="folio"]').text(jqXHR.responseJSON?.folio || '-');
+
+  $(".error-screen")
+    .find('[data-id="mensaje"]')
+    .text(jqXHR.responseJSON?.mensaje || genericError);
+  $(".error-screen")
+    .find('[data-id="folio"]')
+    .text(jqXHR.responseJSON?.folio || "-");
 
   changeScreen($(".error-screen"));
   showLoader(false);
@@ -261,10 +290,17 @@ request.movieById(
         $('.gitCard-amout').find('[data-id="montos"]').append(optionEl);
       });
 
-
       changeScreen($(".gitCard-amout"));
     } else {
-      const { idPelicula, imagenPelicula, nombrePelicula, numeroCuentaClienteCadenaBaz, botonPago, compras, tokenOperacion, } = datosFlujo;
+      const {
+        idPelicula,
+        imagenPelicula,
+        nombrePelicula,
+        numeroCuentaClienteCadenaBaz,
+        botonPago,
+        compras,
+        tokenOperacion,
+      } = datosFlujo;
 
       globalIdPelicula = idPelicula;
       globalImagenPelicula = imagenPelicula;
@@ -276,8 +312,12 @@ request.movieById(
 
       // Fill detail screen.
       $(".detail-screen").find('[data-id="nombre"]').text(globalNombrePelicula);
-      $(".detail-screen").find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
-      $(".detail-screen").find('[data-id="tarjeta"]').text(globalNumeroCuentaClienteCadenaBaz);
+      $(".detail-screen")
+        .find('[data-id="precio"]')
+        .text(formatAmount(globalBotonPago.detallePago.montoEnvio));
+      $(".detail-screen")
+        .find('[data-id="tarjeta"]')
+        .text(globalNumeroCuentaClienteCadenaBaz);
 
       changeScreen($(".detail-screen"));
     }
@@ -310,18 +350,26 @@ $(".rent-button").on("click", function () {
       console.log("scripts.js: Payment button. %o", data);
 
       const { resultado: { fechaOperacion, horaOperacion }, } = data;
-
       request.buyMovie(globalIdPelicula, { transaccion: { ...globalCompras, fechaOperacion: data.resultado.fechaOperacion, numeroMovimiento: data.resultado.numeroMovimiento, }, }, buyMovieHeaders, function (data) {
           console.log("scripts.js: Buy movie. %o", data);
 
           const { folio } = data;
-
           // Fill resume screen.
-          $(".resume-screen").find('[data-id="fecha"]').text(`${fechaOperacion}, ${horaOperacion}`);
-          $(".resume-screen").find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
-          $(".resume-screen").find('[data-id="tarjeta"]').text(globalNumeroCuentaClienteCadenaBaz);
-          $(".resume-screen").find('[data-id="nombre"]').text(globalNombrePelicula);
-          $(".resume-screen").find('[data-id="precio"]').text(formatAmount(globalBotonPago.detallePago.montoEnvio));
+          $(".resume-screen")
+            .find('[data-id="fecha"]')
+            .text(`${fechaOperacion}, ${horaOperacion}`);
+          $(".resume-screen")
+            .find('[data-id="precio"]')
+            .text(formatAmount(globalBotonPago.detallePago.montoEnvio));
+          $(".resume-screen")
+            .find('[data-id="tarjeta"]')
+            .text(globalNumeroCuentaClienteCadenaBaz);
+          $(".resume-screen")
+            .find('[data-id="nombre"]')
+            .text(globalNombrePelicula);
+          $(".resume-screen")
+            .find('[data-id="precio"]')
+            .text(formatAmount(globalBotonPago.detallePago.montoEnvio));
           $(".resume-screen").find('[data-id="folio"]').text(folio);
 
           changeScreen($(".resume-screen"));
@@ -350,14 +398,24 @@ $(".share-btn").on("click", function () {
 // Initialize movie button.
 $(".movie-btn").on("click", function () {
   console.log("scripts.js: Go to movie button click.");
+  console.log("scripts.js: %s detected.", getMobileOperatingSystem());
+
+  const seeMovieHref = getMobileOperatingSystem() === 'iOS' 
+    ? `gssapp://?verPelicula?data=${btoa(globalIdPelicula)}`
+    : `intent://?verPelicula?data=${btoa(globalIdPelicula)}#Intent;scheme=sappdl;action=android.intent.action.VIEW;S.browser_fallback_url=https%3A%2F%2Fplay.google.com/store/apps/details?id=mx.app.baz.superapp;end`;
 
   $(".success-screen").find('[data-id="nombre"]').text(globalNombrePelicula);
-  $(".success-screen").find(".see-movie-href").attr("href", `intent://?verPelicula?data=${btoa(globalIdPelicula)}#Intent;scheme=sappdl;action=android.intent.action.VIEW;S.browser_fallback_url=https%3A%2F%2Fplay.google.com/store/apps/details?id=mx.app.baz.superapp;end`);
+  $(".success-screen")
+    .find(".see-movie-href")
+    .attr("href", seeMovieHref);
 
   // Wait for image is already loaded.
   if (globalImagenPelicula) {
     $(`<img src="${globalImagenPelicula}">`).on("load", function () {
-      $(".success-screen").find('[data-id="imagen"]').attr("style", `background-image: url(${globalImagenPelicula})`).addClass("displayed");
+      $(".success-screen")
+        .find('[data-id="imagen"]')
+        .attr("style", `background-image: url(${globalImagenPelicula})`)
+        .addClass("displayed");
     });
   }
 
