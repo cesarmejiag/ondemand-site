@@ -7,7 +7,8 @@ let globalIdPelicula,
   globalTokenOperacion,
   globalHeaders,
   globalGiftCard,
-  globalGiftCardPayment;
+  globalGiftCardPayment,
+  globalValueId;
 
 /**
  * Bind JSON to HTML.
@@ -116,6 +117,15 @@ function handleDigitKeyup({ target, keyCode }) {
   }
 
   validateCode();
+}
+
+/**
+ * Mask account.
+ * @param {string} account
+ * @returns {string}
+ */
+function maskAccount(account) {
+  return account.replace(/(\d+)(?=\d{4})/, "baz ***");
 }
 
 /**
@@ -261,7 +271,7 @@ function validateCode() {
 const searchJson = searchToJson();
 
 showLoader(true);
-request.movieById(
+request.operationById(
   searchJson["id"],
   function (data) {
     console.log("%o", data);
@@ -277,17 +287,27 @@ request.movieById(
       globalGiftCardPayment = giftCardPayment;
 
       $('.gitCard-amout').find('[data-id="nombre"]').text(globalGiftCard.name);
-      $('.gitCard-amout').find('[data-id="montos"]').empty();
+      
+      const $selectAmount = $('.gitCard-amout').find('[data-id="montos"]');
+      $selectAmount.empty();
 
       globalGiftCard.amounts.forEach(amount => {
-        const optionEl = document.createElement('option');
+        if (amount.precios.length > 0 && amount.precios) {
+          const optionEl = document.createElement('option');
 
-        optionEl.setAttribute('value', amount.id);
-        optionEl.innerText = formatAmount(amount.precios);
-        optionEl.obj = amount;
-        optionEl.classList.add('colorPrice');
+          optionEl.setAttribute('value', amount.id);
+          optionEl.innerText = formatAmount(amount.precios[0]);
+          optionEl.obj = amount;
+          optionEl.classList.add('colorPrice');
 
-        $('.gitCard-amout').find('[data-id="montos"]').append(optionEl);
+          $selectAmount.append(optionEl);
+        }
+      });
+
+
+      globalValueId = $selectAmount.val();
+      $selectAmount.on('change', function() {
+        globalValueId = $selectAmount.val();
       });
 
       changeScreen($(".gitCard-amout"));
@@ -420,4 +440,39 @@ $(".movie-btn").on("click", function () {
   }
 
   changeScreen($(".success-screen"));
+});
+
+// Change screen gitCard-amout -> detail-screen
+$('.gitCard-amout .button').on('click', function() {
+  console.log('scripts.js: Go to resume screen.');
+
+  const { name, amounts } = globalGiftCard;
+  const { transaccion: { transaccionOperacion: { cuenta } } } = globalGiftCardPayment;
+  const amount = amounts.find(a => a.id === globalValueId);
+
+  $(".detail-screen").find('[data-id="tarjeta"]').text(maskAccount(cuenta));
+  $(".detail-screen").find('[data-id="servicio"]').text(name);
+  $(".detail-screen").find('[data-id="precio"]').text(formatAmount(amount.precios[0]));
+
+  changeScreen($('.detail-screen'));
+});
+
+// Change screen detail-screen -> resume-screen
+$('.detail-screen .pay-button').on('click', function() {
+  console.log('scripts.js: Pay giftcard');
+
+  const { amounts } = globalGiftCard;
+  const body = { ...globalGiftCardPayment };
+  const amount = amounts.find(a => a.id === globalValueId);
+  
+  body.transaccion.transaccionOperacion.monto = amount.precios[0];
+
+  showLoader(true);
+  request.paymentGiftcard(globalValueId, body, globalHeaders, function (data) {
+    console.log(data);
+
+
+    changeScreen($(".resume-screen"));
+    showLoader(false);
+  }, showErrorScreen);
 });

@@ -306,11 +306,32 @@ footer {
   font-size: 20px;
 }
 
-.detail-screen .card-value {
-  background: transparent no-repeat left center url("../images/icon-card.svg");
+.detail-screen .concept {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 20px 0;
+}
+
+.detail-screen .concept:last-child {
+  border-bottom: none;
+}
+
+.detail-screen .concept h3 {
+  color: #747f92;
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+
+.detail-screen .card-value,
+.detail-screen .service-value,
+.detail-screen .price-value {
+  background: transparent no-repeat left center;
   background-size: 25px auto;
   padding-left: 45px;
 }
+
+.detail-screen .card-value { background-image: url("../images/icon-card.svg"); }
+.detail-screen .service-value { background-image: url("../images/icon-giftcard.svg"); text-transform: capitalize; }
+.detail-screen .price-value { background-image: url("../images/icon-payment.svg"); }
 
 .detail-screen .advice {
   margin-top: 40px;
@@ -828,6 +849,7 @@ footer {
   color: #747f92;
   font-size: 14px;
   margin-top: 5px;
+  text-transform: capitalize;
 }
 
 .gitCard-amoutn .amount {
@@ -858,6 +880,7 @@ footer {
 
 .gitCard-amout .seleccionFormatter {
   appearance: none;
+  background: transparent;
   border: solid 1px #d8d8d8;
   border-radius: 10px;
   color: #747f92;
