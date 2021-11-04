@@ -421,7 +421,7 @@ $(".movie-btn").on("click", function () {
   console.log("scripts.js: %s detected.", getMobileOperatingSystem());
 
   const seeMovieHref = getMobileOperatingSystem() === 'iOS' 
-    ? `gssapp://?verPelicula?data=${btoa(globalIdPelicula)}`
+    ? `gssapp://sapp?flowName=GSIFMod&data=${btoa(globalIdPelicula)}`
     : `intent://?verPelicula?data=${btoa(globalIdPelicula)}#Intent;scheme=sappdl;action=android.intent.action.VIEW;S.browser_fallback_url=https%3A%2F%2Fplay.google.com/store/apps/details?id=mx.app.baz.superapp;end`;
 
   $(".success-screen").find('[data-id="nombre"]').text(globalNombrePelicula);
