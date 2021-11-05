@@ -69,6 +69,17 @@ function formatAmount(amount) {
 }
 
 /**
+ * Get today date.
+ * @returns {string}
+ */
+function getTodayDate() {
+  const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+  const date = new Date();
+
+  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}`;
+}
+
+/**
  * Determine the mobile operating system.
  * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
  * @returns {String}
@@ -390,7 +401,9 @@ $(".rent-button").on("click", function () {
           $(".resume-screen")
             .find('[data-id="precio"]')
             .text(formatAmount(globalBotonPago.detallePago.montoEnvio));
-          $(".resume-screen").find('[data-id="folio"]').text(folio);
+          $(".resume-screen")
+            .find('[data-id="folio"]')
+            .text(folio);
 
           changeScreen($(".resume-screen"));
           showLoader(false);
@@ -417,7 +430,7 @@ $(".share-btn").on("click", function () {
 
 // Initialize movie button.
 $(".movie-btn").on("click", function () {
-  console.log("scripts.js: Go to movie button click.");
+  console.log("scripts.js: Movie button click.");
   console.log("scripts.js: %s detected.", getMobileOperatingSystem());
 
   const seeMovieHref = getMobileOperatingSystem() === 'iOS' 
@@ -461,7 +474,8 @@ $('.gitCard-amout .button').on('click', function() {
 $('.detail-screen .pay-button').on('click', function() {
   console.log('scripts.js: Pay giftcard');
 
-  const { amounts } = globalGiftCard;
+  const { name, amounts } = globalGiftCard;
+  const { transaccion: { transaccionOperacion: { cuenta } } } = globalGiftCardPayment;
   const body = { ...globalGiftCardPayment };
   const amount = amounts.find(a => a.id === globalValueId);
   
@@ -469,10 +483,53 @@ $('.detail-screen .pay-button').on('click', function() {
 
   showLoader(true);
   request.paymentGiftcard(globalValueId, body, globalHeaders, function (data) {
-    console.log(data);
-
+    console.log("scripts.js: Payment giftcard. %o", data);
 
     changeScreen($(".resume-screen"));
+
+    // Fill resume screen.
+    $(".resume-screen")
+      .find('[data-id="fecha"]')
+      .text(getTodayDate());
+    $(".resume-screen")
+      .find('[data-id="precio"]')
+      .text(formatAmount(amount.precios[0]));
+    $(".resume-screen")
+      .find('[data-id="tarjeta"]')
+      .text(maskAccount(cuenta));
+    $(".resume-screen")
+      .find('[data-id="nombre"]')
+      .text(name);
+    $(".resume-screen")
+      .find('[data-id="precio"]')
+      .text(formatAmount(amount.precios[0]));
+    $(".resume-screen")
+      .find('[data-id="folio"]')
+      .text(data.folio);
+
     showLoader(false);
   }, showErrorScreen);
+});
+
+// Change screen resume-screen -> success-screen
+$('.giftcard-btn').on('click', function() {
+  console.log("scripts.js: Giftcard button click.");
+
+  const { name, amounts } = globalGiftCard;
+  const amount = amounts.find(a => a.id === globalValueId);
+  const giftcards = ["amazon", "blim", "nintendo", "playstation", "spotify", "uber", "xbox", "netflix", "cinepolis"];
+
+  $(".success-screen").find('[data-id="nombre"]').text(name);
+  $(".success-screen").find('[data-id="precio"]').text(formatAmount(amount.precios[0]));
+
+  if (giftcards.indexOf(name) !== -1) {
+    $(`<img src="../../assets/images/logo-${name}.png">`).on("load", function () {
+      $(".success-screen")
+        .find('[data-id="imagen"]')
+        .attr("style", `background-image: url(../../assets/images/logo-${name}.png)`)
+        .addClass("displayed");
+    });
+  }
+
+  changeScreen($(".success-screen"));
 });

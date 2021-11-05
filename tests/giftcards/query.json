@@ -1,0 +1,54 @@
+{
+  "mensaje": "Operación Exitosa.",
+  "folio": "4cbaae30288bb29c-4cbaae30288bb29c",
+  "resultado": {
+    "idFlujo": "COMPRA_GIFTCARD",
+    "headers": {
+      "x-id-dispositivo": "2793EBCA05A34BCFAF1DD3D96724EF85",
+      "x-sistema-dispositivo": "iOS",
+      "x-nombre-dispositivo": "iPhone de Cristian Eduardo",
+      "x-version-dispositivo": "15.1",
+      "x-operador-telefonia": "AT&T",
+      "Accept": "*/*",
+      "x-fabricante-dispositivo": "Apple",
+      "Content-Type": "application/json",
+      "x-latitud": "19.309362770521343",
+      "x-longitud": "-99.18719187657021",
+      "x-serie-procesador": "00000000-0000-0000-0000-000000000000",
+      "Authorization": "Bearer eyJraWQiOiJKMmhRXC9xbGJyeEYxXC9iazBOa1I3eHd5d1Z1UGE5dmxXTkF3Tm1IYlVhd2s9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIzanEzMW9sMDFoZjk2Y2MwdjM1aDlncDJnayIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoic3VwZXJhcHAtcHJvZFwvcHJvZCIsImF1dGhfdGltZSI6MTYzNjA2NDEyOSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfQ1JGNHJBNUMwIiwiZXhwIjoxNjM2MDY3NzI5LCJpYXQiOjE2MzYwNjQxMjksInZlcnNpb24iOjIsImp0aSI6IjU3YmFhOThjLThhOWMtNGM1ZC04YTFjLThhY2MzZDhkMjI1OSIsImNsaWVudF9pZCI6IjNqcTMxb2wwMWhmOTZjYzB2MzVoOWdwMmdrIn0.otFPCEvtU8gOopyjRgDXX0GpvidUhPcrR8-3KdB4E6-RG7TzH3wTKIU-4RFY16snm2dyOI0xr5DFg_4PQMmtidlWqLXkjy2u9oy00xRxeAHcWYcaoe5F_cz1KZPB5tRz1l0TGDBeF02C8Bd6KF9uxMoBu12CkEABLLUTaar4IdHM19K9lI5ayB9RficvJlq0WvZxy1kyan0TwztfV23WztkBF-r1z_tEKJmOh_wnV7o84MdV2K4Y0a9woh2oOJhx8xVGMEbTZFcrc6PHMKV7bK0AXodKIwKrFinntEahojJdcBzPNhSw3MHnHLz9kNINkN0nT_hGadEOary6dywQ_A",
+      "x-id-lealtad": "",
+      "x-token-usuario": "9f7afe7ac89b59788a53064129a229aa",
+      "x-id-interaccion": "663D61E5-7BE9-4D04-8B46-958EE1DCED7F",
+      "x-version-aplicacion": "1.1.2",
+      "x-modelo-dispositivo": "iPhone 12 Mini",
+      "x-sicu": "df73ab81e14b48ecb365cefac703f22c"
+    },
+    "datosFlujo": {
+      "giftCard": {
+        "amount": 0,
+        "phone": "5611728189",
+        "id": "",
+        "email": "JUSTCRISTIANVILLEGAS@GMAIL.COM",
+        "commission": "",
+        "name": "uber",
+        "amounts": [
+          { "id": "13725", "comision": "3.75", "precios": ["150.00"] }
+        ]
+      },
+      "giftCardPayment": {
+        "transaccion": {
+          "geolocalizacion": {
+            "latitud": "19.309362770521343",
+            "longitud": "-99.18719187657021"
+          },
+          "transaccionOperacion": { "monto": "", "cuenta": "11561200000019" },
+          "token": "25060908",
+          "notificacion": {
+            "celular": "5611728189",
+            "correo": "JUSTCRISTIANVILLEGAS@GMAIL.COM"
+          }
+        }
+      }
+    }
+  }
+}

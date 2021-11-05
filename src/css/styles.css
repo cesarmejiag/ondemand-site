@@ -102,6 +102,10 @@ button {
   text-align: center;
 }
 
+.text-capitalize {
+  text-transform: capitalize;
+}
+
 .hide {
   display: none !important;
   visibility: hidden !important;
@@ -193,6 +197,7 @@ footer {
   border-radius: 12px;
   display: flex;
   font-size: 14px;
+  margin-bottom: 25px;
   padding: 15px 20px;
 }
 
@@ -541,7 +546,8 @@ footer {
 }
 
 .resume-screen .share-btn,
-.resume-screen .movie-btn {
+.resume-screen .movie-btn,
+.resume-screen .giftcard-btn {
   background-color: transparent;
   border: none;
   display: block;
@@ -572,7 +578,8 @@ footer {
   width: 17px;
 }
 
-.resume-screen .movie-btn {
+.resume-screen .movie-btn,
+.resume-screen .giftcard-btn {
   color: #7abe4e;
 }
 
@@ -660,6 +667,11 @@ footer {
   top: 0;
   width: 100%;
   z-index: -2;
+}
+
+.success-screen .giftcard-bg {
+  background: no-repeat center -60%;
+  background-size: 100%;
 }
 
 .success-screen .product-bg.displayed {
