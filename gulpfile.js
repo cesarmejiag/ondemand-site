@@ -1,6 +1,7 @@
 const { src, dest, series, watch } = require('gulp')
     , autoprefixer = require('gulp-autoprefixer')
     , babel        = require('gulp-babel')
+    , browserify   = require('browserify')
     , concat       = require('gulp-concat')
     , cleanCss     = require('gulp-clean-css')
     , sourcemaps   = require('gulp-sourcemaps')
@@ -52,7 +53,7 @@ function images(cb) {
  * Concat, minimize js files and copy to public folder.
  * @param {function} cb 
  */
-function scripts(cb) {
+function _scripts(cb) {
     const files = [
         // `${srcPath.js}/jquery.swipe.js`,
         `${srcPath.js}/request.js`,
@@ -71,6 +72,25 @@ function scripts(cb) {
         .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(dest(`${destPath.js}`))
+}
+
+
+/**
+ * Boundling, minimize js files and copy to public folder.
+ */
+function scripts() {
+    const opts = {
+        basedir: ".",
+        debug: true,
+        entries: [`${srcPath.js}/scripts.js`],
+        cache: {},
+        packageCache: {},
+    };
+
+    return browserify(opts)
+        .bundle()
+        .pipe(source("bundle.js"))
+        .pipe(gulp.dest(`${destPath.js}`));
 }
 
 
