@@ -1,9 +1,12 @@
 const { src, dest, series, watch } = require('gulp')
     , autoprefixer = require('gulp-autoprefixer')
     , babel        = require('gulp-babel')
+    , babelify     = require('babelify')
+    , buffer       = require('vinyl-buffer')
     , browserify   = require('browserify')
     , concat       = require('gulp-concat')
     , cleanCss     = require('gulp-clean-css')
+    , source       = require('vinyl-source-stream')
     , sourcemaps   = require('gulp-sourcemaps')
     , uglify       = require('gulp-uglify')
 
@@ -88,9 +91,14 @@ function scripts() {
     };
 
     return browserify(opts)
+        .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
         .bundle()
-        .pipe(source("bundle.js"))
-        .pipe(gulp.dest(`${destPath.js}`));
+        .pipe(source("scripts.min.js"))
+        .pipe(buffer())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(dest(`${destPath.js}`));
 }
 
 

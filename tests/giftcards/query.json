@@ -32,7 +32,8 @@
         "commission": "",
         "name": "uber",
         "amounts": [
-          { "id": "13725", "comision": "3.75", "precios": ["150.00"] }
+          { "id": "13725", "comision": "3.75", "precios": ["150.00"] },
+          { "id": "13726", "comision": "3.84", "precios": ["175.00"] }
         ]
       },
       "giftCardPayment": {
