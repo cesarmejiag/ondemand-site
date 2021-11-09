@@ -53,32 +53,6 @@ function images(cb) {
 
 
 /**
- * Concat, minimize js files and copy to public folder.
- * @param {function} cb 
- */
-function _scripts(cb) {
-    const files = [
-        // `${srcPath.js}/jquery.swipe.js`,
-        `${srcPath.js}/request.js`,
-        `${srcPath.js}/scripts.js`
-    ]
-
-    const babelInit = {
-        // presets: ['@babel/env']
-        presets: ['@babel/preset-env']
-    }
-
-    return src(files)
-        .pipe(sourcemaps.init())
-        .pipe(concat('scripts.min.js'))
-        .pipe(babel(babelInit))
-        .pipe(uglify())
-        .pipe(sourcemaps.write())
-        .pipe(dest(`${destPath.js}`))
-}
-
-
-/**
  * Boundling, minimize js files and copy to public folder.
  */
 function scripts() {

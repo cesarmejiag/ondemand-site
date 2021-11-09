@@ -1,10 +1,5 @@
 import { request } from "./request";
-import {
-  bind,
-  changeScreen,
-  showErrorScreen,
-  showLoader,
-} from "./screen-utils";
+import { bind, changeScreen, showErrorScreen, showLoader } from "./screen-utils";
 import { formatAmount, getTodayDate } from "./utils";
 
 let globals = {};
