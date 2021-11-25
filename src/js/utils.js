@@ -34,6 +34,14 @@ export const getTodayDate = () => {
 };
 
 /**
+ * Send notification to google analtyics.
+ * @param {Object} data
+ */
+export const gaEvent = ({ cateogry, action, label }) => {
+  console.log('utils.js: ')
+};
+
+/**
  * Determine the mobile operating system.
  * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
  * @returns {String}
