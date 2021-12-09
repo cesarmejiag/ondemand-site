@@ -1,6 +1,6 @@
 import { request } from "./request";
-import { bind, changeScreen, showErrorScreen, showLoader } from "./screen-utils";
-import { formatAmount, getTodayDate } from "./utils";
+import { changeScreen, showErrorScreen, showLoader } from "./screen-utils";
+import { formatAmount, ga, getTodayDate } from "./utils";
 
 let globals = {};
 
@@ -27,16 +27,23 @@ const showDetailScreen = () => {
   const { name } = globals.giftCard;
   const { transaccion: { transaccionOperacion: { cuenta } } } = globals.giftCardPayment;
 
-  bind($(".detail-screen"), {
+  // Attach click handler to change the view.
+  $(".detail-screen .pay-button").on("click", () => {
+    showResumeScreen();
+    ga('ui_interaction', {
+      "screen_name": "resumen",
+      "type": "click",
+      "element": "pagar"
+    });
+  });
+
+  changeScreen($(".detail-screen"), {
     tarjeta: cuenta,
     servicio: name,
     precio: globals.selectedAmount.precios[0],
+  }, {
+    "screen_name": "resumen"
   });
-
-  // Attach click handler to change the view.
-  $(".detail-screen .pay-button").on("click", showResumeScreen);
-
-  changeScreen($(".detail-screen"));
 };
 
 /**
@@ -52,21 +59,30 @@ const showResumeScreen = () => {
     const { name } = giftCard;
     const { transaccion: { transaccionOperacion: { cuenta } } } = giftCardPayment;
 
-    bind($(".resume-screen"), {
+    // Attach click handler to change the view.
+    $(".resume-screen .giftcard-btn").on("click", () => {
+      showSuccessScreen();
+      ga('ui_interaction', {
+        "screen_name": "pago_exitoso",
+        "type": "click",
+        "element": "continuar"
+      });
+    });
+
+    console.log("giftcard.js: Show resume screen.");
+
+    changeScreen($(".resume-screen"), {
       fecha: getTodayDate(),
       precio: selectedAmount.precios[0],
       tarjeta: cuenta,
       nombre: name,
       folio: data.folio
+    }, {
+      "event_name": "pago_tarjetas_digitales_success",
+      "screen_name": "pago_exitoso",
+      "product": name,
+      "amount": formatAmount(selectedAmount.precios[0])
     });
-
-    console.log("giftcard.js: Show resume screen.");
-
-    changeScreen($(".resume-screen"));
-    showLoader(false);
-
-    // Attach click handler to change the view.
-    $(".resume-screen .giftcard-btn").on("click", showSuccessScreen);
 
   }, showErrorScreen);
 };
@@ -83,11 +99,6 @@ const showSuccessScreen = () => {
     "spotify", "uber", "xbox", "netflix", "cinepolis",
   ];
 
-  bind($(".success-screen"), {
-    nombre: name,
-    precio: selectedAmount.precios[0]
-  });
-
   if (giftcards.indexOf(name) !== -1) {
     $(`<img src="../../assets/images/logo-${name}.png">`).on("load", function () {
         $(".success-screen")
@@ -98,7 +109,12 @@ const showSuccessScreen = () => {
     );
   }
 
-  changeScreen($(".success-screen"));
+  changeScreen($(".success-screen"), {
+    nombre: name,
+    precio: selectedAmount.precios[0]
+  }, {
+    "screen_name": "felicidades"
+  });
 };
 
 /**
@@ -117,11 +133,6 @@ export const initGiftcard = (data) => {
   globals = { ...globals, headers, giftCard, giftCardPayment };
   console.log("giftcard.js: Stored globals %o", globals);
 
-  bind($(".gitCard-amout"), {
-    nombre: name,
-    montos: createAmountOptions(amounts),
-  });
-
   // Store first value and attach change handler to update selectedAmount.
   globals.selectedAmount = $amountsSelect
     .find("option:selected")
@@ -134,8 +145,19 @@ export const initGiftcard = (data) => {
   });
 
   // Attach click handler to change the view.
-  $(".gitCard-amout .button").on("click", showDetailScreen);
+  $(".gitCard-amout .button").on("click", () => {
+    showDetailScreen();
+    ga('ui_interaction', {
+      "screen_name": "elegir_monto",
+      "type": "click",
+      "element": "continuar"
+    });
+  });
 
-  changeScreen($(".gitCard-amout"));
-  showLoader(false);
+  changeScreen($(".gitCard-amout"), {
+    nombre: name,
+    montos: createAmountOptions(amounts),
+  }, {
+    "screen_name": "elegir_monto"
+  });
 };

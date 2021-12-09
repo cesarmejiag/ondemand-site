@@ -1,4 +1,4 @@
-import { formatAmount, maskAccount } from "./utils";
+import { formatAmount, ga, maskAccount } from "./utils";
 
 /**
  * Bind JSON values to HTML elements.
@@ -43,13 +43,17 @@ export const bindFromStr = (strJson) => {
 /**
  * Change screen.
  * @param {jQuery} $screen
- * @param {function} callback
+ * @param {object} data
+ * @param {object} gaData
  */
-export const changeScreen = ($screen, callback) => {
+export const changeScreen = ($screen, data = {}, gaData = {}) => {
   $(".screen").addClass("no-visible");
   $screen.removeClass("no-visible");
 
-  typeof callback === "function" && callback();
+  bind($screen, data);
+  ga('page_view', gaData);
+
+  showLoader(false);
 };
 
 /**
@@ -92,11 +96,13 @@ export const showLoader = (show) => {
  * @param {string} errorThrown
  */
 export const showErrorScreen = (jqXHR) => {
-  bind($(".error-screen"), {
+  changeScreen($(".error-screen"), {
     mensaje: jqXHR.responseJSON?.mensaje || "Tuvimos un problema al conectar con nuestros servicios.",
     folio: jqXHR.responseJSON?.folio || "-",
+  }, {
+    "event_name": "error_sp",
+    "screen_name": "fallo",
+    "type": "system_error",
+    "id": jqXHR.responseJSON?.folio || "-",
   });
-
-  changeScreen($(".error-screen"));
-  showLoader(false);
 };

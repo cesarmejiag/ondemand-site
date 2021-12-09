@@ -1,5 +1,5 @@
 import { request } from "./request";
-import { searchToJson } from "./utils";
+import { searchToJson, setGa } from "./utils";
 import { showAdvice, showLoader, showErrorScreen } from "./screen-utils";
 import { initGiftcard } from "./giftcard";
 import { initMovies } from "./movies";
@@ -11,13 +11,13 @@ showLoader(true);
 request.operationById(id, (data) => {
   const { resultado: { idFlujo } } = data;
 
+  setGa(idFlujo);
+
   if (idFlujo === 'COMPRA_GIFTCARD') {
     initGiftcard(data);
   } else {
     initMovies(data);
   }
-
-  showLoader(false);
 }, showErrorScreen);
 
 // Initialize advices.

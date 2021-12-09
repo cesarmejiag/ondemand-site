@@ -1,3 +1,5 @@
+const gaParams = {};
+
 /**
  * Capitalize text.
  * @param {string} text 
@@ -35,10 +37,19 @@ export const getTodayDate = () => {
 
 /**
  * Send notification to google analtyics.
- * @param {Object} data
+ * @param {string} eventName
+ * @param {object} params 
  */
-export const gaEvent = ({ cateogry, action, label }) => {
-  console.log('utils.js: ')
+export const ga = (eventName, params) => {
+  if ('dataLayer' in window) {
+    console.log(`Google Analytics: event: ${eventName} params: %o`, params);
+
+    dataLayer.push({
+      'event_name': eventName,
+      ...gaParams,
+      ...params
+    })
+  }
 };
 
 /**
@@ -91,4 +102,20 @@ export const searchToJson = () => {
   }
 
   return object;
+};
+
+/**
+ * Set common ga params to use in events.
+ * @param {string} idFlow 
+ */
+export const setGa = (idFlow) => {
+  gaParams["event"] = "trackGA4";
+
+  if (idFlow === 'COMPRA_GIFTCARD') {
+    gaParams["flow"] = "pago_tarjetas_digitales";
+    gaParams["section"] = "mis_pagos";
+  } else {
+    gaParams["flow"] = "mis_peliculas";
+    gaParams["section"] = "mi_diversion";
+  }
 };
