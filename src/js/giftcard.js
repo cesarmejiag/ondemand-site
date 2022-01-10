@@ -37,6 +37,8 @@ const showDetailScreen = () => {
     });
   });
 
+  console.log(globals);
+
   changeScreen($(".detail-screen"), {
     tarjeta: cuenta,
     servicio: name,
@@ -51,12 +53,14 @@ const showDetailScreen = () => {
  */
 const showResumeScreen = () => {
   const { headers, giftCard, giftCardPayment, selectedAmount } = globals;
+  const { name } = giftCard;
   const body = { ...giftCardPayment };
-  body.transaccion.transaccionOperacion.monto = selectedAmount.precios[0];
 
+  body.transaccion.transaccionOperacion.monto = selectedAmount.precios[0];
+  headers['x-id-marca-tarjeta'] = `${selectedAmount.id} | ${name}`;
   showLoader(true);
+
   request.paymentGiftcard(selectedAmount.id, body, headers, (data) => {
-    const { name } = giftCard;
     const { transaccion: { transaccionOperacion: { cuenta } } } = giftCardPayment;
 
     // Attach click handler to change the view.
