@@ -15,8 +15,6 @@ export const bind = ($screen, values) => {
 
     if (id === "precio") {
       $tag.text(formatAmount(value));
-    } else if (id === "montos") {
-      $tag.empty().append(value);
     } else if (id === "tarjeta") {
       $tag.text(maskAccount(value));
     } else if (id === "imagen") {

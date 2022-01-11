@@ -1,0 +1,11 @@
+{
+  "resultado": {
+    "horaOperacion": "15:41",
+    "descripcionOrigen": "Compras de productos de Elektr",
+    "descripcionDestino": "",
+    "fechaOperacion": "2022-01-10",
+    "numeroMovimiento": "000000005"
+  },
+  "folio": "e4f531b00a1e6253-e4f531b00a1e6253",
+  "mensaje": "Operación Exitosa."
+}

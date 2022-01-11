@@ -37,8 +37,6 @@ const showDetailScreen = () => {
     });
   });
 
-  console.log(globals);
-
   changeScreen($(".detail-screen"), {
     tarjeta: cuenta,
     servicio: name,
@@ -137,6 +135,9 @@ export const initGiftcard = (data) => {
   globals = { ...globals, headers, giftCard, giftCardPayment };
   console.log("giftcard.js: Stored globals %o", globals);
 
+  // Set options to select
+  $amountsSelect.empty().append(createAmountOptions(amounts));
+
   // Store first value and attach change handler to update selectedAmount.
   globals.selectedAmount = $amountsSelect
     .find("option:selected")
@@ -160,7 +161,6 @@ export const initGiftcard = (data) => {
 
   changeScreen($(".gitCard-amout"), {
     nombre: name,
-    montos: createAmountOptions(amounts),
   }, {
     "screen_name": "elegir_monto"
   });

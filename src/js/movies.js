@@ -1,5 +1,5 @@
 import { request } from "./request";
-import { formatAmount, ga } from "./utils";
+import { formatAmount, ga, getMobileOperatingSystem } from "./utils";
 import { changeScreen, showErrorScreen, showLoader } from "./screen-utils";
 
 let globals = {};
@@ -10,7 +10,7 @@ let globals = {};
 const showResumeScreen = () => {
   const { headers, datosFlujo } = globals;
   const { idPelicula, botonPago, tokenOperacion, numeroCuentaClienteCadenaBaz, nombrePelicula } = datosFlujo;
-  const body = { transaccion: { ...botonPago, tokenOperacion } };
+  const body = { transaccion: { ...botonPago.transaccion, tokenOperacion } };
 
   showLoader(true);
   request.paymentButton(body, headers, (data) => {
@@ -35,7 +35,7 @@ const showResumeScreen = () => {
 
       changeScreen($(".resume-screen"), {
         fecha: `${fechaOperacion}, ${horaOperacion}`,
-        precio: botonPago.detallePago.montoEnvio,
+        precio: botonPago.transaccion.detallePago.montoEnvio,
         tarjeta: numeroCuentaClienteCadenaBaz,
         nombre: nombrePelicula,
         folio: folio 
@@ -44,7 +44,7 @@ const showResumeScreen = () => {
         'screen_name': 'disfruta_pelicula',
         'title': nombrePelicula,
         'category': "",
-        'price': formatAmount(botonPago.detallePago.montoEnvio),
+        'price': formatAmount(botonPago.transaccion.detallePago.montoEnvio),
       });
     }, showErrorScreen);
   }, showErrorScreen);
@@ -100,7 +100,7 @@ export const initMovies = (data) => {
   const { nombrePelicula, botonPago, numeroCuentaClienteCadenaBaz } = datosFlujo;
 
   // Store globals, their will be used again in other services.
-  globals = { ...globals, ...datosFlujo, headers };
+  globals = { ...globals, datosFlujo, headers };
   console.log("movies.js: Stored globals %o", globals);
   
   // Attach click handler to change the view.

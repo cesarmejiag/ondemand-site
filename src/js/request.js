@@ -12,7 +12,19 @@ export const request = {
    */
   buyMovie(idMovie, body, headers, success, error) {
     const url = `${request.BASE_URL}/diversion/gestion-peliculas/v1/peliculas/${idMovie}/compras`;
-    request.send(url, "POST", body, headers, success, error);
+    // request.send(url, "POST", body, headers, success, error);
+
+    setTimeout(() =>{
+      success({
+        "mensaje": "Operación Exitosa.",
+        "folio": "268dbfa372e64531-268dbfa372e64531",
+        "resultado": {
+          "description": "Operación realizada con éxito",
+          "idResult": "178363385",
+          "result": "0"
+        }
+      });
+    }, 1000);
   },
 
   /**
@@ -28,7 +40,80 @@ export const request = {
       "x-token-usuario": "SRfVZrTYvdm7mzzZmcuiDViACkAx",
     };
     // request.send(url, "GET", undefined, headers, success, error);
-    success({"mensaje":"Operación Exitosa.","folio":"3a4961bec6696fe7-3a4961bec6696fe7","resultado":{"idFlujo":"COMPRA_GIFTCARD","headers":{"x-id-dispositivo":"2793EBCA05A34BCFAF1DD3D96724EF85","x-sistema-dispositivo":"iOS","x-nombre-dispositivo":"iPhone de Cristian Eduardo","x-version-dispositivo":"15.1.1","x-operador-telefonia":"AT&T","Accept":"*/*","x-fabricante-dispositivo":"Apple","Content-Type":"application/json","x-latitud":"19.27955118009466","x-longitud":"-99.18507884265779","x-serie-procesador":"00000000-0000-0000-0000-000000000000","Authorization":"Bearer eyJraWQiOiJkczdRNlBTbE9ZNStuMnJjXC9PdjJqTGp5eWZRS2VJdmFjRXcwWHlNQm80cz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxOGg4dmFudnJoNHB1aTFscm50YzFuaWxqZiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiVXN1YXJpb1wvZGVsZXRlIFVzdWFyaW9cL3JlYWQgVXN1YXJpb1wvdXBkYXRlIiwiYXV0aF90aW1lIjoxNjQxODU1MzAxLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9FaEZuSU9JRzAiLCJleHAiOjE2NDE4NTg5MDEsImlhdCI6MTY0MTg1NTMwMSwidmVyc2lvbiI6MiwianRpIjoiZmQ3NGEzZTUtOTRmNC00NDkxLWI5MTktZTVkNThkNDdlYjcxIiwiY2xpZW50X2lkIjoiMThoOHZhbnZyaDRwdWkxbHJudGMxbmlsamYifQ.cm7VouaAGAo2RYuCjAXIfTNPOYVhZjCBLmPIuJUvG_Olwn-9hwOPc2v_MHthJYxWcDYX4IQPzNfqWvnkH0T1BOPTgA3gVb8AjzrPFw4eq_jgKC2G9IFkF5hC38mq3hsgpZSE8GMqOXNTe3U2Piccl7bHsmeTT-fSEa3cGo_GFNyXrdKk9BYWF2DTwD94KRjh-j5Srw7KOJzpKjLzM4kt9hgxxzGnwXXsmpSzhiyje2fSx_WGM8qoBCc79EEShbvmFTVf8OmbMDGMRBy47BtR1Rnvx8dSqRfYs_PQIJML27nE3dCbaw0keUmKtgwovgbwYxs5HNTrWu0Oy7m1x5kc_w","x-id-lealtad":"","x-token-usuario":"efa400dbfbe2ffaa688474e547772d71","x-id-interaccion":"8D857C86-74C5-489D-9C14-09F9BFB145F2","x-version-aplicacion":"1.1.7","x-modelo-dispositivo":"iPhone 12 Mini","x-sicu":"bb693233b5d24ceebfe2f2e79a63593c"},"datosFlujo":{"giftCard":{"amount":0,"phone":"5611728189","id":"","email":"justcristianvillegas@gmail.com","commission":"","name":"amazon","amounts":[{"id":"13696","comision":"5.29","precios":["300.00"]},{"id":"13697","comision":"8.82","precios":[]}]},"giftCardPayment":{"transaccion":{"geolocalizacion":{"latitud":"19.27955118009466","longitud":"-99.18507884265779"},"transaccionOperacion":{"monto":"","cuenta":""},"token":"51818091","notificacion":{"celular":"5611728189","correo":"justcristianvillegas@gmail.com"}}}}}});
+    setTimeout(() => {
+      success({
+        "mensaje": "Operación Exitosa.",
+        "folio": "5721c87a6aca900e-5721c87a6aca900e",
+        "resultado": {
+          "idFlujo": "RENTA_PELICULA",
+          "headers": {
+            "x-sicu": "a46a165f2a4746e7abcc4de915c6000d",
+            "x-id-interaccion": "6f3264cf-9486-4a0a-8ddc-b3bfddc923ae",
+            "x-token-usuario": "34a360c2248444356db82dca75e01bc7",
+            "Authorization": "Bearer eyJraWQiOiJkczdRNlBTbE9ZNStuMnJjXC9PdjJqTGp5eWZRS2VJdmFjRXcwWHlNQm80cz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyNnQ0OWQ1djhrYTZhcTlvZnFiajQyNWU5ZiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiVXN1YXJpb1wvZGVsZXRlIFVzdWFyaW9cL3JlYWQgVXN1YXJpb1wvdXBkYXRlIiwiYXV0aF90aW1lIjoxNjQxODU1MjQ1LCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9FaEZuSU9JRzAiLCJleHAiOjE2NDE4NTg4NDUsImlhdCI6MTY0MTg1NTI0NSwidmVyc2lvbiI6MiwianRpIjoiNDkxZWEyZGEtYWNmZC00NzEyLTgwNjktYmQ4NjU4ZTRhOTVhIiwiY2xpZW50X2lkIjoiMjZ0NDlkNXY4a2E2YXE5b2ZxYmo0MjVlOWYifQ.dRpc5L3tJmZtiIQX3ZdJqvCbktHi8_00Ou8e03SssFwJb3FezUjuTsbDxhmQ9woYN36tVvItdKdVxwm6Qu_yZTgSqXBVu2lhyKH2NSw0kE8Y9DaOCQnlpoMfPg0B87DNHMPvJ7UHjc7mHEPFRaqebfj0-M8zYcx24BdiHFmAzK9Mk-pTjb0VLRvcQ_ulJzV5swraeVs2cAGon3dtNJUiVP7dQqcCooj3a2lFCpTsL97PeoV8TmZelTUDOweEefCCYB2usKBO_EvxJNhEBsUzlxychqmkBeKX-nfkXHM6FAla2wkXLEcgioxCVSF6KL3sbYE2oyoKjwoH8XTvA2d9bA",
+            "x-id-operacion-conciliacion": "CP88kT1AmvzTNlgnU_LsPA",
+            "x-id-dispositivo": "72c4f7a5-c942-438a-820e-0874b4037fea",
+            "accept": "",
+            "x-nombre-dispositivo": "",
+            "x-sistema-dispositivo": "WEB",
+            "x-version-dispositivo": "",
+            "x-version-aplicacion": "",
+            "x-modelo-dispositivo": "",
+            "x-fabricante-dispositivo": "",
+            "x-serie-procesador": "",
+            "x-operador-telefonia": "",
+            "x-latitud": "",
+            "x-longitud": "",
+            "x-id-lealtad": ""
+          },
+          "datosFlujo": {
+            "idPelicula": "74308",
+            "nombrePelicula": "En busca de la grandeza",
+            "imagenPelicula": "https://imgn.cdn.iutpcdn.com/IMGS/VOD/COVER/550763-8c.jpg",
+            "numeroCuentaClienteCifradoRsa": "ZIFDUrf7907AY5ZqXk4fnXlJE1GsMDUGv8G1aiS0U/j4YQl6zcXcLRv1KxYbhr7bjbK3mnA1C+ch\nE7Z3xAWaOqKqM92yr+awF+zG+DeyZfps0rVrvv8JO5GkJNzrz0ZF1CobxnA8GXGrVbPakGgLcyRw\n6UCtssIiGqg2ne3iRhEBJ1zIurwh1dGB3XAlHY1JklFZX+B2TsdyVuc8TkJ0BzmQHnL2hP2dg2QB\nY5M0PJouhRGAnJz4XKz6tsMI44x/MGm/KGU1J7yRK2NpP3vmHldkzU4gQXyE+Nd4+NEWVZSv9jJD\ne+CuHnaHeWNBVYck9da55OGm3IWji/niE0bbTg==\n",
+            "numeroCuentaClienteCadenaBaz": "baz***",
+            "botonPago": {
+              "transaccion": {
+                "primerTokenVerificacion": "",
+                "requiereFactura": true,
+                "geolocalizacion": {
+                  "latitud": "sXW2VpWSgj6SFIfzabZzKg",
+                  "longitud": "sXW2VpWSgj6SFIfzabZzKg"
+                },
+                "beneficiario": {
+                  "idEmpresaCifrado": "N6STSd6swrKvfMp2Zyynrg",
+                  "idEmpresa": "TP00000002"
+                },
+                "traspaso": {
+                  "cuentaOrigen": "",
+                  "monto": "1dfFtRHJAn3KJVyd8mONj8ceUhElp_2XtPn3u_P5y4o",
+                  "concepto": "Cargo por renta de película"
+                },
+                "detallePago": {
+                  "comision": "0.0",
+                  "iva": "0.0",
+                  "montoEnvio": "55",
+                  "cantidadProductos": "1",
+                  "idReferenciaPago": "0101000000743082022"
+                }
+              }
+            },
+            "compras": {
+              "transaccion": {
+                "calidadPelicula": "HD",
+                "monto": "1dfFtRHJAn3KJVyd8mONj8ceUhElp_2XtPn3u_P5y4o",
+                "numeroReferencia": "5YuMiDsVus5Mfd0GEM6ECA2kemE9OYe623m_2wC_D1s",
+                "fechaOperacion": "",
+                "numeroMovimiento": "",
+                "peliculaGratuita": false,
+                "numeroCuentaCliente": ""
+              }
+            },
+            "tokenOperacion": "yqFBzgNrXQZP0WYGlpgr4A"
+          }
+        }
+      });
+    }, 1000);
   },
 
   /**
@@ -40,7 +125,20 @@ export const request = {
    */
   paymentButton(body, headers, success, error) {
     const url = `${request.BASE_URL}/pagos/captacion/traspasos/v1/boton-pago`;
-    request.send(url, "POST", body, headers, success, error);
+    // request.send(url, "POST", body, headers, success, error);
+    setTimeout(() => {
+      success({
+        "resultado": {
+          "horaOperacion": "15:41",
+          "descripcionOrigen": "Compras de productos de Elektr",
+          "descripcionDestino": "",
+          "fechaOperacion": "2022-01-10",
+          "numeroMovimiento": "000000005"
+        },
+        "folio": "e4f531b00a1e6253-e4f531b00a1e6253",
+        "mensaje": "Operación Exitosa."
+      });
+    }, 1000);
   },
 
   /**
