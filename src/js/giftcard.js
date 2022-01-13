@@ -55,7 +55,7 @@ const showResumeScreen = () => {
   const body = { ...giftCardPayment };
 
   body.transaccion.transaccionOperacion.monto = selectedAmount.precios[0];
-  headers['x-id-marca-tarjeta'] = `${selectedAmount.id} | ${name}`;
+  headers['x-id-marca-tarjeta'] = `${selectedAmount.id}|${name}`;
   showLoader(true);
 
   request.paymentGiftcard(selectedAmount.id, body, headers, (data) => {
