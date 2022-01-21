@@ -12,19 +12,7 @@ export const request = {
    */
   buyMovie(idMovie, body, headers, success, error) {
     const url = `${request.BASE_URL}/diversion/gestion-peliculas/v1/peliculas/${idMovie}/compras`;
-    // request.send(url, "POST", body, headers, success, error);
-
-    setTimeout(() =>{
-      success({
-        "mensaje": "Operación Exitosa.",
-        "folio": "268dbfa372e64531-268dbfa372e64531",
-        "resultado": {
-          "description": "Operación realizada con éxito",
-          "idResult": "178363385",
-          "result": "0"
-        }
-      });
-    }, 1000);
+    request.send(url, "POST", body, headers, success, error);
   },
 
   /**
@@ -39,8 +27,8 @@ export const request = {
       "x-id-interaccion": "123e4567-e89b-12d3-a456-426655440000",
       "x-token-usuario": "SRfVZrTYvdm7mzzZmcuiDViACkAx",
     };
-    // request.send(url, "GET", undefined, headers, success, error);
-    setTimeout(() => {
+    request.send(url, "GET", undefined, headers, success, error);
+    /* setTimeout(() => {
       success({
         "mensaje": "Operación Exitosa.",
         "folio": "5721c87a6aca900e-5721c87a6aca900e",
@@ -113,7 +101,7 @@ export const request = {
           }
         }
       });
-    }, 1000);
+    }, 1000); */
   },
 
   /**
@@ -125,20 +113,7 @@ export const request = {
    */
   paymentButton(body, headers, success, error) {
     const url = `${request.BASE_URL}/pagos/captacion/traspasos/v1/boton-pago`;
-    // request.send(url, "POST", body, headers, success, error);
-    setTimeout(() => {
-      success({
-        "resultado": {
-          "horaOperacion": "15:41",
-          "descripcionOrigen": "Compras de productos de Elektr",
-          "descripcionDestino": "",
-          "fechaOperacion": "2022-01-10",
-          "numeroMovimiento": "000000005"
-        },
-        "folio": "e4f531b00a1e6253-e4f531b00a1e6253",
-        "mensaje": "Operación Exitosa."
-      });
-    }, 1000);
+    request.send(url, "POST", body, headers, success, error);
   },
 
   /**

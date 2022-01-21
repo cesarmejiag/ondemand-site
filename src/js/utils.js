@@ -1,4 +1,4 @@
-const gaParams = {};
+const gaParams = { "event": "trackGA4" };
 
 /**
  * Capitalize text.
@@ -109,8 +109,6 @@ export const searchToJson = () => {
  * @param {string} idFlow 
  */
 export const setGa = (idFlow) => {
-  gaParams["event"] = "trackGA4";
-
   if (idFlow === 'COMPRA_GIFTCARD') {
     gaParams["flow"] = "pago_tarjetas_digitales";
     gaParams["section"] = "mis_pagos";

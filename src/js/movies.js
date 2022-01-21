@@ -25,12 +25,12 @@ const showResumeScreen = () => {
 
       // Attach click handler to change the view.
       $(".resume-screen .movie-btn").on("click", () => {
-        showSuccessScreen();
         ga('ui_interaction', {
           "screen_name": "disfruta_pelicula",
           "type": "click",
           "element": "ver_ahora"
         });
+        showSuccessScreen();
       });
 
       changeScreen($(".resume-screen"), {
@@ -40,10 +40,9 @@ const showResumeScreen = () => {
         nombre: nombrePelicula,
         folio: folio 
       }, {
-        'event_name': 'mis_peliculas_succes',
+        'event_name': 'mis_peliculas_success',
         'screen_name': 'disfruta_pelicula',
         'title': nombrePelicula,
-        'category': "",
         'price': formatAmount(botonPago.transaccion.detallePago.montoEnvio),
       });
     }, showErrorScreen);
@@ -70,7 +69,6 @@ const showSuccessScreen = () => {
         "element": "ver_pelicula",
         "type": "click",
         "title": nombrePelicula,
-        "category": ""
       });
     });
 
@@ -89,7 +87,6 @@ const showSuccessScreen = () => {
   }, {
     "screen_name": 'felicidades',
     "title": nombrePelicula,
-    "category": ""
   });
 }
 
@@ -112,7 +109,6 @@ export const initMovies = (data) => {
       "type": "click",
       "element": "rentar",
       "title": nombrePelicula,
-      "category": "",
       "price": formatAmount(botonPago.transaccion.detallePago.montoEnvio)
     });
   });
@@ -124,7 +120,6 @@ export const initMovies = (data) => {
   }, {
     "screen_name": "descripcion",
     "title": nombrePelicula,
-    "category": "",
     "price": formatAmount(botonPago.transaccion.detallePago.montoEnvio)
   });
 };
