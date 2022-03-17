@@ -96,11 +96,11 @@ export const showLoader = (show) => {
 export const showErrorScreen = (jqXHR) => {
   changeScreen($(".error-screen"), {
     mensaje: jqXHR.responseJSON?.mensaje || "Tuvimos un problema al conectar con nuestros servicios.",
-    folio: jqXHR.responseJSON?.folio || "-",
+    folio: jqXHR.responseJSON?.folio || jqXHR.responseJSON?.codigo || "-",
   }, {
     "event_name": "error_sp",
     "screen_name": "fallo",
     "type": "system_error",
-    "id": jqXHR.responseJSON?.folio || "-",
+    "id": jqXHR.responseJSON?.folio || jqXHR.responseJSON?.codigo || "-",
   });
 };

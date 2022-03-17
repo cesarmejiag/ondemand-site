@@ -1,6 +1,6 @@
 export const request = {
-  BASE_URL: 'https://apigateway.superappbaz.com/integracion/superapp', // Dev
-  // BASE_URL: "https://api.baz.app/superapp", // Prod
+  // BASE_URL: 'https://apigateway.superappbaz.com/integracion/superapp', // Dev
+  BASE_URL: "https://api.baz.app/superapp", // Prod
 
   /**
    * Request buyMovie service.
