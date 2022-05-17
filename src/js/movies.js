@@ -9,13 +9,13 @@ let globals = {};
  */
 const showResumeScreen = () => {
   const { headers, datosFlujo } = globals;
-  const { idPelicula, botonPago, tokenOperacion, numeroCuentaClienteCadenaBaz, nombrePelicula } = datosFlujo;
+  const { idPelicula, botonPago, compras, tokenOperacion, numeroCuentaClienteCadenaBaz, nombrePelicula } = datosFlujo;
   const body = { transaccion: { ...botonPago.transaccion, tokenOperacion } };
 
   showLoader(true);
   request.paymentButton(body, headers, (data) => {
     const { resultado: { fechaOperacion, horaOperacion, numeroMovimiento } } = data;
-    const body = { transaccion: { fechaOperacion, numeroMovimiento } };
+    const body = { transaccion: { ...compras.transaccion, fechaOperacion, numeroMovimiento } };
     const buyMovieHeaders = { ...headers };
 
     delete buyMovieHeaders["x-id-operacion-conciliacion"];
